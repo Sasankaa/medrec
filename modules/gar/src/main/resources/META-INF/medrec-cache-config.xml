@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+ This cache configuration file is for the storage enabled and disabled members in the Managed Coherence Server example.
+-->
+<cache-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns="http://xmlns.oracle.com/coherence/coherence-cache-config"
+              xsi:schemaLocation="http://xmlns.oracle.com/coherence/coherence-cache-config coherence-cache-config.xsd">
+              
+  <caching-scheme-mapping>
+    <cache-mapping>
+      <cache-name>MethodCache</cache-name>
+      <scheme-name>MedrecPartitionedScheme</scheme-name>
+    </cache-mapping>
+    <cache-mapping>
+      <cache-name>SharedCache</cache-name>
+      <scheme-name>MedrecPartitionedSharedScheme</scheme-name>
+    </cache-mapping>
+  </caching-scheme-mapping>
+
+  <caching-schemes>
+    <distributed-scheme>
+      <scheme-name>MedrecPartitionedScheme</scheme-name>
+      <service-name>MedrecPartitionedCache</service-name>
+      <thread-count>3</thread-count>
+      <backing-map-scheme>
+        <local-scheme>
+        </local-scheme>
+      </backing-map-scheme>
+      <autostart>true</autostart>
+    </distributed-scheme>
+    <distributed-scheme>
+      <scheme-name>MedrecPartitionedSharedScheme</scheme-name>
+      <service-name>MedrecPartitionedCache</service-name>
+      <thread-count>3</thread-count>
+      <backing-map-scheme>
+        <local-scheme>
+        </local-scheme>
+      </backing-map-scheme>
+      <autostart>true</autostart>
+    </distributed-scheme>
+ </caching-schemes>
+</cache-config>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="report" xmlns="http://xmlns.jcp.org/xml/ns/javaee" version="1.0">
+  <step id="record" next="drug">
+    <listeners>
+      <listener ref="RecordStepListener"/>
+    </listeners>
+    <chunk item-count="10">
+      <reader ref="RecordItemReader"></reader>
+      <processor ref="RecordItemProcessor"></processor>
+      <writer ref="RecordItemWriter"></writer>
+    </chunk>
+  </step>
+  <step id="drug" next="physician">
+    <listeners>
+      <listener ref="DrugStepListener"/>
+    </listeners>
+    <batchlet ref="DrugSumBatchLet"/>
+    <end on="COMPLETED"/>
+  </step>
+  <step id="physician">
+    <listeners>
+      <listener ref="PhysicianStepListener"/>
+    </listeners>
+    <batchlet ref="PhysicianSumBatchLet"></batchlet>
+    <end on="COMPLETED"/>
+  </step>
+</job>

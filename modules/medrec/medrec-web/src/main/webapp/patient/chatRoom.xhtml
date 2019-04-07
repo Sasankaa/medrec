@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contracts="#{initParam['contract.name']}">
+<ui:composition template="/template/template-patient.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.chatRoom']}"/>
+  </ui:define>
+  <ui:define name="head"></ui:define>
+  <ui:define name="cssscript">
+    <script type="text/javascript"
+            src="#{request.contextPath}/js/chat_patient.js"></script>
+    <style>
+      .chat-yourself {
+        background: url(../img/chat-yourself.jpg);
+        filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+        -moz-background-size: 100% 100%;
+        background-size: 100% 100%;
+        padding: 40px;
+        padding-right: 100px;
+      }
+
+      .chat-patient {
+        background: url(../img/chat-patient.jpg);
+        filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+        -moz-background-size: 100% 100%;
+        background-size: 100% 100%;
+        padding: 40px;
+        padding-left: 100px;
+      }
+
+      .chat-physician {
+        background: url(../img/chat-physician.jpg);
+        filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";
+        -moz-background-size: 100% 100%;
+        background-size: 100% 100%;
+        padding: 40px;
+        padding-left: 100px;
+      }
+    </style>
+  </ui:define>
+
+  <ui:define name="contents">
+    <div class="row">
+      <div class="offset1 span10">
+        <h2>
+          <h:outputText value="${bundle['text.chatRoom.head']}"/>
+        </h2>
+
+        <p>
+          <h:outputText value="${bundle['text.chatRoom.desc']}"/>
+        </p>
+        <button id="join" class="btn btn-info">${bundle['button.join']}</button>
+        <button id="leave" class="btn btn-danger">${bundle['button.leave']}</button>
+      </div>
+    </div>
+    <hr class="featurette-divider"></hr>
+
+    <div class="row">
+      <div class="offset1 span9">
+        <h2>
+					<span id="room-name" class="label label-info chat-label">Not
+						in chat</span>
+        </h2>
+      </div>
+      <div class="span2">
+        <h2>
+          <span class="label label-info chat-label">Room members</span>
+        </h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="offset1 span9">
+        <div id="information" class="information"></div>
+      </div>
+      <div class="span2">
+        <div id="list" class="information"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="offset1 span11">
+        <input id="msg" class="span9 send-text" maxlength="100"/>
+        <button id="send" class="btn btn-info">${bundle['button.send']}</button>
+      </div>
+    </div>
+
+    <div id="myModal" class="modal hide fade" style="width: 300px;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">&times;</button>
+        <h3>${bundle['text.chatRoom.physicians']}</h3>
+      </div>
+      <div class="modal-body">
+        <p>${bundle['text.chatRoom.join']}</p>
+        <select id="physicians" size="8">
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button id="choose" class="btn btn-primary" data-dismiss="modal"
+                aria-hidden="true">${bundle['button.choose']}</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">${bundle['button.close']}</button>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+</f:view>
+
+</html>

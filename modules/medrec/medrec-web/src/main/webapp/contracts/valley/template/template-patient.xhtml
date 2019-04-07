@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+<ui:composition template="/template/template.xhtml">
+  <ui:define name="hide">
+    <div class="hide">
+      <input id="p_id" value="#{sessionScope['user'].id}"/>
+      <input id="p_name" value="#{sessionScope['user'].name.lastName}"/>
+    </div>
+    <div id="logoutModal" class="modal hide fade signin">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">&times;</button>
+        <h3>
+          <h:outputText value="${bundle['role.patient']}"/>
+        </h3>
+      </div>
+      <div class="modal-body">
+        <h4>
+          <h:outputText value="${bundle['text.logout']}"/>
+        </h4>
+        <h:form id="logout" class="form-signin">
+          <h:commandButton id="action"
+                           action="#{authenticatingPatientController.logout}"
+                           value="${bundle['button.logout']}"
+                           class="btn btn-warning pull-right">
+          </h:commandButton>
+        </h:form>
+      </div>
+    </div>
+  </ui:define>
+  <ui:define name="brand">
+    <h:outputText
+            value="#{sessionScope['user'].name.firstName} #{sessionScope['user'].name.middleName} #{sessionScope['user'].name.lastName} "/>
+  </ui:define>
+  <ui:define name="nav">
+    <li class="active"><a
+            href="#{request.contextPath}/patient/patientHome.xhtml"><h:outputText
+            value="${bundle['bar.patient.home']}"/></a></li>
+    <li><a
+            href="#{request.contextPath}/patient/viewPatient.xhtml"><h:outputText
+            value="${bundle['bar.patient.profile']}"/></a>
+    </li>
+    <li><a href="#{request.contextPath}/patient/chatRoom.xhtml"><h:outputText
+            value="${bundle['bar.chatRoom']}"/></a></li>
+    <li><a data-toggle="modal" href="#logoutModal"><h:outputText value="${bundle['bar.logout']}"/></a></li>
+  </ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wldf-resource xmlns="http://xmlns.oracle.com/weblogic/weblogic-diagnostics">
+  <instrumentation>
+    <enabled>false</enabled>
+
+    <!-- Servlet Session Monitors -->
+    <wldf-instrumentation-monitor>
+      <name>Servlet_Around_Service</name>
+      <enabled>true</enabled>
+      <dye-mask>ADDR1</dye-mask>
+      <dye-filtering-enabled>true</dye-filtering-enabled>
+      <action>TraceElapsedTimeAction</action>
+    </wldf-instrumentation-monitor>
+
+    <!-- Servlet Session Monitors -->
+
+    <wldf-instrumentation-monitor>
+      <name>EJB_Around_SessionEjbBusinessMethods</name>
+      <enabled>true</enabled>
+      <dye-mask>ADDR1</dye-mask>
+      <dye-filtering-enabled>true</dye-filtering-enabled>
+      <action>TraceElapsedTimeAction</action>
+    </wldf-instrumentation-monitor>
+
+  </instrumentation>
+</wldf-resource>

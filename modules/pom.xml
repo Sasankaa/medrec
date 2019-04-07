@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.oracle.weblogic.sample.medrec-javaee</groupId>
+  <artifactId>modules</artifactId>
+  <version>2.0</version>
+  <name>modules</name>
+  <packaging>pom</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <wls.url>t3://Peters-MacBook-Pro.local:7011</wls.url>
+    <wls.user>weblogic</wls.user>
+    <wls.password>welcome1</wls.password>
+    <wls.adminServer>MedRecServer</wls.adminServer>
+  </properties>
+
+  <modules>
+    <module>common</module>
+    <module>medrec</module>
+    <module>physician</module>
+    <module>chat</module>
+    <module>medrec-data-import</module>
+    <module>browser-starter</module>
+  </modules>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.oracle.weblogic</groupId>
+      <artifactId>weblogic-server-pom</artifactId>
+      <version>12.2.1-3-0</version>
+      <type>pom</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>7.0</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymock</artifactId>
+      <version>2.4</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <defaultGoal>install</defaultGoal>
+    <finalName>${project.name}</finalName>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+        <!-- This is the configuration for the weblogic-maven-plugin -->
+          <groupId>com.oracle.weblogic</groupId>
+          <artifactId>weblogic-maven-plugin</artifactId>
+          <version>12.2.1-3-0</version>
+          <configuration>
+            <adminurl>${wls.url}</adminurl>
+            <user>${wls.user}</user>
+            <password>${wls.password}</password>
+            <!--The location of the file or directory to be deployed -->
+            <source>${project.build.directory}/${project.build.finalName}.${project.packaging}</source>
+            <!--The target servers where the application is deployed. -->
+            <targets>${wls.adminServer}</targets>
+            <verbose>true</verbose>
+            <name>${project.build.finalName}</name>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-ear-plugin</artifactId>
+          <version>2.8</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-ejb-plugin</artifactId>
+          <version>2.3</version>
+          <configuration>
+            <ejbVersion>3.1</ejbVersion>
+            <jarName>${project.name}</jarName>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>2.2</version>
+          <configuration>
+            <warName>${project.name}</warName>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.15</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.4</version>
+          <configuration>
+            <finalName>${project.name}</finalName>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.1</version>
+          <configuration>
+            <source>1.8</source>
+            <target>1.8</target>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+</project>

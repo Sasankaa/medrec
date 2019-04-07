@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contracts="#{initParam['contract.name']}">
+<ui:composition template="/template/template-admin.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.viewRegisteredPatients']}"/>
+  </ui:define>
+
+  <ui:define name="contents">
+    <div class="offset1">
+      <h:dataTable id="patientTable" styleClass="table table-hove span8"
+                   value="#{viewingNewlyRegisteredPatientsController.patients}"
+                   var="patient">
+
+        <h:column>
+          <f:facet name="header">
+            <h:outputText value="${bundle['label.username']}"/>
+          </f:facet>
+          <h:form id="patient" prependId="false">
+            <h:commandLink id="profile"
+                           action="#{approvingNewlyRegisteredPatientController.viewNewlyRegisteredPatient}"
+                           value="${patient.username}">
+              <f:param name="patientId" value="#{patient.id}"/>
+            </h:commandLink>
+          </h:form>
+        </h:column>
+        <h:column>
+          <f:facet name="header">
+            <h:outputText value="${bundle['label.firstName']}"/>
+          </f:facet>
+          <h:outputText value="${patient.name.firstName}"/>
+        </h:column>
+        <h:column>
+          <f:facet name="header">
+            <h:outputText value="${bundle['label.middleName']}"/>
+          </f:facet>
+          <h:outputText value="${patient.name.middleName}"/>
+        </h:column>
+        <h:column>
+          <f:facet name="header">
+            <h:outputText value="${bundle['label.lastName']}"/>
+          </f:facet>
+          <h:outputText value="${patient.name.lastName}"/>
+        </h:column>
+      </h:dataTable>
+    </div>
+  </ui:define>
+</ui:composition>
+</f:view>
+
+</html>

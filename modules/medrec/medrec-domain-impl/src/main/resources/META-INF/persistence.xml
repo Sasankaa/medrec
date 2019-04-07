@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                               http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+  <!-- TODO switch to DataSource -->
+  <persistence-unit name="MedRec" transaction-type="JTA">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <jta-data-source>jdbc/MedRecGlobalDataSourceXA</jta-data-source>
+    <class>com.oracle.medrec.model.Address</class>
+    <class>com.oracle.medrec.model.BaseEntity</class>
+    <class>com.oracle.medrec.model.PersonName</class>
+    <class>com.oracle.medrec.model.Patient</class>
+    <class>com.oracle.medrec.model.Physician</class>
+    <class>com.oracle.medrec.model.Drug</class>
+    <class>com.oracle.medrec.model.Prescription</class>
+    <class>com.oracle.medrec.model.Record</class>
+    <class>com.oracle.medrec.model.RegularUser</class>
+    <class>com.oracle.medrec.model.User</class>
+    <class>com.oracle.medrec.model.VersionedEntity</class>
+    <class>com.oracle.medrec.model.VitalSigns</class>
+    <properties>
+      <property name="eclipselink.logging.level" value="FINE"/>
+    </properties>
+  </persistence-unit>
+</persistence>

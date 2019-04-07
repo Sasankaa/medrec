@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                               http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+  <persistence-unit name="MedRecTest" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.oracle.medrec.model.Address</class>
+    <class>com.oracle.medrec.model.BaseEntity</class>
+    <class>com.oracle.medrec.model.Drug</class>
+    <class>com.oracle.medrec.model.PersonName</class>
+    <class>com.oracle.medrec.model.Patient</class>
+    <class>com.oracle.medrec.model.Physician</class>
+    <class>com.oracle.medrec.model.Prescription</class>
+    <class>com.oracle.medrec.model.Record</class>
+    <class>com.oracle.medrec.model.RegularUser</class>
+    <class>com.oracle.medrec.model.User</class>
+    <class>com.oracle.medrec.model.VersionedEntity</class>
+    <class>com.oracle.medrec.model.VitalSigns</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:medrec_test;create=true"/>
+      <property name="javax.persistence.jdbc.user" value="medrec_test"/>
+      <property name="javax.persistence.jdbc.password" value="medrec_test"/>
+      <property name="javax.persistence.schema-generation.database.action"
+                value="create"/>
+    </properties>
+  </persistence-unit>
+</persistence>

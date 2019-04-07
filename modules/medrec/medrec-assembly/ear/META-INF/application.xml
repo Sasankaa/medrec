@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://java.sun.com/xml/ns/javaee"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_7.xsd"
+             version="7">
+  <description>Medical Records Patient/Admin Application</description>
+  <display-name>Medical Records Patient/Admin Application</display-name>
+  <module>
+    <ejb>common.jar</ejb>
+  </module>
+  <module>
+    <ejb>medrec-domain-impl.jar</ejb>
+  </module>
+  <module>
+    <ejb>medrec-facade-impl.jar</ejb>
+  </module>
+  <module>
+    <web>
+      <web-uri>medrec-web.war</web-uri>
+      <context-root>medrec</context-root>
+    </web>
+  </module>
+  <module>
+    <web>
+      <web-uri>medrec-jaxrs-facade-broker.war</web-uri>
+      <context-root>medrec-jaxrs-services</context-root>
+    </web>
+  </module>
+  <module>
+    <web>
+      <web-uri>medrec-jaxws-facade-broker.war</web-uri>
+      <context-root>medrec-jaxws-services</context-root>
+    </web>
+  </module>
+  <env-entry>
+    <env-entry-name>java:app/com.oracle.medrec.IsEmailEnabled</env-entry-name>
+    <env-entry-type>java.lang.Boolean</env-entry-type>
+    <env-entry-value>false</env-entry-value>
+  </env-entry>
+  <env-entry>
+    <env-entry-name>java:app/com.oracle.medrec.target</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+    <!-- server, cluster, coherence_cluster -->
+    <env-entry-value>server</env-entry-value>
+  </env-entry>
+</application>

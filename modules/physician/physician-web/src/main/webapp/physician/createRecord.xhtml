@@ -1,0 +1,319 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/template/template-physician.xhtml">
+
+<ui:define name="title">
+  <h:outputText value="${bundle['title.createRecord']}"/>
+</ui:define>
+
+<ui:define name="contents">
+
+<h:form id="navigation" prependId="false">
+  <h:commandLink id="backtoSummary"
+                 action="viewRecordSummary"
+                 value="${bundle['label.viewRecordSummary']}"/>
+  <h:outputText value=" >> "/>
+  <h:outputText value="${bundle['label.addNewRecord']}"/>
+</h:form>
+<br/>
+<h:form id="newRecord">
+<div class="row">
+  <div class="span4">
+    <h3>
+      <h:outputText value="${bundle['text.record.create.head']}"/>
+    </h3>
+
+    <p>
+      <h:outputText value="${bundle['text.record.create.desc']}"/>
+    </p>
+  </div>
+
+  <div class="span8">
+    <fieldset>
+      <legend></legend>
+      <h:panelGrid id="recordCreationPanel1" columns="3" border="0"
+                   cellpadding="5" cellspacing="3">
+
+        <h:outputLabel for="dateInput">
+          <h:outputText value="*${bundle['label.date']}"/>
+        </h:outputLabel>
+        <h:inputText id="dateInput"
+                     value="#{creatingRecordController.record.date}" size="10"
+                     maxlength="30" required="true">
+          <f:convertDateTime type="date" dateStyle="medium"/>
+        </h:inputText>
+        <h:message for="dateInput" styleClass="text-error"/>
+
+
+        <h:outputLabel for="symptomsInput">
+          <h:outputText value="*${bundle['label.symptoms']}"/>
+        </h:outputLabel>
+        <h:inputText id="symptomsInput"
+                     value="#{creatingRecordController.record.symptoms}" size="10"
+                     maxlength="30" required="true">
+          <f:validateLength minimum="1" maximum="30"/>
+        </h:inputText>
+        <h:message for="symptomsInput" styleClass="text-error"/>
+      </h:panelGrid>
+    </fieldset>
+
+    <fieldset>
+      <legend>
+        <h:outputText value="${bundle['text.record.create.vital']}"/>
+      </legend>
+
+      <h:panelGrid id="vitalSignsPanel" columns="3" border="0"
+                   cellpadding="5" cellspacing="3">
+
+        <h:outputLabel for="temperatureInput">
+          <h:outputText value="*${bundle['label.temperature']}"/>
+        </h:outputLabel>
+        <h:inputText id="temperatureInput"
+                     value="#{creatingRecordController.record.vitalSigns.temperature}"
+                     size="10" maxlength="10" required="true">
+          <f:validateDoubleRange minimum="1.0" maximum="200.0"/>
+        </h:inputText>
+        <h:message for="temperatureInput" styleClass="text-error"/>
+
+        <h:outputLabel for="weightInput">
+          <h:outputText value="*${bundle['label.weight']}"/>
+        </h:outputLabel>
+        <h:inputText id="weightInput"
+                     value="#{creatingRecordController.record.vitalSigns.weight}"
+                     size="10" maxlength="10" required="true">
+          <f:validateDoubleRange minimum="1.0" maximum="999.9"/>
+        </h:inputText>
+        <h:message for="weightInput" styleClass="text-error"/>
+
+        <h:outputLabel for="pulseInput">
+          <h:outputText value="*${bundle['label.pulse']}"/>
+        </h:outputLabel>
+        <h:inputText id="pulseInput"
+                     value="#{creatingRecordController.record.vitalSigns.pulse}"
+                     size="10" maxlength="10" required="true">
+          <f:validateDoubleRange minimum="1.0" maximum="200.0"/>
+        </h:inputText>
+        <h:message for="pulseInput" styleClass="text-error"/>
+
+        <h:outputLabel for="heightInput">
+          <h:outputText value="*${bundle['label.height']}"/>
+        </h:outputLabel>
+        <h:inputText id="heightInput"
+                     value="#{creatingRecordController.record.vitalSigns.height}"
+                     size="10" maxlength="10" required="true">
+          <f:validateDoubleRange minimum="1.0" maximum="999.9"/>
+        </h:inputText>
+        <h:message for="heightInput" styleClass="text-error"/>
+
+        <h:outputLabel for="diastolicBloodPressureInput">
+          <h:outputText value="*${bundle['label.diastolicBloodPressure']}"/>
+        </h:outputLabel>
+        <h:inputText id="diastolicBloodPressureInput"
+                     value="#{creatingRecordController.record.vitalSigns.diastolicBloodPressure}"
+                     size="10" maxlength="10" required="true">
+          <f:validateDoubleRange minimum="1.0" maximum="999.9"/>
+        </h:inputText>
+        <h:message for="diastolicBloodPressureInput"
+                   styleClass="text-error"/>
+
+        <h:outputLabel for="systolicBloodPressureInput">
+          <h:outputText value="*${bundle['label.systolicBloodPressure']}"/>
+        </h:outputLabel>
+        <h:inputText id="systolicBloodPressureInput"
+                     value="#{creatingRecordController.record.vitalSigns.systolicBloodPressure}"
+                     size="10" maxlength="10" required="true">
+          <f:validateDoubleRange minimum="1.0" maximum="999.9"/>
+        </h:inputText>
+        <h:message for="systolicBloodPressureInput"
+                   styleClass="text-error"/>
+      </h:panelGrid>
+    </fieldset>
+    <fieldset>
+      <legend></legend>
+      <h:panelGrid id="recordCreationPanel2" columns="3" border="0"
+                   cellpadding="5" cellspacing="3">
+        <h:outputLabel for="notesInput">
+          <h:outputText value="*${bundle['label.notes']}"/>
+        </h:outputLabel>
+        <h:inputTextarea id="notesInput"
+                         value="#{creatingRecordController.record.notes}" rows="5"
+                         class="span4" required="true">
+          <f:validateLength minimum="1" maximum="200"/>
+        </h:inputTextarea>
+        <h:message for="notesInput" styleClass="text-error"/>
+
+        <h:outputLabel for="diagnosisInput">
+          <h:outputText value="*${bundle['label.diagnosis']}"/>
+        </h:outputLabel>
+        <h:inputTextarea id="diagnosisInput"
+                         value="#{creatingRecordController.record.diagnosis}" rows="5"
+                         class="span4" required="true">
+          <f:validateLength minimum="1" maximum="200"/>
+        </h:inputTextarea>
+        <h:message for="diagnosisInput" styleClass="text-error"/>
+      </h:panelGrid>
+    </fieldset>
+  </div>
+</div>
+<div class="row">
+  <fieldset class="offset1">
+    <legend>
+      <h:outputText value="${bundle['label.prescriptions']}"/>
+    </legend>
+    <div class="row">
+      <div class="span9">
+        <h:dataTable id="preTable"
+                     value="#{creatingRecordController.record.prescriptions}"
+                     var="prescription" class="table" headerClass="tableHeader">
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.date']}"/>
+            </f:facet>
+            <h:outputText value="#{prescription.datePrescribed}">
+              <f:convertDateTime type="date" dateStyle="medium"/>
+            </h:outputText>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.drug']}"/>
+            </f:facet>
+            <h:outputText value="#{prescription.drug.name}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.dosage']}"/>
+            </f:facet>
+            <h:outputText value="#{prescription.dosage}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.frequency']}"/>
+            </f:facet>
+            <h:outputText value="#{prescription.frequency}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.refills']}"/>
+            </f:facet>
+            <h:outputText value="#{prescription.refillsRemaining}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.instructions']}"/>
+            </f:facet>
+            <h:outputText
+                value="#{prescription.instructions == '' ? bundle['message.noInstructions'] : prescription.instructions}"/>
+          </h:column>
+        </h:dataTable>
+      </div>
+      <div class="span1">
+        <a class="btn" href="#preModal" data-toggle="modal"><i
+            class="icon-plus"></i></a>
+      </div>
+    </div>
+  </fieldset>
+  <div id="preModal" class="modal hide fade signin form-signin">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"
+              aria-hidden="true">&times;</button>
+      <h3 id="myModalLabel">
+        <h:outputText value="${bundle['button.prescribePrescription']}"/>
+      </h3>
+    </div>
+    <div class="modal-body" style="max-height: 485px;">
+      <h:panelGrid id="prescriptionCreationPanel" columns="2" border="0"
+                   cellpadding="5" cellspacing="3">
+
+        <h:outputLabel for="dateInput1" class="label label-info">
+          <h:outputText value="${bundle['label.date']}"/>
+        </h:outputLabel>
+        <h:inputText id="dateInput1"
+                     value="#{creatingRecordController.prescription.datePrescribed}"
+                     size="10" maxlength="30">
+          <f:convertDateTime type="date" dateStyle="medium"/>
+        </h:inputText>
+
+        <h:outputLabel for="drugInput" class="label label-info">
+          <h:outputText value="${bundle['label.drug']}"/>
+        </h:outputLabel>
+        <h:selectOneMenu id="drugInput"
+                         value="#{creatingRecordController.drugInfo}">
+          <f:selectItems value="#{drugList}"/>
+        </h:selectOneMenu>
+
+        <h:outputLabel for="dosageInput" class="label label-info">
+          <h:outputText value="${bundle['label.dosage']}"/>
+        </h:outputLabel>
+        <h:inputText id="dosageInput"
+                     value="#{creatingRecordController.prescription.dosage}"
+                     size="10" maxlength="30">
+        </h:inputText>
+
+        <h:outputLabel for="frequencyInput" class="label label-info">
+          <h:outputText value="${bundle['label.frequency']}"/>
+        </h:outputLabel>
+        <h:inputText id="frequencyInput"
+                     value="#{creatingRecordController.prescription.frequency}"
+                     size="10" maxlength="30">
+        </h:inputText>
+
+        <h:outputLabel for="refillsInput" class="label label-info">
+          <h:outputText value="${bundle['label.refills']}"/>
+        </h:outputLabel>
+        <h:inputText id="refillsInput"
+                     value="#{creatingRecordController.prescription.refillsRemaining}"
+                     size="10" maxlength="10">
+          <f:convertNumber/>
+        </h:inputText>
+
+        <h:outputLabel for="instructionsInput" class="label label-info">
+          <h:outputText value="${bundle['label.instructions']}"/>
+        </h:outputLabel>
+        <h:inputTextarea id="instructionsInput"
+                         value="#{creatingRecordController.prescription.instructions}"
+                         rows="5">
+          <f:validateLength minimum="0" maximum="200"/>
+        </h:inputTextarea>
+
+        <h:panelGroup/>
+        <h:commandButton id="savePrescription"
+                         action="#{creatingRecordController.addPrescription}"
+                         value="${bundle['button.save']}" class="btn btn-info addPre">
+          <f:ajax
+              execute="dateInput1 drugInput dosageInput frequencyInput refillsInput instructionsInput"
+              render="preTable"/>
+        </h:commandButton>
+      </h:panelGrid>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <fieldset class="offset1">
+    <legend></legend>
+
+    <h:commandButton id="action"
+                     action="#{savingRecordController.saveRecord}"
+                     value="${bundle['button.save']}" class="btn btn-info"/>
+  </fieldset>
+</div>
+</h:form>
+</ui:define>
+<ui:define name="cssscript">
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.addPre').click(function () {
+        $('#preModal').modal('hide');
+      });
+    });
+  </script>
+</ui:define>
+</ui:composition>
+
+</html>

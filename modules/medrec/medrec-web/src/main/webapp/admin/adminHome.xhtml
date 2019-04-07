@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contracts="#{initParam['contract.name']}">
+<ui:composition template="/template/template-admin.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.adminHome']}"/>
+  </ui:define>
+
+  <ui:define name="contents">
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <h:outputText value="${bundle['text.loginSuccessfully']}"/>
+    </div>
+
+    <div class="row">
+      <div class="span4 offset1">
+        <h3><h:outputText value="${bundle['text.admin.viewPending.head']}"/></h3>
+
+        <p><h:outputText value="${bundle['text.admin.viewPending.desc']}"/></p>
+        <h:form id="viewRegistered">
+          <h:commandButton id="action"
+                           class="btn btn-primary btn-inverse pull-right"
+                           action="#{viewingNewlyRegisteredPatientsController.viewNewlyRegisteredPatients}"
+                           value="${bundle['button.action']}"/>
+        </h:form>
+      </div>
+      <div class="span4 offset1">
+        <h3>
+          <h:outputText value="${bundle['text.admin.statistics.head']}"/>
+        </h3>
+
+        <p>
+          <h:outputText value="${bundle['text.admin.statistics.desc']}"/>
+        </p>
+        <a class="btn btn-primary btn-inverse pull-right"
+           href="#{request.contextPath}/admin/financialStatistics.xhtml"
+            >${bundle['button.action']}</a>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+</f:view>
+
+</html>

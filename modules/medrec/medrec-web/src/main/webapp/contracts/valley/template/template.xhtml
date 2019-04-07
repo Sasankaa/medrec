@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head id="head">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="description" content="Avitek&#153; Medical Records"/>
+  <meta name="keywords" content="Oracle WebLogic Server"/>
+  <f:loadBundle basename="LocalizationResources" var="bundle"/>
+  <title><ui:insert name="title">
+    <h:outputText value="${bundle['title']}"/>
+  </ui:insert></title>
+  <ui:insert name="head"></ui:insert>
+</h:head>
+
+<h:body id="body">
+  <div id="bar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <button type="button" class="btn btn-navbar" data-toggle="collapse"
+                data-target=".nav-collapse">
+          <span class="icon-bar"></span> <span class="icon-bar"></span> <span
+            class="icon-bar"></span>
+        </button>
+        <a class="brand" href="#"><ui:insert name="brand">Weblogic</ui:insert></a>
+
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <ui:insert name="nav"></ui:insert>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ui:insert name="top">
+    <div class="blank80"></div>
+  </ui:insert>
+
+  <ui:insert name="hide"></ui:insert>
+
+  <div class="hide">
+    <input id="cp" value="#{request.contextPath}"/>
+  </div>
+  <div id="container" class="container" style="background-color:#f7f7f7">
+
+    <ui:insert name="message">
+      <h:messages globalOnly="true" errorClass="alert-error" infoClass="alert-success"/>
+    </ui:insert>
+
+    <hr class="featurette-divider"></hr>
+
+    <div class="contents">
+      <ui:insert name="contents"></ui:insert>
+    </div>
+
+    <div class="row footer text-center">
+      <hr></hr>
+      <p class="copyright">
+        <a href="http://www.oracle.com/index.html" target="_blank">Oracle Home</a> | <a
+          href="http://www.oracle.com/products/index.html" target="_blank">Products
+        and Services</a> | <a
+          href="http://www.oracle.com/industries/index.html" target="_blank">Industries</a>
+        | <a href="http://www.oracle.com/support/index.html" target="_blank">Support</a>
+        | <a href="http://www.oracle.com/store/index.html" target="_blank">Store</a>
+        | <a href="http://www.oracle.com/partnerships/index.html"
+             target="_blank">Partners</a> | <a
+          href="http://www.oracle.com/us/community/index.html"
+          target="_blank">Communities</a> | <a
+          href="http://www.oracle.com/corporate/index.html" target="_blank">About</a>
+        <br/>Copyright &copy; 2007, 2017, Oracle and/or its affiliates. All rights
+        reserved. <a
+          href="http://www.oracle.com/us/corporate/contact/index.htm"
+          target="_blank">Contact Oracle</a><br/>
+      </p>
+    </div>
+  </div>
+  <link href="#{request.contextPath}/css/bootstrap.css" rel="stylesheet"></link>
+  <link href="#{request.contextPath}/css/bootstrap-responsive.css" rel="stylesheet"></link>
+  <link href="#{request.contextPath}/css/medrec.css" rel="stylesheet"></link>
+  <script type="text/javascript" src="#{request.contextPath}/js/jquery.js"></script>
+  <script type="text/javascript" src="#{request.contextPath}/js/bootstrap.js"></script>
+  <ui:insert name="cssscript"></ui:insert>
+</h:body>
+
+</html>

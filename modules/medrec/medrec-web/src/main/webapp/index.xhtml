@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<f:view contracts="#{initParam['contract.name']}">
+<ui:composition template="/template/template-index.xhtml">
+
+<ui:define name="title">
+  <h:outputText value="${bundle['title.index']}"/>
+</ui:define>
+
+<ui:define name="hide">
+  <div id="adminModal" class="modal hide fade signin">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"
+              aria-hidden="true">&times;</button>
+      <h3>
+        <h:outputText value="${bundle['role.admin']}"/>
+      </h3>
+    </div>
+    <div class="modal-body">
+      <h:form id="adminLogin" class="form-signin">
+        <h3 class="form-signin-heading">
+          <h:outputText value="${bundle['text.signIn']}"/>
+        </h3>
+        <h:outputText value="${bundle['label.username']}"/>
+        <h:inputText id="usernameInput" value="#{login.username}"
+                     label="${bundle['label.username']}" size="30" maxlength="30"
+                     required="true" class="input-block-level"
+                     requiredMessage="${bundle['message.username.required']}"
+                     p:required="true" p:placeholder="administrator"
+                     p:autofocus="true">
+          <f:validateLength minimum="1" maximum="30"/>
+        </h:inputText>
+        <h:outputText value="${bundle['label.password']}"/>
+        <h:inputSecret id="passwordInput" value="#{login.password}"
+                       label="${bundle['label.password']}" size="20" maxlength="20"
+                       required="true" class="input-block-level"
+                       requiredMessage="${bundle['message.password.required']}"
+                       p:required="true">
+          <f:validateLength minimum="6" maximum="20"/>
+        </h:inputSecret>
+        <h:commandButton id="action"
+                         action="#{authenticatingAdministratorController.login}"
+                         value="${bundle['button.signIn']}"
+                         class="btn btn-large btn-primary pull-right">
+        </h:commandButton>
+      </h:form>
+    </div>
+  </div>
+
+  <div id="patientModal" class="modal hide fade signin">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"
+              aria-hidden="true">&times;</button>
+      <h3>
+        <h:outputText value="${bundle['role.patient']}"/>
+      </h3>
+    </div>
+    <div class="modal-body">
+      <h:form id="patientLogin" class="form-signin">
+        <h3 class="form-signin-heading">
+          <h:outputText value="${bundle['text.signIn']}"/>
+        </h3>
+
+        <h:outputText value="${bundle['label.email']}"/>
+        <h:inputText id="usernameInput" value="#{login.username}"
+                     label="${bundle['label.username']}" size="30" maxlength="30"
+                     required="true" class="input-block-level"
+                     requiredMessage="${bundle['message.username.required']}"
+                     p:required="true" p:placeholder="fred@golf.com"
+                     p:autofocus="true">
+          <f:validateLength minimum="1" maximum="30"/>
+        </h:inputText>
+        <h:outputText value="${bundle['label.password']}"/>
+        <h:inputSecret id="passwordInput" value="#{login.password}"
+                       label="${bundle['label.password']}" size="20" maxlength="20"
+                       required="true" class="input-block-level"
+                       requiredMessage="${bundle['message.password.required']}"
+                       p:required="true">
+          <f:validateLength minimum="6" maximum="20"/>
+        </h:inputSecret>
+        <h:commandButton id="action"
+                         action="#{authenticatingPatientController.login}"
+                         value="${bundle['button.signIn']}"
+                         class="btn btn-large btn-primary pull-right">
+        </h:commandButton>
+      </h:form>
+    </div>
+  </div>
+
+  <div id="presetModal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"
+              aria-hidden="true">&times;</button>
+      <h3>
+        <h:outputText value="${bundle['button.preset']}"/>
+      </h3>
+    </div>
+    <div class="modal-body">
+      <table class="table">
+        <tr>
+          <td><b>Role</b></td>
+          <td><b>Username</b></td>
+          <td><b>Password</b></td>
+        </tr>
+        <tr>
+          <td>Admin</td>
+          <td>administrator</td>
+          <td>administrator123</td>
+        </tr>
+        <tr>
+          <td>Patient</td>
+          <td>fred@golf.com</td>
+          <td>weblogic</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>larry@bball.com</td>
+          <td>weblogic</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>page@fish.com</td>
+          <td>weblogic</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>volley@ball.com</td>
+          <td>weblogic</td>
+        </tr>
+        <tr>
+          <td>Physician</td>
+          <td>mary@md.com</td>
+          <td>weblogic</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ui:define>
+
+<ui:define name="message">
+  <h:messages styleClass="alert-error"></h:messages>
+</ui:define>
+
+<ui:define name="contents">
+
+  <div class="featurette">
+    <img id="admin-jpg" class="featurette-image pull-left"></img>
+
+    <h2 class="featurette-heading">
+      <h:outputText value="${bundle['role.admin']}"/>
+			<span class="muted">
+        <h:outputText value="${bundle['text.admin.role']}"/>
+      </span>
+    </h2>
+
+    <p class="lead">
+      <h:outputText value="${bundle['text.admin.description']}"/>
+    </p>
+    <a class="btn btn-primary" data-toggle="modal" href="#adminModal">
+      <h:outputText value="${bundle['button.login']}"/>
+    </a>
+    <a class="btn btn-primary" data-toggle="modal" href="#presetModal">
+      <h:outputText value="${bundle['button.preset']}"/>
+    </a>
+  </div>
+
+  <hr class="featurette-divider"></hr>
+
+  <div class="featurette">
+    <img id="patient-jpg" class="featurette-image pull-left"></img>
+
+    <h2 class="featurette-heading">
+      <h:outputText value="${bundle['role.patient']}"/>
+			<span class="muted">
+        <h:outputText value="${bundle['text.patient.role']}"/>
+      </span>
+    </h2>
+
+    <p class="lead">
+      <h:outputText value="${bundle['text.patient.description']}"/>
+    </p>
+    <a class="btn btn-primary" data-toggle="modal" href="#patientModal">
+      <h:outputText value="${bundle['button.login']}"/>
+    </a>
+    <a class="btn btn-primary" href="#{request.contextPath}/registerPatient.xhtml">
+      <h:outputText value="${bundle['button.new']}"/>
+    </a>
+  </div>
+
+  <hr class="featurette-divider"></hr>
+
+  <div class="featurette">
+    <img id="physician-jpg" class="featurette-image pull-left"></img>
+
+    <h2 class="featurette-heading">
+      <h:outputText value="${bundle['role.physician']}"/>
+			<span class="muted">
+        <h:outputText value="${bundle['text.physician.role']}"/>
+      </span>
+    </h2>
+
+    <p class="lead">
+      <h:outputText value="${bundle['text.physician.description']}"/>
+    </p>
+    <a href="#{request.contextPath}/physician/login.xhtml" class="btn btn-primary">
+      <h:outputText value="${bundle['button.go.physician']}"/>
+    </a>
+  </div>
+</ui:define>
+
+<ui:define name="cssscript">
+  <script>
+    $(function () {
+      $("#admin-jpg").attr("src", "#{resource['img:admin.jpg']}");
+      $("#patient-jpg").attr("src", "#{resource['img:patient.jpg']}");
+      $("#physician-jpg").attr("src", "#{resource['img:physician.jpg']}");
+    });
+  </script>
+</ui:define>
+</ui:composition>
+</f:view>
+
+</html>

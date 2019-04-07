@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contracts="#{initParam['contract.name']}">
+<ui:composition template="/template/template-index.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.registerResult']}"/>
+  </ui:define>
+
+  <ui:define name="contents">
+    <div class="alert alert-success text-center">
+      <h:outputText value="${bundle['text.patient.registerSuccessfully1']}"/>
+      <br/>
+      <h:outputText value="${bundle['text.patient.registerSuccessfully2']}"/>
+    </div>
+  </ui:define>
+</ui:composition>
+</f:view>
+
+</html>

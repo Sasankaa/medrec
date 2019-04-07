@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contracts="#{initParam['contract.name']}">
+  <ui:composition template="/template/template-patient.xhtml">
+
+    <ui:define name="title">
+      <h:outputText value="${bundle['title.recordSummary']}"/>
+    </ui:define>
+
+    <ui:define name="contents">
+      <div class="row">
+        <div class="offset1 span9">
+          <ul id="myTab" class="nav nav-tabs">
+            <li class="active"><a href="#records" data-toggle="tab">${bundle['label.records']}</a></li>
+            <li><a href="#prescriptions" data-toggle="tab">${bundle['label.prescriptions']}</a></li>
+          </ul>
+          <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade in active" id="records">
+              <h:dataTable id="recordTable"
+                           value="${viewingRecordSummaryController.records}" var="record"
+                           class="table table-hover" headerClass="tableHeader">
+                <h:column>
+                  <f:facet name="header">
+                    <h:outputText value="${bundle['label.date']}"/>
+                  </f:facet>
+                  <h:form id="record" prependId="false">
+                    <h:commandLink id="detail"
+                                   action="#{viewingRecordDetailController.viewRecordDetail}">
+                      <h:outputText value="${record.date}">
+                        <f:convertDateTime type="date" dateStyle="medium"/>
+                      </h:outputText>
+                      <f:param name="recordId" value="${record.id}"/>
+                    </h:commandLink>
+                  </h:form>
+                </h:column>
+                <h:column>
+                  <f:facet name="header">
+                    <h:outputText value="${bundle['label.symptoms']}"/>
+                  </f:facet>
+                  <h:outputText value="${record.symptoms}"/>
+                </h:column>
+                <h:column>
+                  <f:facet name="header">
+                    <h:outputText value="${bundle['label.physician']}"/>
+                  </f:facet>
+                  <h:outputText value="${record.physician.name.firstName} "/>
+                  <h:outputText value="${record.physician.name.middleName} "/>
+                  <h:outputText value="${record.physician.name.lastName}"/>
+                </h:column>
+              </h:dataTable>
+            </div>
+            <div class="tab-pane fade" id="prescriptions">
+              <h:dataTable id="prescriptionTable"
+                           value="${viewingRecordSummaryController.prescriptions}"
+                           var="prescription" class="table table-hover"
+                           headerClass="tableHeader">
+                <h:column>
+                  <f:facet name="header">
+                    <h:outputText value="${bundle['label.date']}"/>
+                  </f:facet>
+                  <h:outputText value="${prescription.datePrescribed}">
+                    <f:convertDateTime type="date" dateStyle="medium"/>
+                  </h:outputText>
+                </h:column>
+                <h:column>
+                  <f:facet name="header">
+                    <h:outputText value="${bundle['label.drug']}"/>
+                  </f:facet>
+                  <h:outputText value="${prescription.drug.name}"/>
+                </h:column>
+                <h:column>
+                  <f:facet name="header">
+                    <h:outputText value="${bundle['label.dosage']}"/>
+                  </f:facet>
+                  <h:outputText value="${prescription.dosage}"/>
+                </h:column>
+                <h:column>
+                  <f:facet name="header">
+                    <h:outputText value="${bundle['label.frequency']}"/>
+                  </f:facet>
+                  <h:outputText value="${prescription.frequency}"/>
+                </h:column>
+                <h:column>
+                  <f:facet name="header">
+                    <h:outputText value="${bundle['label.refills']}"/>
+                  </f:facet>
+                  <h:outputText value="${prescription.refillsRemaining}"/>
+                </h:column>
+                <h:column>
+                  <f:facet name="header">
+                    <h:outputText value="${bundle['label.instructions']}"/>
+                  </f:facet>
+                  <h:outputText
+                      value="${empty prescription.instructions ? bundle['message.noInstructions'] : prescription.instructions}"/>
+                </h:column>
+              </h:dataTable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ui:define>
+  </ui:composition>
+</f:view>
+
+</html>

@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/template/template-physician.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.recordSummary']}"/>
+  </ui:define>
+
+  <ui:define name="contents">
+
+    <div class="row offset1 span9">
+      <h2>
+        <h:outputText for="firstNameInput"
+                      value="${bundle['text.current.patient']}"/>
+      </h2>
+      <h:panelGrid columns="3" border="0" cellpadding="3" cellspacing="3">
+        <h:outputLabel for="firstNameInput"
+                       value="${bundle['label.firstName']}"/>
+        <h:outputLabel for="middleNameInput"
+                       value="${bundle['label.middleName']}"/>
+        <h:outputLabel for="lastNameInput"
+                       value="${bundle['label.lastName']}"/>
+
+        <h:inputText id="firstNameInput" disabled="true"
+                     value="${viewingRecordSummaryController.patient.name.firstName}"/>
+        <h:inputText id="middleNameInput" disabled="true"
+                     value="${viewingRecordSummaryController.patient.name.middleName}"/>
+        <h:inputText id="lastNameInput" disabled="true"
+                     value="${viewingRecordSummaryController.patient.name.lastName}"/>
+      </h:panelGrid>
+      <br/>
+      <h:form id="upMain" prependId="false">
+        <h:commandButton id="viewPatient"
+                         action="viewPatient?faces-redirect=true"
+                         class="btn btn-inverse pull-right"
+                         value="${bundle['button.view.patient']}"/>
+        <h:outputText value=" "/>
+        <h:commandButton id="createRecord"
+                         action="createRecord?faces-redirect=true"
+                         class="btn btn-inverse pull-right"
+                         value="${bundle['button.newRecord']}"/>
+      </h:form>
+    </div>
+
+    <hr class="featurette-divider"></hr>
+
+    <div class="row">
+      <div class="offset1 span10">
+        <ul id="myTab" class="nav nav-tabs">
+          <li class="active"><a href="#records" data-toggle="tab">${bundle['label.records']}</a></li>
+          <li><a href="#prescriptions" data-toggle="tab">${bundle['label.prescriptions']}</a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+          <div class="tab-pane fade in active" id="records">
+            <h:dataTable id="recordTable"
+                         value="#{viewingRecordSummaryController.recordSummary.summarizedRecords}"
+                         var="summarizedRecord" class="table table-hover"
+                         headerClass="tableHeader">
+              <h:column>
+                <f:facet name="header">
+                  <h:outputText value="${bundle['label.date']}"/>
+                </f:facet>
+                <h:form id="record" prependId="false">
+                  <h:commandLink id="detail"
+                                 action="#{viewingRecordDetailController.viewRecordDetail}">
+                    <h:outputText value="${summarizedRecord.date}">
+                      <f:convertDateTime type="date" dateStyle="medium"/>
+                    </h:outputText>
+                    <f:param name="recordId" value="#{summarizedRecord.id}"/>
+                  </h:commandLink>
+                </h:form>
+              </h:column>
+              <h:column>
+                <f:facet name="header">
+                  <h:outputText value="${bundle['label.symptoms']}"/>
+                </f:facet>
+                <h:outputText value="${summarizedRecord.symptoms}"/>
+              </h:column>
+              <h:column>
+                <f:facet name="header">
+                  <h:outputText value="${bundle['label.physician']}"/>
+                </f:facet>
+                <h:outputText value="${summarizedRecord.physicianName.firstName}"/>
+                <h:outputText value=" "/>
+                <h:outputText value="${summarizedRecord.physicianName.middleName}"/>
+                <h:outputText
+                    value="${empty summarizedRecord.physicianName.middleName ? '' : ' '}"/>
+                <h:outputText value="${summarizedRecord.physicianName.lastName}"/>
+              </h:column>
+            </h:dataTable>
+          </div>
+          <div class="tab-pane fade" id="prescriptions">
+            <h:dataTable id="prescriptionTable"
+                         value="#{viewingRecordSummaryController.recordSummary.prescriptions}"
+                         var="prescription" class="table table-hover"
+                         headerClass="tableHeader">
+              <h:column>
+                <f:facet name="header">
+                  <h:outputText value="${bundle['label.date']}"/>
+                </f:facet>
+                <h:outputText value="${prescription.datePrescribed}">
+                  <f:convertDateTime type="date" dateStyle="medium"/>
+                </h:outputText>
+              </h:column>
+              <h:column>
+                <f:facet name="header">
+                  <h:outputText value="${bundle['label.drug']}"/>
+                </f:facet>
+                <h:outputText value="${prescription.drug.name}"/>
+              </h:column>
+              <h:column>
+                <f:facet name="header">
+                  <h:outputText value="${bundle['label.dosage']}"/>
+                </f:facet>
+                <h:outputText value="${prescription.dosage}"/>
+              </h:column>
+              <h:column>
+                <f:facet name="header">
+                  <h:outputText value="${bundle['label.frequency']}"/>
+                </f:facet>
+                <h:outputText value="${prescription.frequency}"/>
+              </h:column>
+              <h:column>
+                <f:facet name="header">
+                  <h:outputText value="${bundle['label.refills']}"/>
+                </f:facet>
+                <h:outputText value="${prescription.refillsRemaining}"/>
+              </h:column>
+              <h:column>
+                <f:facet name="header">
+                  <h:outputText value="${bundle['label.instructions']}"/>
+                </f:facet>
+                <h:outputText
+                    value="${empty prescription.instructions ? 'No instructions' : prescription.instructions}"/>
+              </h:column>
+            </h:dataTable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+
+</html>

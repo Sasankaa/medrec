@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/template/template-physician.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.physicianHome']}"/>
+  </ui:define>
+
+  <ui:define name="contents">
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <h:outputText value="${bundle['text.loginSuccessfully']}"/>
+    </div>
+
+    <div class="row">
+      <div class="span10">
+        <p>
+          <h:outputText value="${bundle['text.physician.searchPatient1']}"/>
+        </p>
+
+        <p>
+          <h:outputText value="${bundle['text.physician.searchPatient2']}"/>
+        </p>
+
+        <p>
+          <h:outputText value="${bundle['text.physician.searchPatient3']}"/>
+        </p>
+      </div>
+    </div>
+
+    <h:form id="search">
+      <h:outputText value="${bundle['label.lastName']}"
+                    styleClass="label label-inverse"/>
+      <h:inputText id="lastNameInput" class="input-medium search-query"
+                   value="#{searchingPatientController.lastName}" maxlength="30">
+        <f:ajax execute="lastNameInput ssnInput" render="resultTable" delay="600"
+                event="keyup" listener="#{searchingPatientController.search}"/>
+      </h:inputText>
+      &nbsp;&nbsp;
+      <h:outputText value="${bundle['label.ssn']}"
+                    styleClass="label label-inverse"/>
+      <h:inputText id="ssnInput" class="input-medium search-query"
+                   value="#{searchingPatientController.ssn}" maxlength="9">
+        <f:ajax execute="lastNameInput ssnInput" render="resultTable" delay="600"
+                event="keyup" listener="#{searchingPatientController.search}"/>
+      </h:inputText>
+
+      <a class="btn btn-default" data-toggle="modal" href="#presetModal">
+        <h:outputText value="${bundle['label.preset']}"/>
+      </a>
+
+
+      <div id="presetModal" class="modal hide fade">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3>
+            <h:outputText value="${bundle['label.preset']}"/>
+          </h3>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <tr>
+              <td><b>Username</b></td>
+              <td><b>Last Name</b></td>
+              <td><b>SSN</b></td>
+            </tr>
+            <tr>
+              <td>fred@golf.com</td>
+              <td>Winner</td>
+              <td>123456789</td>
+            </tr>
+            <tr>
+              <td>larry@bball.com</td>
+              <td>Parrot</td>
+              <td>777777777</td>
+            </tr>
+            <tr>
+              <td>page@fish.com</td>
+              <td>Trout</td>
+              <td>888888888</td>
+            </tr>
+            <tr>
+              <td>volley@ball.com</td>
+              <td>Spiker</td>
+              <td>333333333</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+
+      <hr class="featurette-divider"></hr>
+
+      <h:dataTable id="resultTable"
+                   value="#{searchingPatientController.patients}" var="patient"
+                   class="table table-hover">
+        <h:column>
+          <f:facet name="header">
+            <h:outputText value="${bundle['label.lastName']}"/>
+          </f:facet>
+          <h:commandLink id="patient"
+                         action="viewRecordSummary"
+                         value="#{patient.name.lastName}">
+            <f:param name="patientId" value="#{patient.id}"/>
+            <f:param name="patientFirstName" value="#{patient.name.firstName}"/>
+            <f:param name="patientMiddleName"
+                     value="#{patient.name.middleName}"/>
+            <f:param name="patientLastName" value="#{patient.name.lastName}"/>
+          </h:commandLink>
+        </h:column>
+        <h:column>
+          <f:facet name="header">
+            <h:outputText value="${bundle['label.firstName']}"/>
+          </f:facet>
+          <h:outputText value="#{patient.name.firstName}"/>
+        </h:column>
+        <h:column>
+          <f:facet name="header">
+            <h:outputText value="${bundle['label.middleName']}"/>
+          </f:facet>
+          <h:outputText value="#{patient.name.middleName}"/>
+        </h:column>
+        <h:column>
+          <f:facet name="header">
+            <h:outputText value="${bundle['label.dob']}"/>
+          </f:facet>
+          <h:outputText value="#{patient.dob}">
+            <f:convertDateTime type="date" dateStyle="medium"/>
+          </h:outputText>
+        </h:column>
+        <h:column>
+          <f:facet name="header">
+            <h:outputText value="${bundle['label.ssn']}"/>
+          </f:facet>
+          <h:outputText value="#{patient.ssn}"/>
+        </h:column>
+      </h:dataTable>
+    </h:form>
+  </ui:define>
+</ui:composition>
+
+</html>

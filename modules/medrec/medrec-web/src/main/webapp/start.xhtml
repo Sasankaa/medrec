@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:body>
+<f:view contracts="#{initParam['contract.name']}">
+  <ui:composition template="/template/template-index.xhtml">
+    <ui:define name="top">
+      <div id="myCarousel" class="carousel">
+        <div class="carousel-inner">
+          <div class="item active">
+            <img id="welcome-jpg"/>
+
+            <div class="container">
+              <div class="carousel-caption">
+                <h1>
+                  Welcome to Avitek&#153; Medical Records World<br></br>
+                </h1>
+
+                <p>Avitek Medical Records (or MedRec) is a WebLogic Server
+                  sample application suite that demonstrates all aspects of the
+                  Java Platform, Enterprise Edition (Java EE). MedRec is designed
+                  as an educational tool for all levels of Java EE developers. It
+                  showcases the use of each Java EE component, and illustrates
+                  best-practice design patterns for component interaction and
+                  client development. MedRec also illustrates best practices for
+                  developing and deploying applications with WebLogic Server.</p>
+                <a class="btn btn-large btn-primary" href="index.xhtml" target="_blank">Getting
+                  Started!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ui:define>
+
+    <ui:define name="contents">
+
+      <div class="row">
+        <div class="span6">
+          <h2>The MedRec User Type</h2>
+
+          <p>To begin using MedRec, click the <strong>Start Using MedRec</strong> button
+            below. From there, you can begin by registering as a new patient,
+            or you can log in using one of the previously defined roles listed
+            below.</p>
+
+          <p>The administration username and password are the ones you
+            entered when creating your Weblogic Server samples domains. Use this username
+            when logging into the WebLogic Server Administration Console.</p>
+
+          <ul>
+            <li><strong>Patient</strong>&nbsp;-&nbsp;The Patient
+              application allows patients to log in, edit their profile
+              information, or request that their profile be added to the
+              system. Patients can also view prior medical records of visits
+              with their physician.
+            </li>
+            <li><strong>Admin</strong>&nbsp;-&nbsp;The Admin application
+              allows an administrator to approve or deny new patient profile
+              requests.
+            </li>
+            <li><strong>Physician</strong>&nbsp;-&nbsp;The Physician
+              application allows physicians and nurses to log in, search and
+              access patient profiles, create and review patient medical
+              records, and prescribe drug to patients.
+            </li>
+          </ul>
+          <p>
+            <a class="btn btn-primary" href="index.xhtml" target="_blank">Start using
+              Medrec »</a>
+          </p>
+        </div>
+        <div class="span6">
+          <h2>Documentation</h2>
+
+          <p>Avitek Medical Records (or MedRec) is a comprehensive sample
+            application that demonstrates how to use Oracle WebLogic Server
+            and Java EE features together in a real-world Java EE application
+            suite. In addition to providing extensive code examples for
+            developing Java EE applications, Avitek Medical Records helps you
+            to understand the Oracle WebLogic Server development environment
+            and how to use that environment to build your own applications and
+            modules. If you are already familiar with Oracle WebLogic Server
+            or basic Java EE programming, or if you are interested in using
+            Oracle WebLogic Server development tools, start with the Avitek
+            Medical Records application and documentation.</p>
+
+          <p>
+            <a class="btn btn-primary" href="/docs/server/medrec/docs/introduction.html"
+               target="_blank">View details »</a>
+          </p>
+        </div>
+      </div>
+
+      <hr class="featurette-divider"></hr>
+
+      <div class="row">
+        <div class="span6">
+          <h2>Additional Resources</h2>
+
+          <p>Use these resources to learn more about the Avitek Medical
+            Records sample application:</p>
+          <ul>
+            <li><a href="http://www.oracle.com/technetwork/middleware/weblogic/overview/index.html"
+                target="_blank">WebLogic
+              Server News and Community</a><br></br> You can post and read
+              questions, comments, or suggestions about MedRec in these
+              newsgroups.
+            </li>
+            <li><a href="https://docs.oracle.com/middleware/12213/wls/index.html"
+                   target="_blank">WebLogic Server
+              Documentation</a><br></br> Complete documentation for developers and
+              system administrators.
+            </li>
+          </ul>
+        </div>
+        <div class="span6">
+          <h2>Database Connectivity</h2>
+
+          <p>
+            Data for the MedRec applications is stored in a Derby database
+            installed with WebLogic Server. You can view the Derby data
+            directly by running the Derby SQL scripting tool, <font
+              face="Courier New">ij</font>, located in the <font
+              face="Courier New" class="style1">WL_HOME/common/derby/bin</font>
+            subdirectory of the WebLogic Server installation directory. The
+            URL of the MedRec database is <font face="Courier New"
+                                                class="style1">jdbc:derby://host:1527/medrec</font>; the login is
+            <font face="Courier New" class="style1">medrec/medrec</font>. For
+            more information about Derby and about <font face="Courier New">ij</font>,
+            see the Apache Derby site at <a href="http://db.apache.org/derby/" target="_blank"><font
+              face="Courier New" class="style1">http://db.apache.org/derby/</font></a>.
+          </p>
+        </div>
+      </div>
+    </ui:define>
+    <ui:define name="cssscript">
+      <script>
+        $(function () {
+          $("#welcome-jpg").attr("src", "#{resource['img:welcome.jpg']}");
+        });
+      </script>
+    </ui:define>
+  </ui:composition>
+  </f:view>
+</h:body>
+
+</html>

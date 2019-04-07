@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contracts="#{initParam['contract.name']}">
+<ui:composition
+    template="/template/template-admin.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.statistics']}"/>
+  </ui:define>
+  <ui:define name="cssscript">
+    <link rel="stylesheet" href="#{request.contextPath}/css/jquery-ui.css"/>
+    <script type="text/javascript" src="#{request.contextPath}/js/jquery-ui.js"/>
+    <script type="text/javascript" src="#{request.contextPath}/js/batch.js"/>
+  </ui:define>
+  <ui:define name="contents">
+    <div class="row">
+      <p class="span12">
+        ${bundle['text.admin.statistics.instruction']}
+      </p>
+    </div>
+    <div class="row">
+      <div class="span12">
+        <legend></legend>
+        <span for="startDate" class="label label-default">${bundle['label.startDate']}</span>
+        <input id="startDate" class="datepicker" size="20" value="2008-01-01"
+               maxlength="20" required="true" placeholder="date">
+        </input>
+        <span for="endDate" class="label label-default">${bundle['label.endDate']}</span>
+        <input id="endDate" class="datepicker" size="20"
+               maxlength="20" required="true" placeholder="date">
+        </input>
+        <button id="processBatch" class="btn btn-primary">${bundle['button.statistic']}</button>
+      </div>
+    </div>
+    <br/>
+
+    <div class="row">
+      <div class="span12">
+        <h2 class="text-center">${bundle['text.admin.statistics.batch.title']}</h2>
+        <legend></legend>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>${bundle['text.admin.statistics.th.id']}</th>
+            <th>${bundle['text.admin.statistics.th.startDate']}</th>
+            <th>${bundle['text.admin.statistics.th.endDate']}</th>
+            <th>${bundle['text.admin.statistics.th.record']}</th>
+            <th>${bundle['text.admin.statistics.th.physician']}</th>
+            <th>${bundle['text.admin.statistics.th.drug']}</th>
+          </tr>
+          </thead>
+          <tbody id="result">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+</f:view>
+
+</html>

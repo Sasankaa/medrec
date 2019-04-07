@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contracts="#{initParam['contract.name']}">
+<ui:composition template="/template/template-patient.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="#{bundle['title.patientHome']}"/>
+  </ui:define>
+
+  <ui:define name="contents">
+    <div class="alert alert-success fade in">
+      <button type="button" class="close" data-dismiss="alert">×</button>
+      <h:outputText value="#{bundle['text.loginSuccessfully']}"/>
+    </div>
+    <div class="row">
+      <div class="span4 offset1">
+        <h3>
+          <h:outputText value="#{bundle['text.patient.view.head']}"/>
+        </h3>
+
+        <p>
+          <h:outputText value="#{bundle['text.patient.view.desc']}"/>
+        </p>
+
+        <h:form id="viewRecords">
+          <h:commandButton id="action"
+                           class="btn btn-primary btn-info pull-right"
+                           action="#{viewingRecordSummaryController.viewRecordSummary}"
+                           value="#{bundle['button.action']}"/>
+        </h:form>
+      </div>
+      <div class="span4 offset1">
+        <h3>
+          <h:outputText value="#{bundle['text.chatRoom.head']}"/>
+        </h3>
+
+        <p>
+          <h:outputText value="#{bundle['text.chatRoom.desc']}"/>
+        </p>
+        <a class="btn btn-primary btn-info pull-right"
+           href="#{request.contextPath}/patient/chatRoom.xhtml"> <h:outputText
+            value="#{bundle['button.action']}"/></a>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+</f:view>
+
+</html>

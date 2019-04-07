@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="template/template-index.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.physician.login']}"/>
+  </ui:define>
+
+  <ui:define name="contents">
+    <div class="row">
+      <div class="span4 offset1">
+        <br/>
+        <h:form id="physicianLogin">
+          <h:panelGrid columns="2" border="0" cellpadding="5" cellspacing="3">
+            <h:outputLabel for="usernameInput">
+              <h:outputText value="${bundle['label.email']}"/>
+            </h:outputLabel>
+            <h:inputText id="usernameInput"
+                         value="#{authenticationController.username}" size="20"
+                         maxlength="20" required="true" p:required="true"
+                         p:placeholder="mary@md.com" p:autofocus="true">
+            </h:inputText>
+            <h:panelGroup/>
+            <h:message for="usernameInput" styleClass="text-error"/>
+
+            <h:outputLabel for="passwordInput">
+              <h:outputText value="${bundle['label.password']}"/>
+            </h:outputLabel>
+            <h:inputSecret id="passwordInput"
+                           value="#{authenticationController.password}" size="20"
+                           maxlength="10" required="true">
+            </h:inputSecret>
+            <h:panelGroup/>
+            <h:message for="passwordInput" styleClass="text-error"/>
+            <h:panelGroup/>
+            <h:commandButton id="action"
+                             class="btn btn-primary"
+                             action="#{authenticationController.login}"
+                             value="${bundle['button.submit']}"/>
+          </h:panelGrid>
+        </h:form>
+      </div>
+      <div class="span4">
+        <h2>
+          <h:outputText value="${bundle['role.physician']}"/>
+        </h2>
+
+        <p>
+          <h:outputText value="${bundle['text.physician.description']}"/>
+        </p>
+
+        <p>
+          <h:outputText value="${bundle['text.physician.preset']}"/>
+        </p>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+
+</html>
+

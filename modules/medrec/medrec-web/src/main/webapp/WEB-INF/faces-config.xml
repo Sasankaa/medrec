@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<faces-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                                http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+              version="2.2">
+
+  <lifecycle>
+    <phase-listener id="cacheControl">com.oracle.medrec.common.web.CacheControlPhaseListener</phase-listener>
+  </lifecycle>
+
+  <application>
+    <locale-config>
+      <default-locale>en</default-locale>
+      <supported-locale>en</supported-locale>
+    </locale-config>
+    <message-bundle>LocalizationResources</message-bundle>
+  </application>
+
+</faces-config>

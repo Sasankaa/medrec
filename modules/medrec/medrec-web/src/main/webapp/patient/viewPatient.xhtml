@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contracts="#{initParam['contract.name']}">
+<ui:composition template="/template/template-patient.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.profile']}"/>
+  </ui:define>
+  <ui:define name="head"></ui:define>
+  <ui:define name="cssscript">
+    <link rel="stylesheet"
+          href="#{request.contextPath}/css/jquery-ui.css"/>
+    <script src="#{request.contextPath}/js/jquery-ui.js"></script>
+    <script>
+      $(function () {
+        $(".datepicker").datepicker({
+          changeMonth: true,
+          changeYear: true,
+          dateFormat: "M d, yy"
+        });
+      });
+    </script>
+  </ui:define>
+
+  <ui:define name="contents">
+    <div class="row">
+      <div class="span4">
+        <h3>
+          <h:outputText value="${bundle['text.patient.profile.head']}"/>
+        </h3>
+
+        <p>
+          <h:outputText value="${bundle['text.patient.profile.desc']}"/>
+        </p>
+      </div>
+      <div class="span8">
+        <h:form id="profile">
+          <fieldset>
+            <legend>
+              <h:outputText
+                  value="${bundle['text.patient.new.form.user.legend']}"/>
+            </legend>
+            <h:panelGrid columns="2" border="0" cellpadding="5"
+                         cellspacing="3">
+              <h:outputLabel for="emailInput" value="${bundle['label.email']}"/>
+              <h:inputText id="emailInput" disabled="true"
+                           value="#{viewingPatientController.patient.email}"/>
+            </h:panelGrid>
+
+            <fieldset>
+              <legend>
+                <h:outputText
+                    value="${bundle['text.patient.new.form.name.legend']}"/>
+              </legend>
+              <h:panelGrid columns="3" border="0" cellpadding="3"
+                           cellspacing="3">
+                <h:outputLabel for="firstNameInput"
+                               value="${bundle['label.firstName']}"/>
+                <h:outputLabel for="middleNameInput"
+                               value="${bundle['label.middleName']}"/>
+                <h:outputLabel for="lastNameInput"
+                               value="${bundle['label.lastName']}"/>
+
+                <h:inputText id="firstNameInput"
+                             value="#{viewingPatientController.patient.name.firstName}"
+                             size="20" maxlength="20"/>
+                <h:inputText id="middleNameInput"
+                             value="#{viewingPatientController.patient.name.middleName}"
+                             size="20" maxlength="20"/>
+                <h:inputText id="lastNameInput"
+                             value="#{viewingPatientController.patient.name.lastName}"
+                             size="20" maxlength="20"/>
+
+                <h:message for="firstNameInput" styleClass="text-error"/>
+                <h:message for="middleNameInput" styleClass="text-error"/>
+                <h:message for="lastNameInput" styleClass="text-error"/>
+              </h:panelGrid>
+            </fieldset>
+
+            <fieldset>
+              <legend>
+                <h:outputText
+                    value="${bundle['text.patient.new.form.personal.legend']}"/>
+              </legend>
+              <h:panelGrid columns="3" border="0" cellpadding="5"
+                           cellspacing="3">
+                <h:outputLabel for="genderInput"
+                               value="${bundle['label.gender']}"/>
+                <h:selectOneMenu id="genderInput"
+                                 value="#{viewingPatientController.patient.gender}"
+                                 required="true">
+                  <f:selectItem itemValue="MALE"
+                                itemLabel="${bundle['label.male']}"/>
+                  <f:selectItem itemValue="FEMALE"
+                                itemLabel="${bundle['label.female']}"/>
+                </h:selectOneMenu>
+                <h:message for="genderInput" styleClass="text-error"/>
+
+                <h:outputLabel for="dobInput" value="${bundle['label.dob']}"/>
+                <h:inputText id="dobInput" class="datepicker"
+                             value="#{viewingPatientController.patient.dob}" size="20"
+                             maxlength="20">
+                  <f:convertDateTime type="date" dateStyle="medium"/>
+                </h:inputText>
+                <h:message for="dobInput" styleClass="text-error"/>
+
+                <h:outputLabel for="ssnInput" value="${bundle['label.ssn']}"/>
+                <h:inputText id="ssnInput"
+                             value="#{viewingPatientController.patient.ssn}" size="9"
+                             maxlength="9"/>
+                <h:message for="ssnInput" styleClass="text-error"/>
+
+                <h:outputLabel for="phoneInput" value="${bundle['label.phone']}"/>
+                <h:inputText id="phoneInput"
+                             value="#{viewingPatientController.patient.phone}" size="12"
+                             maxlength="12"/>
+                <h:message for="phoneInput" styleClass="text-error"/>
+              </h:panelGrid>
+            </fieldset>
+
+            <fieldset>
+              <legend>
+                <h:outputText
+                    value="${bundle['text.patient.new.form.address.legend']}"/>
+              </legend>
+              <h:panelGrid columns="3" border="0" cellpadding="5"
+                           cellspacing="3">
+                <h:outputLabel for="streetInput"
+                               value="${bundle['label.street']}"/>
+                <h:inputText id="streetInput"
+                             value="#{viewingPatientController.patient.address.street1}"
+                             size="60" maxlength="60"/>
+                <h:message for="streetInput" styleClass="text-error"/>
+
+                <h:outputLabel for="street2Input" value=""/>
+                <h:inputText id="street2Input"
+                             value="#{viewingPatientController.patient.address.street2}"
+                             size="60" maxlength="60"/>
+                <h:message for="street2Input" styleClass="text-error"/>
+
+                <h:outputLabel for="cityInput" value="${bundle['label.city']}"/>
+                <h:inputText id="cityInput"
+                             value="#{viewingPatientController.patient.address.city}"
+                             size="30" maxlength="60"/>
+                <h:message for="cityInput" styleClass="text-error"/>
+
+                <h:outputLabel for="stateInput" value="${bundle['label.state']}"/>
+                <h:selectOneMenu id="stateInput"
+                                 value="#{viewingPatientController.patient.address.state}">
+                  <f:selectItems value="#{stateInfoController.states}"/>
+                </h:selectOneMenu>
+                <h:message for="stateInput" styleClass="text-error"/>
+
+                <h:outputLabel for="zipInput" value="${bundle['label.zip']}"/>
+                <h:inputText id="zipInput"
+                             value="#{viewingPatientController.patient.address.zip}"
+                             size="10" maxlength="10"/>
+                <h:message for="zipInput" styleClass="text-error"/>
+
+                <h:outputLabel for="countryInput"
+                               value="${bundle['label.country']}"/>
+                <h:inputText id="countryInput"
+                             value="#{viewingPatientController.patient.address.country}"
+                             size="30" maxlength="60"/>
+                <h:message for="countryInput" styleClass="text-error"/>
+              </h:panelGrid>
+            </fieldset>
+
+            <fieldset>
+              <legend></legend>
+              <h:commandButton id="action"
+                               class="btn btn-primary btn-warning"
+                               action="#{viewingPatientController.updatePatient}"
+                               value="${bundle['button.save']}"/>
+            </fieldset>
+          </fieldset>
+        </h:form>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+</f:view>
+
+</html>

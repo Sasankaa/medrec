@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contracts="#{initParam['contract.name']}">
+<ui:composition
+    template="/template/template-admin.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.viewRegisteredPatient']}"/>
+  </ui:define>
+
+  <ui:define name="contents">
+    <div class="row">
+      <div class="span4">
+        <h3>
+          <h:outputText value="${bundle['text.admin.patientProfile.head']}"/>
+        </h3>
+
+        <p>
+          <h:outputText value="${bundle['text.admin.patientProfile.desc']}"/>
+        </p>
+      </div>
+
+      <div class="span8">
+        <h:form id="profile">
+          <fieldset>
+            <legend>
+              <h:outputText
+                  value="${bundle['text.patient.new.form.user.legend']}"/>
+            </legend>
+            <h:panelGrid columns="2" border="0" cellpadding="5"
+                         cellspacing="3">
+              <h:outputText value="${bundle['label.username']}"/>
+              <h:inputText id="username" readonly="true"
+                           value="${approvingNewlyRegisteredPatientController.patient.username}"/>
+
+              <h:outputText value="${bundle['label.email']}"/>
+              <h:inputText id="email" readonly="true"
+                           value="${approvingNewlyRegisteredPatientController.patient.email}"/>
+            </h:panelGrid>
+
+            <fieldset>
+              <legend>
+                <h:outputText
+                    value="${bundle['text.patient.new.form.name.legend']}"/>
+              </legend>
+              <h:panelGrid columns="3" border="0" cellpadding="3"
+                           cellspacing="3">
+                <h:outputLabel for="firstNameInput"
+                               value="${bundle['label.firstName']}"/>
+                <h:outputLabel for="middleNameInput"
+                               value="${bundle['label.middleName']}"/>
+                <h:outputLabel for="lastNameInput"
+                               value="${bundle['label.lastName']}"/>
+
+                <h:inputText readonly="true" id="firstNameInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.name.firstName}"/>
+                <h:inputText readonly="true" id="middleNameInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.name.middleName}"/>
+                <h:inputText readonly="true" id="lastNameInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.name.lastName}"/>
+              </h:panelGrid>
+            </fieldset>
+
+            <fieldset>
+              <legend>
+                <h:outputText
+                    value="${bundle['text.patient.new.form.personal.legend']}"/>
+              </legend>
+              <h:panelGrid columns="2" border="0" cellpadding="5"
+                           cellspacing="3">
+                <h:outputLabel for="genderInput"
+                               value="${bundle['label.gender']}"/>
+                <h:inputText readonly="true" id="genderInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.gender}"/>
+
+                <h:outputLabel for="dobInput" value="${bundle['label.dob']}"/>
+                <h:inputText readonly="true" id="dobInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.dob}">
+                  <f:convertDateTime type="date" dateStyle="medium"/>
+                </h:inputText>
+
+                <h:outputLabel for="ssnInput" value="${bundle['label.ssn']}"/>
+                <h:inputText readonly="true" id="ssnInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.ssn}"/>
+
+                <h:outputLabel for="phoneInput" value="${bundle['label.phone']}"/>
+                <h:inputText readonly="true" id="phoneInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.phone}"/>
+              </h:panelGrid>
+            </fieldset>
+
+            <fieldset>
+              <legend>
+                <h:outputText
+                    value="${bundle['text.patient.new.form.address.legend']}"/>
+              </legend>
+              <h:panelGrid columns="2" border="0" cellpadding="5"
+                           cellspacing="3">
+                <h:outputLabel for="streetInput"
+                               value="${bundle['label.street']}"/>
+                <h:inputText readonly="true" id="streetInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.address.street1}"/>
+
+                <h:outputLabel for="street2Input" value=""/>
+                <h:inputText readonly="true" id="street2Input"
+                             value="${approvingNewlyRegisteredPatientController.patient.address.street2}"/>
+
+                <h:outputLabel for="cityInput" value="${bundle['label.city']}"/>
+                <h:inputText readonly="true" id="cityInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.address.city}"/>
+
+                <h:outputLabel for="stateInput" value="${bundle['label.state']}"/>
+                <h:inputText readonly="true" id="stateInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.address.state}"/>
+
+                <h:outputLabel for="zipInput" value="${bundle['label.zip']}"/>
+                <h:inputText readonly="true" id="zipInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.address.zip}"/>
+
+                <h:outputLabel for="countryInput"
+                               value="${bundle['label.country']}"/>
+                <h:inputText readonly="true" id="countryInput"
+                             value="${approvingNewlyRegisteredPatientController.patient.address.country}"/>
+              </h:panelGrid>
+            </fieldset>
+
+            <fieldset>
+              <legend></legend>
+              <h:inputHidden id="id" value="#{approvingNewlyRegisteredPatientController.patientId}"/>
+              <h:commandButton id="approve"
+                               class="btn btn-success"
+                               action="#{approvingNewlyRegisteredPatientController.approvePatient}"
+                               value="${bundle['button.approve']}"/>
+              <h:outputText value=" "/>
+              <h:commandButton id="deny"
+                               class="btn btn-warning"
+                               action="#{approvingNewlyRegisteredPatientController.denyPatient}"
+                               value="${bundle['button.deny']}"/>
+            </fieldset>
+          </fieldset>
+        </h:form>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+</f:view>
+
+</html>

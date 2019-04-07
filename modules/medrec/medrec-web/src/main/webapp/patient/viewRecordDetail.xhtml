@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contracts="#{initParam['contract.name']}">
+<ui:composition template="/template/template-patient.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.recordDetail']}"/>
+  </ui:define>
+
+  <ui:define name="contents">
+    <div class="offset1">
+      <h:form id="navigation" prependId="false">
+        <h:commandLink id="backtoSummary"
+                       action="viewRecordSummary"
+                       value="${bundle['label.viewRecordSummary']}"/>
+        <h:outputText value=" >> "/>
+        <h:outputText value="${bundle['label.viewRecordDetail']}"/>
+      </h:form>
+
+      <h:panelGrid id="recordDetailPanel" columns="2" border="0"
+                   cellpadding="10" cellspacing="10">
+
+        <h:outputText value="${bundle['label.date']}" styleClass="label label-info"/>
+        <h:outputText value="#{viewingRecordDetailController.record.date}">
+          <f:convertDateTime type="date" dateStyle="medium"/>
+        </h:outputText>
+
+        <h:outputText value="${bundle['label.symptoms']}" styleClass="label label-info"/>
+        <h:outputText
+            value="#{viewingRecordDetailController.record.symptoms}"/>
+
+        <h:outputText value="${bundle['label.vitalSigns']}"
+                      styleClass="label label-info"/>
+        <h:panelGrid id="vitalSignsPanel" columns="2" class="table span4">
+
+          <h:outputText value="${bundle['label.temperature']}"/>
+          <h:outputText
+              value="#{viewingRecordDetailController.record.vitalSigns.temperature}"/>
+          <h:outputText value="${bundle['label.weight']}"/>
+          <h:outputText
+              value="#{viewingRecordDetailController.record.vitalSigns.weight}"/>
+
+          <h:outputText value="${bundle['label.pulse']}"/>
+          <h:outputText
+              value="#{viewingRecordDetailController.record.vitalSigns.pulse}"/>
+          <h:outputText value="${bundle['label.height']}"/>
+          <h:outputText
+              value="#{viewingRecordDetailController.record.vitalSigns.height}"/>
+
+          <h:outputText value="${bundle['label.diastolicBloodPressure']}"/>
+          <h:outputText
+              value="#{viewingRecordDetailController.record.vitalSigns.diastolicBloodPressure}"/>
+          <h:outputText value="${bundle['label.systolicBloodPressure']}"/>
+          <h:outputText
+              value="#{viewingRecordDetailController.record.vitalSigns.systolicBloodPressure}"/>
+        </h:panelGrid>
+
+        <h:outputText value="${bundle['label.notes']}" styleClass="label label-info"/>
+        <h:outputText value="#{viewingRecordDetailController.record.notes}"/>
+
+        <h:outputText value="${bundle['label.diagnosis']}"
+                      styleClass="label label-info"/>
+        <h:outputText
+            value="#{viewingRecordDetailController.record.diagnosis}"/>
+
+        <h:outputText value="${bundle['label.prescriptions']}"
+                      styleClass="label label-info"/>
+        <h:dataTable
+            value="#{viewingRecordDetailController.record.prescriptions}"
+            var="prescription" class="table span8"
+            headerClass="tableHeader">
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.date']}"/>
+            </f:facet>
+            <h:outputText value="#{prescription.datePrescribed}">
+              <f:convertDateTime type="date" dateStyle="medium"/>
+            </h:outputText>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.drug']}"/>
+            </f:facet>
+            <h:outputText value="#{prescription.drug.name}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.dosage']}"/>
+            </f:facet>
+            <h:outputText value="#{prescription.dosage}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.frequency']}"/>
+            </f:facet>
+            <h:outputText value="#{prescription.frequency}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.refills']}"/>
+            </f:facet>
+            <h:outputText value="#{prescription.refillsRemaining}"/>
+          </h:column>
+          <h:column>
+            <f:facet name="header">
+              <h:outputText value="${bundle['label.instructions']}"/>
+            </f:facet>
+            <h:outputText
+                value="#{empty prescription.instructions ? bundle['message.noInstructions'] : prescription.instructions}"/>
+          </h:column>
+        </h:dataTable>
+      </h:panelGrid>
+    </div>
+  </ui:define>
+</ui:composition>
+</f:view>
+
+</html>

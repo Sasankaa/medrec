@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+    >
+
+<ui:composition template="/template/template-physician.xhtml">
+
+  <ui:define name="title">
+    <h:outputText value="${bundle['title.recordSummary']}"/>
+  </ui:define>
+
+  <ui:define name="contents">
+    <div class="alert alert-success">
+      <h:outputText value="${bundle['message.createdRecordSuccessfully']}"/>
+    </div>
+    <div class="offset1">
+      <h:form id="navigation" prependId="false">
+        <h:commandLink id="backtoSummary"
+                       action="viewRecordSummary"
+                       value="${bundle['label.viewRecordSummary']}"/>
+        <h:outputText value=" >> "/>
+        <h:outputText value="${bundle['label.viewRecordCreationResult']}"/>
+      </h:form>
+    </div>
+  </ui:define>
+</ui:composition>
+
+</html>
