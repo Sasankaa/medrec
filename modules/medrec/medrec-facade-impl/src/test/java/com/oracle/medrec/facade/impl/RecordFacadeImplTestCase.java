@@ -6,6 +6,7 @@ import com.oracle.medrec.facade.model.RecordToCreate;
 import com.oracle.medrec.model.Physician;
 import com.oracle.medrec.model.Record;
 import com.oracle.medrec.service.RecordService;
+
 import junit.framework.JUnit4TestAdapter;
 
 import static org.easymock.EasyMock.createMock;
@@ -61,9 +62,13 @@ public class RecordFacadeImplTestCase {
   @Test
   public void testGetRecordSummaryByPatientId() {
     Record r1 = new Record();
-    r1.setPhysician(new Physician());
+    Physician physician = new Physician();
+    physician.setUsername("joe.smith");
+    physician.setEmail("joe@smith");
+    physician.setPassword("password");
+    r1.setPhysician(physician);
     Record r2 = new Record();
-    r2.setPhysician(new Physician());
+    r2.setPhysician(physician);
     List<Record> records = Arrays.asList(r1, r2);
     rs.getRecordsByPatientId(1L);
     expectLastCall().andReturn(records);

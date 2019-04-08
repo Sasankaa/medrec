@@ -22,18 +22,22 @@ public class JaxWsPatientFacadeBroker implements JaxWsPatientFacade {
   private PatientFacade patientFacade;
 
   public Patient getPatient(Long patientId) {
+	  System.out.println("SYSTEMOUT:" +  JaxWsPatientFacadeBroker.class.getName() + " - getPatient");
     return patientFacade.getPatient(patientId);
   }
 
   public FoundPatient findApprovedPatientBySsn(String ssn) {
+	  System.out.println("SYSTEMOUT:" +  JaxWsPatientFacadeBroker.class.getName() + " - findApprovedPatientBySsn");
     return patientFacade.findApprovedPatientBySsn(ssn);
   }
 
   public List<FoundPatient> findApprovedPatientsByLastName(String lastName) {
+	  System.out.println("SYSTEMOUT:" +  JaxWsPatientFacadeBroker.class.getName() + " - findApprovedPatientsByLastName");
     return patientFacade.findApprovedPatientsByLastName(lastName);
   }
 
   public List<FoundPatient> fuzzyFindApprovedPatientsByLastNameAndSsn(String lastName, String ssn) {
+	  System.out.println("SYSTEMOUT:" +  JaxWsPatientFacadeBroker.class.getName() + " - fuzzyFindApprovedPatientsByLastNameAndSsn");
     return patientFacade.fuzzyFindApprovedPatientsByLastNameAndSsn(lastName, ssn);
   }
 
