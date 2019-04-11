@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2018, 2019 Oracle and/or its affiliates. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,190 +16,139 @@
 
 package io.helidon.medrec.patient;
 
-import java.net.URI;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonBuilderFactory;
 import javax.json.JsonObject;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.PATCH;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
-import com.oracle.medrec.model.Patient;
-import com.oracle.medrec.service.DuplicateSsnException;
-import com.oracle.medrec.service.DuplicateUsernameException;
+import io.helidon.medrec.model.Patient;
 
 /**
+ * A simple JAX-RS resource to greet you. Examples:
  *
- * The patients are created, upated, deleted, and queired.
+ * Get default greeting message:
+ * curl -X GET http://localhost:8080/greet
  *
+ * Get greeting message for Joe:
+ * curl -X GET http://localhost:8080/greet/Joe
+ *
+ * Change greeting
+ * curl -X PUT -H "Content-Type: application/json" -d '{"greeting" : "Howdy"}' http://localhost:8080/greet/greeting
+ *
+ * The message is returned as a JSON object.
  */
-@Path("/patients")
+@Path("/patient")
 @RequestScoped
 public class PatientResource {
-    private static final Logger logger = Logger.getLogger(PatientResource.class.getName());
+
+    private static final JsonBuilderFactory JSON = Json.createBuilderFactory(Collections.emptyMap());
 
     /**
-     * The patient provider.
+     * The greeting message provider.
      */
-    private final PatientProvider patientProvider;
+    private final PatientProvider greetingProvider;
 
-    public PatientResource() {
-        this.patientProvider = new PatientProvider();
+    /**
+     * Using constructor injection to get a configuration property.
+     * By default this gets the value from META-INF/microprofile-config
+     *
+     * @param greetingConfig the configured greeting message
+     */
+    @Inject
+    public PatientResource(PatientProvider greetingConfig) {
+        this.greetingProvider = greetingConfig;
     }
 
     /**
-     * Return selected patients.
+     * Return a wordly greeting message.
      *
      * @return {@link JsonObject}
      */
+    @SuppressWarnings("checkstyle:designforextension")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPatients(@Context UriInfo uriInfo) {
-
-        String lastName = uriInfo.getQueryParameters().getFirst("lastName");
-        String ssn = uriInfo.getQueryParameters().getFirst("ssn");
-        logger.log(Level.FINEST, () -> "lastName: " + lastName);
-        logger.log(Level.FINEST, () -> "ssn: " + ssn);
-        List<Patient> patients = new ArrayList<>();
-
-        if (lastName == null) {
-            patients.add(patientProvider.findApprovedPatientBySsn(ssn));
-        } else if (ssn == null) {
-            patients.addAll(patientProvider.findApprovedPatientsByLastName(lastName));
-        } else {
-            patients.addAll(patientProvider.fuzzyFindApprovedPatientsByLastNameAndSsn(lastName, ssn));
-        }
-
-        logger.log(Level.FINEST, () -> "List of patients: " + patients.toString());
-
-        return Response.ok(patients).type(MediaType.APPLICATION_JSON).header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                .header("Access-Control-Expose-Headers", "*").build();
+    public JsonObject getDefaultMessage() {
+        return createResponse("World");
     }
 
     /**
-     * Return a patient.
+     * Return a greeting message using the name that was provided.
      *
+     * @param name the name to greet
      * @return {@link JsonObject}
      */
+    @SuppressWarnings("checkstyle:designforextension")
+    @Path("/{name}")
     @GET
-    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Patient getPatientById(@PathParam("id") String patientId) {
-        logger.log(Level.FINEST, () -> "id: " + patientId);
-        return patientProvider.getPatient(Long.valueOf(patientId));
+    public JsonObject getMessage(@PathParam("name") String name) {
+        return createResponse(name);
     }
 
     /**
-     * Return selected patients.
+     * Set the greeting to use in future messages.
      *
-     * @return {@link JsonObject}
-     */
-    @GET
-    @Path("/registered")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Patient> getNewlyRegisteredPatients() {
-        return patientProvider.getNewlyRegisteredPatients();
-    }
-
-    /**
-     * Return selected patients.
-     *
-     * @return {@link JsonObject}
-     */
-    @POST
-    @Path("/authenticate-and-return")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAuthenticateAndReturnPatient(UserCredentials credentials) {
-        String username = credentials.getUsername();
-        String password = credentials.getPassword();
-        logger.log(Level.FINEST, () -> "username: " + username);
-        logger.log(Level.FINEST, () -> "password: " + password);
-        return Response.ok(patientProvider.authenticateAndReturnPatient(username, password)).build();
-
-    }
-
-    /**
-     * Return response.
-     *
+     * @param jsonObject JSON containing the new greeting
      * @return {@link Response}
      */
-    @PATCH
-    @Path("/{id}/status")
-    public Response approvePatient(@PathParam("id") String patientId, String status) {
-        logger.log(Level.FINEST, () -> "id: " + patientId);
-        logger.log(Level.FINEST, () -> "status: " + status);
-        try {
-            if (Patient.Status.APPROVED.toString().equals(status)) {
-                patientProvider.approvePatient(Long.valueOf(patientId));
-            } else {
-                patientProvider.denyPatient(Long.valueOf(patientId));
-            }
-        } catch (Exception e) {
-            return Response.serverError().type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
-        }
-        return Response.ok().build();
-    }
-
+    @SuppressWarnings("checkstyle:designforextension")
+    @Path("/greeting")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updatePatient(Patient patient) {
-        logger.log(Level.FINEST, () -> "patient: " + patient);
-        try {
-            return Response.ok(patientProvider.updatePatient(patient)).build();
-        } catch (DuplicateSsnException e) {
-            return Response.status(Response.Status.CONFLICT).entity(patient).build();
-        }
-    }
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateGreeting(JsonObject jsonObject) {
 
-    /**
-     * Create a patient.
-     *
-     * @param patient
-     *                    the patient to create
-     * @return {@link Response}
-     */
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createPatient(Patient patient, @Context UriInfo uriInfo) {
-        try {
-            return Response
-                    .created(new URI(uriInfo.getPath() + "/")) //+ patientProvider.createPatient(patient).toString()))
+        if (!jsonObject.containsKey("greeting")) {
+            JsonObject entity = JSON.createObjectBuilder()
+                    .add("error", "No greeting provided")
                     .build();
-        } catch (Exception e) {
-            return Response.serverError().type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
-        }
-    }
-
-    @POST
-    @Path("/authenticate")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response authenticatePatient(UserCredentials credentials) {
-
-        String username = credentials.getUsername();
-        String password = credentials.getPassword();
-        logger.log(Level.FINEST, () -> "username: " + username);
-        logger.log(Level.FINEST, () -> "password: " + password);
-        if (patientProvider.authenticatePatient(username, password)) {
-            return Response.ok().build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(entity).build();
         }
 
-        return Response.status(Response.Status.UNAUTHORIZED).build();
+        String newGreeting = jsonObject.getString("greeting");
+
+        greetingProvider.setMessage(newGreeting);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
+    private JsonObject createResponse(String who) {
+        String msg = String.format("%s %s!", greetingProvider.getMessage(), who);
+
+        return JSON.createObjectBuilder()
+                .add("message", msg)
+                .build();
+    }
+    
+    private void findApprovedPatientsByLastNameAndSsn(String lastName, String ssn) {
+    	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("MedRecTest");
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Query query = em.createQuery(
+                "SELECT p FROM Patient p WHERE p.ssn LIKE :ssnparameter AND p.name.lastName LIKE :lastnameparameter")
+        			.setParameter("ssnparameter", "%" + (ssn != null && ssn.length() > 0 ? ssn : "") + "%")
+        			.setParameter("lastnameparameter", "%Par%");
+        
+        @SuppressWarnings("unchecked")
+		List<Patient> resultList = query.getResultList();
+        
+        for (Patient patient : resultList) {
+			System.out.println("SYSTEMOUT_HELIDON:" + patient.getUsername() + " / " + patient.getSsn());
+		}
+        em.close();
+    }
 }

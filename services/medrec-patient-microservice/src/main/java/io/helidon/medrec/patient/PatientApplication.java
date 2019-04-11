@@ -16,20 +16,19 @@
 
 package io.helidon.medrec.patient;
 
-import io.helidon.common.CollectionsHelper;
-
 import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
-
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import io.helidon.common.CollectionsHelper;
+
 /**
- * Simple Application.
+ * Simple Application that produces a greeting message.
  */
 @ApplicationScoped
-@ApplicationPath("/api/v1")
+@ApplicationPath("/")
 public class PatientApplication extends Application {
 
     @Override

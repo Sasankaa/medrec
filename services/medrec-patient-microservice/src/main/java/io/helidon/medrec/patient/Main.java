@@ -21,9 +21,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.LogManager;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import io.helidon.medrec.model.Patient;
+import io.helidon.medrec.util.DataImporter;
 import io.helidon.microprofile.server.Server;
 
 /**
@@ -49,25 +58,7 @@ public final class Main {
 		Server server = startServer();
 
 		System.out.println("http://localhost:" + server.port() + "/greet");
-
-		String driver = "org.apache.derby.jdbc.EmbeddedDriver";
-		String protocol = "jdbc:derby:";
-
-		try {
-			Class.forName(driver).newInstance();
-			Connection conn = DriverManager.getConnection(protocol + "patientDB;create=true", new Properties());
-			// Creating a database table
-			Statement sta = conn.createStatement();
-			int count = sta
-					.executeUpdate("CREATE TABLE patient (ID INT, firstname VARCHAR(20)," + " lastname VARCHAR(20))");
-			System.out.println("Table created.");
-			sta.close();
-
-			conn.close();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		test();
 	}
 
 	/**
@@ -88,5 +79,85 @@ public final class Main {
 	private static void setupLogging() throws IOException {
 		// load logging configuration
 		LogManager.getLogManager().readConfiguration(Main.class.getResourceAsStream("/logging.properties"));
+	}
+	
+	private static void test() {
+		
+		String driver = "org.apache.derby.jdbc.EmbeddedDriver";
+		String protocol = "jdbc:derby:";
+		
+		try {
+			Class.forName(driver).newInstance();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		/*
+		try {
+			Class.forName(driver).newInstance();
+			Connection conn = DriverManager.getConnection(protocol + "medrec_test;create=true", new Properties());
+			// Creating a database table
+			Statement sta = conn.createStatement();
+			try {
+				int count = sta
+						.executeUpdate("CREATE TABLE patient (ID INT, firstname VARCHAR(20)," + " lastname VARCHAR(20))");
+				System.out.println("Table created.");
+			} catch (SQLException e) {
+				//Table exists
+				if(e instanceof SQLException && ((SQLException)e).getSQLState().equals("X0Y32")) {
+					System.out.println("Table exists.");
+			        return; // That's OK
+			    } else {
+			    	throw e;
+			    }
+			}
+			
+			sta.close();
+
+			conn.close();
+			
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+		new DataImporter().importData();
+		System.out.println("Data imported");
+		
+		String ssn = "77";
+		String lastname = "Par";
+		
+		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("MedRecTest");
+        EntityManager em = entityManagerFactory.createEntityManager();
+        
+        StringBuffer sbQuery = new StringBuffer("SELECT p FROM Patient p WHERE ");
+        
+        if (ssn != null && ssn.length() > 0) {
+        	sbQuery.append("p.ssn LIKE '%");
+        	sbQuery.append(ssn);
+        	sbQuery.append("%' ");
+        }
+        
+        
+        if (lastname != null && lastname.length() > 0) {
+        	sbQuery.append("p.ssn LIKE '%");
+        	sbQuery.append(lastname);
+        	sbQuery.append("%' ");
+        }
+        
+        
+        Query query = em.createQuery(
+                "SELECT p FROM Patient p WHERE p.ssn LIKE :ssnparameter AND p.name.lastName LIKE :lastnameparameter")
+        			.setParameter("ssnparameter", "%%")
+        			.setParameter("lastnameparameter", "%Par%");
+        List<Patient> resultList = query.getResultList();
+        
+        for (Patient patient : resultList) {
+			System.out.println("SYSTEMOUT_HELIDON:" + patient.getUsername() + " / " + patient.getSsn());
+		}
+        em.close();
+	    
+        
+		
 	}
 }
