@@ -1,14 +1,14 @@
 #!/bin/sh
 
 # Users must set $MW_HOME variable
-if [ -z "$MW_HOME" -o ! -d $MW_HOME -o ]; then
+if [ -z "${MW_HOME}" ] || [ ! -d "${MW_HOME}" ]; then
   echo "ERROR: You must set MW_HOME and it must point to a directory".
   echo "       where an installation of WebLogic exists."
   exit 1;
 fi
 
 # Users must set $JAVA_HOME variable
-if [ -z $JAVA_HOME -o ! -d "${JAVA_HOME}/bin" ]; then
+if [ -z "${JAVA_HOME}" ] || [ ! -d "${JAVA_HOME}/bin" ]; then
   echo "ERROR: You must set JAVA_HOME and point it to a valid location"
   echo "       of where your JDK has been installed"
   exit 1;

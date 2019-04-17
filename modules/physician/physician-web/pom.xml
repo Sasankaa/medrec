@@ -17,5 +17,15 @@
       <artifactId>physician-domain</artifactId>
       <version>2.0</version>
     </dependency>
+    <dependency>
+      <groupId>com.oracle.weblogic.sample.medrec-javaee</groupId>
+      <artifactId>medrec-domain</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.oracle.weblogic.sample.medrec-javaee</groupId>
+      <artifactId>medrec-facade</artifactId>
+      <version>2.0</version>
+    </dependency>
   </dependencies>
 </project>
