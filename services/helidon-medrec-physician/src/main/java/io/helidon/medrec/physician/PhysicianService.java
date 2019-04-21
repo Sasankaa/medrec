@@ -91,6 +91,7 @@ public class PhysicianService implements Service {
 		if (result.length() == 0) {
 			response.status(Http.Status.NO_CONTENT_204);
 		}
+		response.headers().add("Content-type", "application/json");
 		response.send(result);
 	}
 
