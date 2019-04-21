@@ -67,34 +67,12 @@ public class MainTest {
     public void testHelloWorld() throws Exception {
         HttpURLConnection conn;
 
-        conn = getURLConnection("GET","/greet");
+        conn = getURLConnection("GET","/physician");
         Assertions.assertEquals(200, conn.getResponseCode(), "HTTP response1");
         JsonReader jsonReader = JSON.createReader(conn.getInputStream());
         JsonObject jsonObject = jsonReader.readObject();
-        Assertions.assertEquals("Hello World!", jsonObject.getString("message"),
+        Assertions.assertEquals(PhysicianService.class.getName() + "!", jsonObject.getString("message"),
                 "default message");
-
-        conn = getURLConnection("GET", "/greet/Joe");
-        Assertions.assertEquals(200, conn.getResponseCode(), "HTTP response2");
-        jsonReader = JSON.createReader(conn.getInputStream());
-        jsonObject = jsonReader.readObject();
-        Assertions.assertEquals("Hello Joe!", jsonObject.getString("message"),
-                "hello Joe message");
-
-        conn = getURLConnection("PUT", "/greet/greeting");
-        conn.setRequestProperty("Content-Type", "application/json");
-        conn.setDoOutput(true);
-        OutputStream os = conn.getOutputStream();
-        os.write("{\"greeting\" : \"Hola\"}".getBytes());
-        os.close();
-        Assertions.assertEquals(204, conn.getResponseCode(), "HTTP response3");
-
-        conn = getURLConnection("GET", "/greet/Jose");
-        Assertions.assertEquals(200, conn.getResponseCode(), "HTTP response4");
-        jsonReader = JSON.createReader(conn.getInputStream());
-        jsonObject = jsonReader.readObject();
-        Assertions.assertEquals("Hola Jose!", jsonObject.getString("message"),
-                "hola Jose message");
 
         conn = getURLConnection("GET", "/health");
         Assertions.assertEquals(200, conn.getResponseCode(), "HTTP response2");
