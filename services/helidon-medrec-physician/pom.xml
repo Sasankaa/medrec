@@ -199,11 +199,11 @@
 			<groupId>io.helidon.media.jsonp</groupId>
 			<artifactId>helidon-media-jsonp-server</artifactId>
 		</dependency>
-    <dependency>
-      <groupId>com.oracle.weblogic.sample.medrec-javaee</groupId>
-      <artifactId>medrec-domain</artifactId>
-      <version>2.0</version>
-    </dependency>		
+	    <dependency>
+	      <groupId>com.oracle.weblogic.sample.medrec-javaee</groupId>
+	      <artifactId>medrec-domain</artifactId>
+	      <version>2.0</version>
+	    </dependency>		
 	</dependencies>
 
 	<profiles>

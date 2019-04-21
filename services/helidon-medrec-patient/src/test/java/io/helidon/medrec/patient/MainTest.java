@@ -21,15 +21,14 @@ import javax.enterprise.inject.spi.CDI;
 import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import io.helidon.microprofile.server.Server;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import io.helidon.microprofile.server.Server;
 
 class MainTest {
     private static Server server;
@@ -45,33 +44,14 @@ class MainTest {
         Client client = ClientBuilder.newClient();
 
         JsonObject jsonObject = client
-                .target(getConnectionString("/greet"))
+                .target(getConnectionString("/patient"))
                 .request()
                 .get(JsonObject.class);
-        Assertions.assertEquals("Hello World!", jsonObject.getString("message"),
+        Assertions.assertEquals(PatientResource.class.getName() + "!", jsonObject.getString("message"),
                 "default message");
 
-        jsonObject = client
-                .target(getConnectionString("/greet/Joe"))
-                .request()
-                .get(JsonObject.class);
-        Assertions.assertEquals("Hello Joe!", jsonObject.getString("message"),
-                "hello Joe message");
 
         Response r = client
-                .target(getConnectionString("/greet/greeting"))
-                .request()
-                .put(Entity.entity("{\"greeting\" : \"Hola\"}", MediaType.APPLICATION_JSON));
-        Assertions.assertEquals(204, r.getStatus(), "PUT status code");
-
-        jsonObject = client
-                .target(getConnectionString("/greet/Jose"))
-                .request()
-                .get(JsonObject.class);
-        Assertions.assertEquals("Hola Jose!", jsonObject.getString("message"),
-                "hola Jose message");
-
-        r = client
                 .target(getConnectionString("/metrics"))
                 .request()
                 .get();

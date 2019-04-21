@@ -1,13 +1,13 @@
-package io.helidon.medrec.util;
+package io.helidon.medrec.patient.dataimport;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-import io.helidon.medrec.model.Address;
-import io.helidon.medrec.model.Patient;
-import io.helidon.medrec.model.PersonName;
+import com.oracle.medrec.model.Address;
+import com.oracle.medrec.model.Patient;
+import com.oracle.medrec.model.PersonName;
 
 import java.util.Calendar;
 
@@ -19,12 +19,9 @@ import java.util.Calendar;
  */
 public final class DataImporter {
 
-  public static void main(String... args) {
-    new DataImporter().importData();
-  }
 
-  public void importData() {
-    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("MedRecTest");
+  public static void importData() {
+    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PatientServiceEM");
     EntityManager entityManager = entityManagerFactory.createEntityManager();
     EntityTransaction entityTransaction = entityManager.getTransaction();
     entityTransaction.begin();
@@ -48,12 +45,12 @@ public final class DataImporter {
     System.out.println("All the data has been imported successfully!");
   }
 
-  private void cleanData(EntityManager entityManager) {
+  private static void cleanData(EntityManager entityManager) {
     entityManager.createQuery("delete from Patient p").executeUpdate();
     entityManager.flush();
   }
 
-  private void importPatients(EntityManager entityManager) {
+  private static void importPatients(EntityManager entityManager) {
     Patient patient = new Patient();
     patient.setPassword("weblogic");
     Calendar dob = Calendar.getInstance();

@@ -5,22 +5,28 @@
                                http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-  <persistence-unit name="MedRecTest" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="PatientServiceEM" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>io.helidon.medrec.model.Address</class>
-    <class>io.helidon.medrec.model.BaseEntity</class>
-    <class>io.helidon.medrec.model.PersonName</class>
-    <class>io.helidon.medrec.model.Patient</class>
-    <class>io.helidon.medrec.model.RegularUser</class>
-    <class>io.helidon.medrec.model.User</class>
+    <class>com.oracle.medrec.model.Address</class>
+    <class>com.oracle.medrec.model.BaseEntity</class>
+    <class>com.oracle.medrec.model.VersionedEntity</class>
+    <class>com.oracle.medrec.model.PersonName</class>
+    <class>com.oracle.medrec.model.Patient</class>
+    <class>com.oracle.medrec.model.RegularUser</class>
+    <class>com.oracle.medrec.model.User</class>
+    <class>com.oracle.medrec.model.Record</class>
+    <class>com.oracle.medrec.model.Physician</class>
+    <class>com.oracle.medrec.model.Drug</class>
+    <class>com.oracle.medrec.model.Prescription</class>
+
     <properties>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:medrec_DB;create=true"/>
-      <property name="javax.persistence.jdbc.user" value="medrec_test"/>
-      <property name="javax.persistence.jdbc.password" value="medrec_test"/>
+      <property name="javax.persistence.jdbc.user" value="patientservice"/>
+      <property name="javax.persistence.jdbc.password" value="patientservice"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
       <property name="eclipselink.target-database" value="Derby"/>
-      <property name="eclipselink.logging.level" value="ALL"/>
+      <property name="eclipselink.logging.level" value="INFO"/>
       <property name="eclipselink.logging.level.sql" value="ALL"/>
     </properties>
   </persistence-unit>
