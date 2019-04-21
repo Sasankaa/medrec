@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                               http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+  <persistence-unit name="PhysicianService" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.oracle.medrec.model.Physician</class>
+    <class>com.oracle.medrec.model.BaseEntity</class>
+    <class>com.oracle.medrec.model.PersonName</class>
+    <class>com.oracle.medrec.model.RegularUser</class>
+    <class>com.oracle.medrec.model.User</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:medrec_DB;create=true"/>
+      <property name="javax.persistence.jdbc.user" value="medrec_test"/>
+      <property name="javax.persistence.jdbc.password" value="medrec_test"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <property name="eclipselink.target-database" value="Derby"/>
+      <property name="eclipselink.logging.level" value="INFO"/>
+      <property name="eclipselink.logging.level.sql" value="ALL"/>
+    </properties>
+  </persistence-unit>
+</persistence>
