@@ -18,6 +18,7 @@ package io.helidon.medrec.patient;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -36,8 +37,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.jboss.logging.Logger;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oracle.medrec.model.Patient;
@@ -49,7 +48,7 @@ import com.oracle.medrec.model.Patient;
 @RequestScoped
 public class PatientResource {
 
-	private static final Logger LOGGER = Logger.getLogger(PatientResource.class);
+	private static final Logger LOGGER = Logger.getLogger(PatientResource.class.getName());
 
 	private static final JsonBuilderFactory JSON = Json.createBuilderFactory(Collections.emptyMap());
 
@@ -82,7 +81,7 @@ public class PatientResource {
 	 * @param jsonObject JSON containing the new greeting
 	 * @return {@link Response}
 	 *
-	 * 		@SuppressWarnings("checkstyle:designforextension") @Path("/greeting")
+	 * 				@SuppressWarnings("checkstyle:designforextension") @Path("/greeting")
 	 * @PUT
 	 * @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
 	 *                                       public Response
@@ -117,30 +116,32 @@ public class PatientResource {
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PatientServiceEM");
 		EntityManager em = entityManagerFactory.createEntityManager();
 
-		Query query = em.createQuery(
-				"SELECT p FROM Patient p WHERE p.ssn LIKE :ssnparameter AND p.name.lastName LIKE :lastnameparameter")
-				.setParameter("ssnparameter", "%" + ssn + "%")
-				.setParameter("lastnameparameter", "%" + lastName + "%");
+		Query query = em
+				.createQuery(
+						"SELECT p FROM Patient p WHERE p.ssn LIKE :ssnparameter AND p.name.lastName LIKE :lastnameparameter")
+				.setParameter("ssnparameter", "%" + ssn + "%").setParameter("lastnameparameter", "%" + lastName + "%");
 		List<Patient> resultList = query.getResultList();
+		
+		if (resultList.size() == 0) {
+			LOGGER.info("Patient not found");
+			return Response.status(Response.Status.NO_CONTENT).build();
+		}
+
+		resultList.forEach((patient) -> {
+			LOGGER.info("Patient found: " + patient.getUsername() + " / " + patient.getSsn());
+		});
 
 		ObjectMapper objMap = new ObjectMapper();
 		String result = "";
 
-		for (Patient patient : resultList) {
-			LOGGER.info("Patient found: " + patient.getUsername() + " / " + patient.getSsn());
-			try {
-				result = objMap.writeValueAsString(patient);
-				LOGGER.info("Patient JSON result: " + result);
-			} catch (JsonProcessingException e) {
-				LOGGER.warn("Patient Object to JSON error", e);
-				;
-			}
+		try {
+			result = objMap.writeValueAsString(resultList);
+		} catch (JsonProcessingException e) {
+			LOGGER.warning("JSON conversion error");
+			e.printStackTrace();
 		}
 		em.close();
 
-		if (result.length() == 0) {
-			return Response.status(Response.Status.NO_CONTENT).build();
-		}
 		return Response.ok(result).build();
 
 	}
