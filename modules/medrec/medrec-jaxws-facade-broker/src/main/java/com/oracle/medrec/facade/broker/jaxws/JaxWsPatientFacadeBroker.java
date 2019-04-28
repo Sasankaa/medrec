@@ -8,37 +8,42 @@ import com.oracle.medrec.model.Patient;
 import javax.inject.Inject;
 import javax.jws.WebService;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
- * @author Copyright (c) 2007, 2017, Oracle and/or its
- *         affiliates. All rights reserved.
+ * @author Copyright (c) 2007, 2017, Oracle and/or its affiliates. All rights
+ *         reserved.
  */
-@WebService(name = "PatientFacade", endpointInterface = "com.oracle.medrec.facade.JaxWsPatientFacade",
-    portName = "PatientFacadePort", serviceName = "PatientFacadeService",
-    targetNamespace = "http://www.oracle.com/medrec/service/jaxws")
+@WebService(name = "PatientFacade", endpointInterface = "com.oracle.medrec.facade.JaxWsPatientFacade", portName = "PatientFacadePort", serviceName = "PatientFacadeService", targetNamespace = "http://www.oracle.com/medrec/service/jaxws")
 public class JaxWsPatientFacadeBroker implements JaxWsPatientFacade {
 
-  @Inject
-  private PatientFacade patientFacade;
+	Logger LOGGER = Logger.getLogger(JaxWsPatientFacadeBroker.class.getName());
 
-  public Patient getPatient(Long patientId) {
-	  System.out.println("SYSTEMOUT:" +  JaxWsPatientFacadeBroker.class.getName() + " - getPatient");
-    return patientFacade.getPatient(patientId);
-  }
+	@Inject
+	private PatientFacade patientFacade;
 
-  public FoundPatient findApprovedPatientBySsn(String ssn) {
-	  System.out.println("SYSTEMOUT:" +  JaxWsPatientFacadeBroker.class.getName() + " - findApprovedPatientBySsn");
-    return patientFacade.findApprovedPatientBySsn(ssn);
-  }
+	public Patient getPatient(Long patientId) {
+		LOGGER.info("Invoked: getPatient");
+		return patientFacade.getPatient(patientId);
+	}
 
-  public List<FoundPatient> findApprovedPatientsByLastName(String lastName) {
-	  System.out.println("SYSTEMOUT:" +  JaxWsPatientFacadeBroker.class.getName() + " - findApprovedPatientsByLastName");
-    return patientFacade.findApprovedPatientsByLastName(lastName);
-  }
+	public FoundPatient findApprovedPatientBySsn(String ssn) {
+		LOGGER.info("Invoked: findApprovedPatientBySsn");
+		return patientFacade.findApprovedPatientBySsn(ssn);
+	}
 
-  public List<FoundPatient> fuzzyFindApprovedPatientsByLastNameAndSsn(String lastName, String ssn) {
-	  System.out.println("SYSTEMOUT:" +  JaxWsPatientFacadeBroker.class.getName() + " - fuzzyFindApprovedPatientsByLastNameAndSsn");
-    return patientFacade.fuzzyFindApprovedPatientsByLastNameAndSsn(lastName, ssn);
-  }
+	public List<FoundPatient> findApprovedPatientsByLastName(String lastName) {
+		LOGGER.info("Invoked: findApprovedPatientsByLastName");
+		return patientFacade.findApprovedPatientsByLastName(lastName);
+	}
+
+	public List<FoundPatient> fuzzyFindApprovedPatientsByLastNameAndSsn(String lastName, String ssn) {
+		LOGGER.info("Invoked: fuzzyFindApprovedPatientsByLastNameAndSsn");
+		List<FoundPatient> foundPatient = patientFacade.fuzzyFindApprovedPatientsByLastNameAndSsn(lastName, ssn);
+		for (FoundPatient foundPatient2 : foundPatient) {
+			LOGGER.info("Found Patient: " + foundPatient2.getSsn() + foundPatient2.getName().toString());
+		}
+		return foundPatient;
+	}
 
 }
