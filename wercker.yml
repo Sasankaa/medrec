@@ -7,7 +7,7 @@ box:
 build:
   steps:
     - script:
-        name: Install WebLogic Maven plugin
+        name: Test WebLogic Maven plugin
         code: mvn com.oracle.maven:oracle-maven-sync:help
     - script:
         name: Medrec - Maven Build
