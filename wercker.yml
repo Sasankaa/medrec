@@ -3,8 +3,11 @@ box: combient/java-mvn
 build:
   steps:
     - script:
+        name: check files
+        code: ls -la maven/oracle-maven-sync/12.2.1/
+    - script:
         name: Install WebLogic Maven plugin
-        code: mvn install:install-file -DpomFile=maven/oracle-maven-sync/12.2.1/oracle-maven-sync.12.2.1.pom -Dfile=maven/oracle-maven-sync/12.2.1/oracle-maven-sync.12.2.1.jar   
+        code: mvn install:install-file -DpomFile=maven/oracle-maven-sync/12.2.1/oracle-maven-sync.12.2.1.pom -Dfile=maven/oracle-maven-sync/12.2.1/oracle-maven-sync.12.2.1.jar
     - script:
         name: Test WebLogic Maven plugin
         code: mvn com.oracle.maven:oracle-maven-sync:help
