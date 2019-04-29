@@ -1,0 +1,221 @@
+<!--
+ Copyright (c) 2011, 2016, Oracle and/or its affiliates. All rights reserved.
+
+   NAME
+     pom.xml - This is the Maven POM file for the Oracle Maven Sync Plugin
+
+   DESCRIPTION
+     This file defines the Project Object Model for the Oracle Maven Synchronization
+     Plugin, including dependencies and build instructions.
+
+   NOTES
+     This plugin is intended to be compiled with Maven 3.0.4 or higher.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.oracle.maven</groupId>
+  <artifactId>oracle-maven-sync</artifactId>
+  <version>12.2.1-3-0</version>
+  <packaging>maven-plugin</packaging>
+
+  <name>Oracle Maven Synchronization Plugin</name>
+  <description>
+    Maven plugin to load a Maven repository with the contents of the
+    Oracle Home directory
+  </description>
+  <url>http://www.oracle.com/us/products/middleware/overview/index.html</url>
+  <inceptionYear>2012</inceptionYear>
+  <organization>
+    <name>Oracle America, Inc.</name>
+    <url>http://www.oracle.com</url>
+  </organization>
+  <licenses>
+    <license>
+      <name>
+	The “Oracle Technology Network License Agreement - Oracle
+        Maven Repository” is the license for this Project Object
+	Model (POM) file and the associated software and documentation
+	unless you have accepted or agreed to different license terms
+	with Oracle when you obtained the right to use the POM file,
+	software and documentation.  Please refer to the comments below
+	for additional information.
+      </name>
+      <url>https://www.oracle.com/webapps/maven/register/license.html</url>
+      <distribution>repo</distribution>
+      <comments>
+	Copyright (c) 2012, 2016. Oracle and/or its affiliates. All rights
+	reserved.
+
+	This Project Object Model (POM) file and the associated software and
+	documentation are provided under a license agreement containing
+	restrictions on use and disclosure and are protected by intellectual
+	property laws. You acknowledge that your use of this POM file and the
+	associated software and documentation is subject to the license terms
+	that you accepted or agreed to when you obtained the right to use the
+	POM file, software and documentation. In the event you have not
+	accepted or agreed to any such license terms, you cannot use this
+	POM file or the associated software and documentation without first
+	accepting the Oracle Technology Network License Agreement - Oracle
+	Maven Repository terms and conditions set forth at the above-listed
+	URL.
+
+	Except as expressly permitted in your license agreement or allowed
+	by law, you may not:
+
+	- use, copy, reproduce, translate, broadcast, modify, license,
+	transmit, distribute, exhibit, perform, publish, or display any part,
+	in any form, or by any means, the POM file or the associated software
+	or documentation; and
+
+	- deploy the POM file or the associated software or documentation to
+	any Maven or other repositories except for your local Maven repository
+	that is not accessible to any third party (other than contractors
+	acting on your behalf if expressly permitted in your license
+	agreement), including but not limited to the Maven Central Repository
+	or any other public Maven repository.
+
+	Reverse engineering, disassembly, or decompilation of this software,
+	unless required by law for interoperability, is prohibited.
+
+	Additional Notices
+
+	The information contained herein is subject to change without notice
+	and is not warranted to be error-free. If you find any errors, please
+	report them to us in writing.
+
+	If this is software or related documentation that is delivered to the
+	U.S. Government or anyone licensing it on behalf of the
+	U.S. Government, the following notice is applicable:
+
+	U.S. GOVERNMENT END USERS: Oracle programs, including any operating
+	system, integrated software, any programs installed on the hardware,
+	and/or documentation, delivered to U.S. Government end users are
+	"commercial computer software" pursuant to the applicable Federal
+	Acquisition Regulation and agency-specific supplemental regulations.
+	As such, use, duplication, disclosure, modification, and adaptation
+	of the programs, including any operating system, integrated software,
+	any programs installed on the hardware, and/or documentation, shall be
+	subject to the license terms and license restrictions applicable to the
+	programs. No other rights are granted to the U.S. Government.
+
+	Oracle and Java are registered trademarks of Oracle and/or its
+	affiliates. Other names may be trademarks of their respective owners.
+
+	This software or hardware and documentation may provide access to or
+	information about content, products, and services from third parties.
+	Oracle Corporation and its affiliates are not responsible for and
+	expressly disclaim all warranties of any kind with respect to
+	third-party content, products, and services unless otherwise set
+	forth in an applicable agreement between you and Oracle. Oracle
+	Corporation and its affiliates will not be responsible for any loss,
+	costs, or damages incurred due to your access to or use of third-party
+	content, products, or services, except as set forth in an applicable
+	agreement between you and Oracle.
+      </comments>
+    </license>
+  </licenses>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <srg.testreport.dir>${project.build.directory}</srg.testreport.dir>
+    <plugin.plugin.version>3.2</plugin.plugin.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <version>3.0.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.maven.plugin-tools</groupId>
+      <artifactId>maven-plugin-annotations</artifactId>
+      <version>3.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-artifact</artifactId>
+      <version>3.2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-compat</artifactId>
+      <version>3.2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jdom</groupId>
+      <artifactId>jdom</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-install-plugin</artifactId>
+      <version>2.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymockclassextension</artifactId>
+      <version>3.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>versions-maven-plugin</artifactId>
+      <version>2.1</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-plugin-plugin</artifactId>
+        <version>${plugin.plugin.version}</version>
+        <configuration>
+          <goalPrefix>oracle-sync</goalPrefix>
+          <extractors>
+            <extractor>java</extractor>
+          </extractors>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.12</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.12</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
