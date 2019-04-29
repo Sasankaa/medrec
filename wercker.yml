@@ -1,0 +1,14 @@
+no-response-timeout: 15
+box:
+  id: store/oracle/weblogic:12.2.1.3
+  username: $DOCKERHUB_USERNAME
+  password: $DOCKERHUB_PASSWORD
+  tag: latest
+build:
+  steps:
+    - script:
+        name: Install WebLogic Maven plugin
+        code: mvn com.oracle.maven:oracle-maven-sync:help
+    - script:
+        name: Medrec - Maven Build
+        code: mvn -version
