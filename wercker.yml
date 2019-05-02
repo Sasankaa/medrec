@@ -6,7 +6,7 @@ box:
 build:
   steps:
     - script:
-        name: Install curl and docker
+        name: Install curl and Docker
         code: apk --no-cache add curl docker
     - script:
         name: Build docker image
