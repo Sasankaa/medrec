@@ -1,0 +1,22 @@
+<!-- The purpose of this file is simply to call the reDisplay() function
+when the user changes the bookmark list (by adding, deleting, etc).
+The reason this gets its own file is so that I can load it using
+javascript's replace() function, which prevents old states of the
+bookmark list from being added to the browser history list. We never want
+to display an outdated bookmark list.
+-->
+<html>
+  <head>
+    <title>Bookmarks</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  </head>
+  <body>
+  <script language="JavaScript">
+// Second parameter to reDisplay: bookmarkMode = 1 = Bookmark
+// Third parameter: tocChange = 0 = No change
+// Fourth parameter: changeContent = 1 = Allow change of current topic
+top.reDisplay(top.g_currentTopicNumber, 1, 0, 1);
+  </script>
+  </body>
+
+</html>

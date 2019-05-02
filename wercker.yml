@@ -1,15 +1,19 @@
 no-response-timeout: 15
-box: combient/java-mvn
+box:
+  id: alpine
+  cmd: /bin/sh
+  docker: true
 build:
   steps:
     - script:
-        name: Install WebLogic Maven plugin
-        code: mvn install:install-file -DpomFile=maven/oracle-maven-sync/12.2.1/oracle-maven-sync-12.2.1.pom -Dfile=maven/oracle-maven-sync/12.2.1/oracle-maven-sync-12.2.1.jar
+        name: Install curl and docker
+        code: apk --no-cache add curl docker
     - script:
-        name: Test WebLogic Maven plugin
-        code: mvn com.oracle.maven:oracle-maven-sync:help
-    - script:
-        name: Medrec - Maven Build
+        name: Build docker image
         code: |
-              cd modules
-              mvn install
+              docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+              docker build --file docker/Dockerfile.create \
+                    --force-rm=true \
+                    -t weblogic-medrec:$WERCKER_GIT_COMMIT .
+#                    -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_COMMIT \
+#                    -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:latest .

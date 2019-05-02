@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <title>Workaround</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script language="JavaScript" src="../core/CookieClass.js"></script>
+  </head>
+  <body>
+    <script language="JavaScript">
+      if (document.location.search.length > 1)
+      {
+        debug("workaround.html: setting location to:");
+        debug("'" + unescape(document.location.search.substring(1)) + "'");
+        document.location = unescape(document.location.search.substring(1));
+      }
+    </script>
+  </body>
+</html>

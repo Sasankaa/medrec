@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>WebLogic Server Documentation</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script language="JavaScript" src="CookieClass.js"></script>
+    <script language="JavaScript" src="displayContent.js"></script>
+  </head>
+
+<!-- JW: This is basically a dummy page that is loaded by the
+frameset when the BEA Help System starts.
+
+Originally, this page called displayContent() in the <body> element's
+onLoad() handler, to check the "destContent" cookie and set the
+content frame to the correct topic, but now the TOC should handle that.
+
+Now this page calls top.displayTOC() to populate the TOC for the first
+time. See tocAndContent.html for explanation.
+-->
+  <body onLoad="displayContent();">
+  </body>
+
+</html>

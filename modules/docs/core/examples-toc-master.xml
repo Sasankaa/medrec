@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?DOCTYPE toc-root SYSTEM "../docs/dtd/toc-root.dtd"?>
+<?xml-stylesheet href="../css/toc.css" type="text/css" alternate="yes"?>
+
+<!-- Master Samples TOC -->
+<toc-root component="samples">
+  <toc-node import=""
+            label="Overview of WebLogic Server Samples"
+            url="../index.html"/>
+  <import-reference import="../../examples/toc-examples.xml"/>
+  <import-reference import="../../medrec-javaee/doc/toc-medrec.xml"/>
+  <import-reference import="../../medrec-spring/doc/toc-medrec.xml"/>
+  <toc-node import="" label="More Information" url="../../examples/src/examples/download.html" />
+</toc-root>

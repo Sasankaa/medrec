@@ -1,0 +1,15 @@
+
+pre {
+  overflow: auto; 
+  display: block;
+  padding: 5px;
+  margin-bottom: 1em;
+  font-size: 13px;
+  line-height: 1.615;
+  color: #000;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #F9F9FB;
+  border: 1px solid #d9d9e2;
+  width: auto;
+}

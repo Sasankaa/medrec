@@ -75,35 +75,6 @@ public class PatientResource {
 		return JSON.createObjectBuilder().add("message", msg).build();
 	}
 
-	/**
-	 * Set the greeting to use in future messages.
-	 *
-	 * @param jsonObject JSON containing the new greeting
-	 * @return {@link Response}
-	 *
-	 * 				@SuppressWarnings("checkstyle:designforextension") @Path("/greeting")
-	 * @PUT
-	 * @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON)
-	 *                                       public Response
-	 *                                       updateGreeting(JsonObject jsonObject) {
-	 * 
-	 *                                       if
-	 *                                       (!jsonObject.containsKey("greeting")) {
-	 *                                       JsonObject entity =
-	 *                                       JSON.createObjectBuilder().add("error",
-	 *                                       "No greeting provided").build(); return
-	 *                                       Response.status(Response.Status.BAD_REQUEST).entity(entity).build();
-	 *                                       }
-	 * 
-	 *                                       String newGreeting =
-	 *                                       jsonObject.getString("greeting");
-	 * 
-	 *                                       greetingProvider.setMessage(newGreeting);
-	 *                                       return
-	 *                                       Response.status(Response.Status.NO_CONTENT).build();
-	 *                                       }
-	 */
-
 	@SuppressWarnings("unchecked")
 	@Path("/findApprovedPatientsByLastNameAndSsn")
 	@GET

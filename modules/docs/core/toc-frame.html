@@ -1,0 +1,182 @@
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<!--
+Added JW: This DHTML transition keeps the TOC from flashing when reloading in IE.
+-->
+    <META http-equiv="Page-Enter" CONTENT="RevealTrans(Duration=0,Transition=5)">
+<!--
+Changed JW: The <title> element is now generated in displayToc.js.
+-->
+<!--    <title>WebLogic Server Documentation</title>-->
+<!--
+Changed JW: Included CookieClass.js so I could read the "destTOC" cookie.
+-->
+    <script language="JavaScript" src="CookieClass.js"></script>
+
+    <script language="JavaScript">
+// Begin Added JW: This function is duplicated from displayContent.js.
+// I've added it here so that I could pass in arguments without using cookies.
+// >>> This could be placed in an include file, might be better for maintenance.
+function getArgs(fullQuery) {
+    var args = new Object();
+
+    // Get Query String (go past ? in first char)
+    var query = fullQuery.substring(1);
+
+    // Split query at the &
+    var pairs = query.split("&");
+
+    // Begin loop through the querystring
+    for(var i = 0; i < pairs.length; i++)
+    {
+        // Look for "name=value"
+        var pos = pairs[i].indexOf('=');
+        // if not found, skip to next
+        if (pos == -1) continue;
+        // Extract the name
+        var argname = pairs[i].substring(0,pos);
+
+        // Extract the value
+        var value = pairs[i].substring(pos+1);
+        // Store as a property
+        args[argname] = unescape(value);
+    }
+    return args; // Return the Object
+}
+// End Added JW 9/24/03
+    </script>
+<!--
+Changed JW: The <title> element is now generated in displayToc.js, so I'm
+not ready to close the <head> element yet.
+-->
+<!--
+  </head>
+  <body>
+-->
+    <script>
+    var url = null;
+    var strTopicNumber = "0";
+    var contentAnchor = null;
+
+    var queryString = document.location.search;
+    debug("toc-frame.html: queryString: " + queryString);
+
+    if(queryString != null && queryString.length > 0)
+    {
+        var args = getArgs(queryString);
+    }
+
+    if (!args["ignoreCookie"])
+    {
+        // JW: Check to see if we received a cookie specifying a target topic.
+        var destTOC = new Cookie(document, "destTOC");
+        debug("toc-frame.html: ignoreCookie arg not present, reading cookie");
+        if (destTOC.load())
+        {
+	    // One would expect we'd only get here if we found such a cookie.
+	    // However, we always get here, but the URL is empty if no page was specified.
+            url = unescape(destTOC.url);
+            debug("toc-frame.html: destTOC.url cookie value: " + url);
+            strTopicNumber = top.findTopicNumber(url);
+            var anchorIndex = url.indexOf("#");
+            if (anchorIndex > 0)
+            {
+                contentAnchor = url.substring(anchorIndex + 1);
+            }
+            debug("toc-frame.html: destTOC.url fragment: " + contentAnchor);
+        }
+        else
+        {
+            url = null;
+            debug("toc-frame.html: destTOC cookie not present, display default topic");
+            strTopicNumber = 0;
+        }
+
+	// make a relative URL for the ToC page with a query string indicating...
+        var strTOCLocation = "toc-frame.html" +
+            "?topicNumber=" + escape(strTopicNumber) +  // ...topic number
+            "&bookmarkMode=0" +                         // ...(not) bookmark mode...
+            "&tocChange=" + top.tocBehavior[2] +	// ...[see tocParas.js for explanation
+            "&changeContent=" + top.tocLinks[2] +	//  of these two...
+            "&currentHistoryID=1" +			// ... this is the start of a Help session
+            "&ignoreCookie=1";
+
+        if (contentAnchor != null)
+        {
+            strTOCLocation += "&contentAnchor=" + contentAnchor;
+        }
+ 
+        strTOCLocation += "#" + strTopicNumber;		// ... HTML anchor. The need for this anchor
+							// is why this MUST be implemented as opening
+							// a new page, not modifying existing page.
+
+        debug("toc-frame.html: location.replace(" + strTOCLocation + ")");
+        location.replace(strTOCLocation);
+    }
+    else
+    {
+
+        debug("toc-frame.html: ignoreCookie arg present, ignoring cookie");
+
+// JW: Check the URL for an argument specifying a target topic.
+// Javascript's document.location.search property contains everything
+// in the URL from the "?" to the end, or to the "#" if there is one.
+
+// JW: As the BEA Help System is set up now, toc-frame.html should never be
+// loaded without an argument specifying a target topic. If this does
+// happen, we reset the history list and display the initial state.
+        if(queryString == null || queryString == "")
+        {
+            top.g_currentHistoryID = 0;
+            top.g_boolExpandCollapse = 1;
+            debug("toc-frame.html: queryString null, displaying default topic");
+            top.reDisplay("0", 0, 3, 1, null, null);
+        }
+        else
+        {
+// JW: Parse the query string we got above.
+            var currentHistoryID = parseInt(args["currentHistoryID"]);
+
+debug("toc-frame.html: top.g_lastHistoryID='" + top.g_lastHistoryID + "'");
+debug("toc-frame.html: currentHistoryID='" + currentHistoryID + "'");
+
+            if(currentHistoryID > top.g_lastHistoryID)
+            {
+// JW: This is a new state of the TOC, not something reached by the
+// back or forward button, history list, etc. Copy the immediate
+// previous state.
+debug("toc-frame.html: new state");
+                top.toDisplay[currentHistoryID] = top.toDisplay[top.g_currentHistoryID].concat();
+                top.g_boolExpandCollapse = 1;
+                top.g_lastHistoryID = currentHistoryID;
+            }
+            else
+            {
+debug("toc-frame.html: no new state");
+                top.g_boolExpandCollapse = 0;
+top.g_lastHistoryID = currentHistoryID;
+            }
+
+// If an existing state is not found, copy the initial state.
+            if(top.toDisplay[currentHistoryID] == null)
+            {
+                top.toDisplay[currentHistoryID] = top.toDisplay[0].concat();
+                top.g_boolExpandCollapse = 1;
+            }
+
+            top.g_currentHistoryID = currentHistoryID;
+
+// See displayToc.js for more information about this function.
+            debug("toc-frame.html: reDisplay(" + args["topicNumber"] + ", " +
+                  parseInt(args["bookmarkMode"]) + ", " + parseInt(args["tocChange"]) + ", " +
+                  parseInt(args["changeContent"]) + ", null, " + args["contentAnchor"] + ")");
+            top.reDisplay(args["topicNumber"], parseInt(args["bookmarkMode"]),
+                parseInt(args["tocChange"]), parseInt(args["changeContent"]),
+                null, args["contentAnchor"]);
+        }
+    }
+    </script>
+  </head>
+</html>
+
