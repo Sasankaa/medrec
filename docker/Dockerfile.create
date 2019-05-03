@@ -39,4 +39,4 @@ RUN rm -rf ${TEMP_DIR} && \
 #USER oracle
 WORKDIR ${DOMAIN_HOME}
 
-CMD ["/u01/oracle/user_projects/domains/medrec/startWebLogic.sh"]
+# CMD ["/u01/oracle/user_projects/domains/medrec/startWebLogic.sh"]
