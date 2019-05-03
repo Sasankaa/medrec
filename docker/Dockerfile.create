@@ -32,7 +32,7 @@ RUN cd ${TEMP_DIR}/modules/gar && \
 
 RUN cd ${TEMP_DIR} && chmod 755 createMedrecDomain.sh && ./createMedrecDomain.sh
 
-RUN rm -rf ${TEMP_DIR} && \
+RUN chown -R ${TEMP_DIR} && \
     chown -R oracle:oracle ${DOMAIN_HOME} && \
     chmod -R a+xwr ${DOMAIN_HOME}
 
