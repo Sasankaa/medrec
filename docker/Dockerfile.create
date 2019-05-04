@@ -22,7 +22,7 @@ COPY scripts/createMedrecDomain.sh scripts/create_medrec_domain_script.py ${TEMP
 
 RUN ls -la ${TEMP_DIR} && ls -la ${TEMP_DIR}/template
 
-ADD template/medrec ${TEMP_DIR}/template/medrec
+COPY template ${TEMP_DIR}/template
 
 RUN ls -la ${TEMP_DIR}/template
 
