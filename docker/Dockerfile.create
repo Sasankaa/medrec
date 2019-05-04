@@ -15,7 +15,7 @@ USER root
 
 RUN yum install -y zip
 
-RUN mkdir -p ${TEMP_DIR} && \
+RUN mkdir -p ${TEMP_DIR}/template && \
     mkdir -p ${DOMAIN_HOME}
 
 COPY scripts/createMedrecDomain.sh scripts/create_medrec_domain_script.py ${TEMP_DIR}/
