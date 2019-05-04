@@ -18,6 +18,7 @@ build:
                     -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:latest .
               else
                 docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+                cd template/medrec/ && zip -r medrec.jar . && cd ..
                 docker build --file docker/Dockerfile.create \
                     --force-rm=true \
                     -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_COMMIT \
