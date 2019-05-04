@@ -20,7 +20,11 @@ RUN mkdir -p ${TEMP_DIR}/template && \
 
 COPY scripts/createMedrecDomain.sh scripts/create_medrec_domain_script.py ${TEMP_DIR}/
 
-COPY template/medrec ${TEMP_DIR}/template/medrec
+RUN ls -la ${TEMP_DIR} && ls -la ${TEMP_DIR}/template
+
+ADD template/medrec ${TEMP_DIR}/template/medrec
+
+RUN ls -la ${TEMP_DIR}/template
 
 RUN cd ${TEMP_DIR}/template/medrec && zip -r medrec.jar . && mv medrec.jar ${WL_HOME}/common/templates/wls/
 
