@@ -51,9 +51,6 @@ ds.setDynamicClusterSize(number_of_ms)
 ds.setMaxDynamicClusterSize(number_of_ms)
 ds.setCalculatedListenPorts(false)
 
-# Apply Medrec template
-# ==================
-
 writeDomain(mwhome + '/user_projects/domains/medrec')
 closeTemplate()
 
@@ -65,7 +62,94 @@ setOption('ReplaceDuplicates','false')
 # setOption('AppDir','@WL_HOME/samples/server/medrec')
 setOption('BackupFiles','false')
 
+# Apply Medrec template
+# ==================
+print 'Add Medrec template'
 addTemplate(wlhome + '/common/templates/wls/medrec.jar')
+
+# Creating a Transactional Data Source
+# ==================
+print 'Create Derby Transactional Data Source'
+dsname = 'MedRecGlobalDataSourceXA'
+dsjndiname = 'jdbc/MedRecGlobalDataSourceXA'
+dsdriver = 'org.apache.derby.jdbc.ClientXADataSource'
+dsurl = 'jdbc:derby://localhost:1527/medrec'
+dspassword = 'medrec'
+dsusername = 'medrec'
+dsinitialcapacity = 2
+cd('/')
+jdbcXASR = create("MedRecGlobalDataSourceXA","JDBCSystemResource")
+cd('JDBCSystemResource/MedRecGlobalDataSourceXA/JdbcResource/MedRecGlobalDataSourceXA')
+connectionPoolParams = create('connectionPoolParams', 'JDBCConnectionPoolParams')
+connectionPoolParams.setInitialCapacity(2)
+connectionPoolParams.setMaxCapacity(10)
+connectionPoolParams.setCapacityIncrement(1)
+connectionPoolParams.setShrinkFrequencySeconds(900)
+connectionPoolParams.setTestConnectionsOnReserve(1)
+connectionPoolParams.setTestTableName("SYSTABLES")
+driverParams = create('driverParams', 'JDBCDriverParams')
+driverParams.setDriverName("org.apache.derby.jdbc.ClientXADataSource")
+driverParams.setUrl("jdbc:derby://localhost:1527/demo")
+driverParams.setPasswordEncrypted("medrec")
+cd('JDBCDriverParams/NO_NAME_0')
+create('medrec','Properties')
+cd('Properties/NO_NAME_0')
+create('user', 'Property')
+cd('Property/user')
+cmo.setValue('medrec')
+cd('../..')
+create('DatabaseName', 'Property')
+cd('Property/DatabaseName')
+cmo.setValue('demo')
+cd('../../../../../..')
+dsXAParams = create('dataSourceParams', 'JDBCDataSourceParams')
+cd('JDBCDataSourceParams/NO_NAME_0')
+set('JNDIName', ['jndi/MedRecGlobalDataSourceXA'])
+
+# Assign datasource to target
+# ======
+assign('JDBCSystemResource', dsname, 'Target', admin_server_name)
+assign('JDBCSystemResource', dsname, 'Target', cluster_name)
+
+# Create JMS resources
+# ======
+print 'Create a JMS Resources.'
+JMSServerName = 'MedRecJMSServer'
+JMSModuleName = 'MedRec-jms'
+JMSSubdeploymentName = 'medrecSub'
+cfName = 'MedRecConnectionFactory'
+cfJndiName = 'com.oracle.medrec.jms.connectionFactory'
+queueName = 'PatientNotificationQueue'
+queueJndiName = 'com.oracle.medrec.jms.PatientNotificationQueue'
+
+print 'Create JMS Server.'
+cd('/')
+jmsServer = create(JMSServerName,'JMSServer')
+assign('JMSServer', JMSServerName, 'Target', cluster_name)
+#assign(sourceType, sourceName, destinationType, destinationName)
+
+print 'Create JMS Module.'
+cd('/')
+jmsModule = create(JMSModuleName,'JMSSystemResource')
+assign('JMSSystemResource', JMSModuleName, 'Target', cluster_name)
+cd('JMSSystemResource/' + JMSModuleName + '/JmsResource/NO_NAME_0')
+
+print 'Create JMS DistributedQueue.'
+myq = create(queueName, 'UniformDistributedQueue')
+myq.setJNDIName(queueJndiName)
+myq.setSubDeploymentName(JMSSubdeploymentName)
+
+print 'Create JMS ConnectionFactory.'
+mycf = create(cfName, 'ConnectionFactory')
+mycf.setJNDIName(cfJndiName)
+mycf.setSubDeploymentName(JMSSubdeploymentName)
+
+print 'Create JMS Subdeployment.'
+cd('/JMSSystemResource/' + JMSModuleName + '')
+create(JMSSubdeploymentName, 'SubDeployment')
+
+cd('/')
+assign('JMSSystemResource.SubDeployment', JMSModuleName + '.' + JMSSubdeploymentName, 'Target', JMSServerName)
 
 updateDomain()
 closeDomain()

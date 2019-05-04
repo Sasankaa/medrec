@@ -1,4 +1,4 @@
-no-response-timeout: 15
+no-response-timeout: 20
 build:
   box: alpine
   docker: true

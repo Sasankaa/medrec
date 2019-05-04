@@ -12,12 +12,18 @@ ENV TEMP_DIR="/u01/oracle/user_projects/temp"
 
 USER root
 
+RUN yum install -y zip
+
 RUN mkdir -p ${TEMP_DIR} && \
     mkdir -p ${DOMAIN_HOME}
 
 COPY scripts/createMedrecDomain.sh scripts/create_medrec_domain_script.py ${TEMP_DIR}/
 
-COPY template/medrec.jar ${WL_HOME}/common/templates/wls/
+COPY template/medrec ${TEMP_DIR}/template/medrec
+
+RUN cd ${TEMP_DIR}/template/medrec && zip -r medrec.jar . && mv medrec.jar ${WL_HOME}/common/templates/wls/
+
+# COPY template/medrec/medrec.jar ${WL_HOME}/common/templates/wls/
 
 RUN cd ${ORACLE_HOME}/oracle_common/plugins/maven/com/oracle/maven/oracle-maven-sync/12.2.1 && \
     mvn install:install-file -DpomFile=oracle-maven-sync-12.2.1.pom -Dfile=oracle-maven-sync-12.2.1.jar && \
@@ -32,11 +38,11 @@ RUN cd ${TEMP_DIR}/modules/gar && \
 
 RUN cd ${TEMP_DIR} && chmod 755 createMedrecDomain.sh && ./createMedrecDomain.sh
 
-RUN chown -R ${TEMP_DIR} && \
+RUN chown -R oracle:oracle ${TEMP_DIR} && \
     chown -R oracle:oracle ${DOMAIN_HOME} && \
     chmod -R a+xwr ${DOMAIN_HOME}
 
 #USER oracle
 WORKDIR ${DOMAIN_HOME}
 
-# CMD ["/u01/oracle/user_projects/domains/medrec/startWebLogic.sh"]
+CMD ["/u01/oracle/user_projects/domains/medrec/startWebLogic.sh"]
