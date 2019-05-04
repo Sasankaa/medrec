@@ -1,0 +1,40 @@
+<jdbc-data-source xmlns="http://xmlns.oracle.com/weblogic/jdbc-data-source"
+  xmlns:sec="http://xmlns.oracle.com/weblogic/security"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:wls="http://xmlns.oracle.com/weblogic/security/wls"
+  xsi:schemaLocation="http://xmlns.oracle.com/weblogic/1.0/domain.xsd">
+  <name>MedRecGlobalDataSourceXA</name>
+
+  <jdbc-driver-params>
+    <url>jdbc:derby://localhost:1527/medrec</url>
+    <driver-name>org.apache.derby.jdbc.ClientXADataSource</driver-name>
+    <properties>
+      <property>
+        <name>user</name>
+        <value>medrec</value>
+      </property>
+      <property>
+        <name>DatabaseName</name>
+        <value>medrec</value>
+      </property>
+    </properties>
+    <password-encrypted>medrec</password-encrypted>
+  </jdbc-driver-params>
+
+  <jdbc-connection-pool-params>
+    <initial-capacity>2</initial-capacity>
+    <max-capacity>10</max-capacity>
+    <capacity-increment>1</capacity-increment>
+    <shrink-frequency-seconds>900</shrink-frequency-seconds>
+    <test-connections-on-reserve>true</test-connections-on-reserve>
+    <test-table-name>SQL SELECT 1 FROM SYS.SYSTABLES</test-table-name>
+  </jdbc-connection-pool-params>
+
+  <jdbc-data-source-params>
+    <jndi-name>jdbc/MedRecGlobalDataSourceXA</jndi-name>
+    <global-transactions-protocol>TwoPhaseCommit</global-transactions-protocol>
+  </jdbc-data-source-params>
+
+  <jdbc-xa-params>
+  </jdbc-xa-params>
+</jdbc-data-source>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- TODO in the feature we should use WLST to dynamically configure most of the stuff here -->
+
+<domain xmlns="http://xmlns.oracle.com/weblogic/domain">
+    <name>medrec</name>
+
+    <configuration-version>9.0.1.0</configuration-version>
+    <admin-server-name>admin-server</admin-server-name>
+
+    <!-- Application Deployments -->
+    <app-deployment>
+        <name>medrec</name>
+        <target>cluster-medrec</target>
+        <module-type>ear</module-type>
+        <source-path>/u01/oracle/user_projects/temp/modules/medrec/medrec-assembly/target/medrec.ear</source-path>
+        <deployment-order>1</deployment-order>
+        <security-dd-model>DDOnly</security-dd-model>
+    </app-deployment>
+    <app-deployment>
+        <name>physician</name>
+        <target>cluster-medrec</target>
+        <module-type>ear</module-type>
+        <source-path>/u01/oracle/user_projects/temp/modules/physician/physician-assembly/target/physician.ear</source-path>
+        <deployment-order>100</deployment-order>
+        <security-dd-model>DDOnly</security-dd-model>
+    </app-deployment>
+    <app-deployment>
+        <name>chat</name>
+        <target>cluster-medrec</target>
+        <module-type>war</module-type>
+        <source-path>/u01/oracle/user_projects/temp/modules/chat/target/chat.war</source-path>
+        <security-dd-model>DDOnly</security-dd-model>
+    </app-deployment>
+    <app-deployment>
+        <name>browser-starter</name>
+        <target>cluster-medrec</target>
+        <module-type>war</module-type>
+        <source-path>/u01/oracle/user_projects/temp/modules/browser-starter/target/browser-starter.war</source-path>
+        <deployment-order>100</deployment-order>
+        <security-dd-model>DDOnly</security-dd-model>
+    </app-deployment>
+    <app-deployment>
+        <name>SamplesSearchWebApp</name>
+        <target>cluster-medrec</target>
+        <module-type>war</module-type>
+        <source-path>/u01/oracle/user_projects/temp/modules/docs</source-path>
+        <deployment-order>100</deployment-order>
+        <security-dd-model>CustomRolesAndPolicies</security-dd-model>
+    </app-deployment>
+
+    <file-realm>
+        <name>wl_default_file_realm</name>
+    </file-realm>
+    <realm>
+        <name>wl_default_realm</name>
+        <file-realm>wl_default_file_realm</file-realm>
+    </realm>
+    <password-policy>
+        <name>wl_default_password_policy</name>
+    </password-policy>
+    <web-app-container>
+        <filter-dispatched-requests-enabled>true</filter-dispatched-requests-enabled>
+    </web-app-container>
+    <!-- unused -->
+    <mail-session>
+        <name>mail/MedRecMailSession</name>
+        <jndi-name>mail/MedRecMailSession</jndi-name>
+        <properties>mail.user=joe;mail.host=mail.mycompany.com</properties>
+    </mail-session>
+    <!--jdbc-system-resource>
+        <name>MedRecGlobalDataSourceXA</name>
+        <target>cluster-medrec</target>
+        <descriptor-file-name>jdbc/MedRec-jdbc.xml</descriptor-file-name>
+    </jdbc-system-resource-->
+    <!--jms-system-resource>
+        <name>MedRec-jms</name>
+        <target>cluster-medrec</target>
+        <sub-deployment>
+            <name>MedRecJMSServer</name>
+            <target>MedRecJMSServer</target>
+        </sub-deployment>
+        <descriptor-file-name>jms/MedRec-jms.xml</descriptor-file-name>
+    </jms-system-resource>
+    <jms-server>
+        <name>MedRecJMSServer</name>
+        <target>cluster-medrec</target>
+    </jms-server-->
+    <self-tuning>
+        <work-manager>
+            <name>weblogic.wsee.mdb.DispatchPolicy</name>
+            <target>cluster-medrec</target>
+        </work-manager>
+    </self-tuning>
+    <wldf-system-resource>
+        <name>MedRecWLDF</name>
+        <target>cluster-medrec</target>
+        <descriptor-file-name>diagnostics/MedRecWLDF.xml</descriptor-file-name>
+    </wldf-system-resource>
+</domain>

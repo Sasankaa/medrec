@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<scripts>
+    <script name="setDomainEnv" path="bin" version="3" type="ext">
+
+        <setenv name="DERBY_FLAG" scope="global">
+            <value>true</value>
+        </setenv>
+        
+        <!-- setenv name="LOG4J_CONFIG_FILE" scope="global" shorten="true">
+            <value>@USERDOMAIN_HOME/log4j.properties</value>
+        </setenv -->
+
+        <!--setenv name="EXTRA_JAVA_PROPERTIES" delim=" " scope="global">
+          <value preserve="true">-Dcom.bea.medrec.xml.incoming=incoming</value>
+        </setenv-->
+
+        <!--setenv name="PRE_CLASSPATH" scope="global" shorten="true">
+          <value>@USERDOMAIN_HOME/security/MedRecDBMSPlugin.jar</value>
+        </setenv-->
+
+        <!--setenv name="PRE_CLASSPATH" scope="global" shorten="true">
+            <@USERDOMAIN_HOME/patches/interceptor-di.jar>
+            <value>@USERDOMAIN_HOME/patches/local-ejb-lookup.jar;@USERDOMAIN_HOME/patches/CR336799.jar</value>
+        </setenv-->
+
+    </script>
+
+    <script name="startWebLogic" path="bin" version="3" type="ext">
+        <setenv name="PB_DEBUG_LEVEL" scope="local">
+            <value>3</value>
+        </setenv>
+    </script>
+</scripts>

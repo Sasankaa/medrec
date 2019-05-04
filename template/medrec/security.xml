@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<securityInfo xmlns="http://www.bea.com/ns/weblogic/90/domain/security">
+  <user name="administrator"
+        password="administrator123"
+        isAdmin="false"
+        description="user for MedRec admin">
+  </user>  
+</securityInfo>

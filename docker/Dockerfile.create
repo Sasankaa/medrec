@@ -15,20 +15,14 @@ USER root
 
 RUN yum install -y zip
 
-RUN mkdir -p ${TEMP_DIR}/template && \
+RUN mkdir -p ${TEMP_DIR} && \
     mkdir -p ${DOMAIN_HOME}
 
 COPY scripts/createMedrecDomain.sh scripts/create_medrec_domain_script.py ${TEMP_DIR}/
 
-#RUN ls -la ${TEMP_DIR} && ls -la ${TEMP_DIR}/template
+COPY template ${TEMP_DIR}/template
 
-#COPY template ${TEMP_DIR}/template
-
-#RUN ls -la ${TEMP_DIR}/template
-
-COPY template/medrec/medrec.jar ${WL_HOME}/common/templates/wls/
-
-#RUN cd ${TEMP_DIR}/template/medrec && zip -r medrec.jar . && mv medrec.jar ${WL_HOME}/common/templates/wls/
+RUN cd ${TEMP_DIR}/template/medrec && zip -r medrec.jar . && mv medrec.jar ${WL_HOME}/common/templates/wls/
 
 # COPY template/medrec/medrec.jar ${WL_HOME}/common/templates/wls/
 
@@ -48,6 +42,8 @@ RUN cd ${TEMP_DIR} && chmod 755 createMedrecDomain.sh && ./createMedrecDomain.sh
 RUN chown -R oracle:oracle ${TEMP_DIR} && \
     chown -R oracle:oracle ${DOMAIN_HOME} && \
     chmod -R a+xwr ${DOMAIN_HOME}
+
+# TODO cleanup
 
 #USER oracle
 WORKDIR ${DOMAIN_HOME}

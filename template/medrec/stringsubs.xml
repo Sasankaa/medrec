@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<stringsubs-definition name="defaultStringsubs" version="11.0.0.0" xmlns="http://xmlns.oracle.com/cie/stringsubs">
+    <component id="defaultStringsubs default">
+        <group-ref name="defaultStringsubs"/>
+    </component>
+<group id="defaultStringsubs" >
+    <file-entry name="$WL_HOME$/samples/server/medrec/project.properties" />
+    <file-entry name="$WL_HOME$/samples/server/medrec/install/non-mt-single-server/weblogic.properties" />
+    <file-entry name="$WL_HOME$/samples/server/medrec/install/mt-coherence-cluster/weblogic.properties" />
+    <file-entry name="$WL_HOME$/samples/server/medrec/install/mt-single-server/weblogic.properties" />
+    <file-entry name="$WL_HOME$/samples/server/medrec/modules/pom.xml" />
+    
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/getting-started.html" />
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/introduction.html" />
+    
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/infra/command-line-ant.html" />
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/infra/command-line-maven.html" />
+    
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/single-server/install.html" />
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/single-server/changing-database.html" />
+    
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/mt-single-server/install.html" />
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/mt-single-server/introduction.html" />
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/mt-single-server/resource-management.html" />
+    
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/mt-coherence-cluster/install.html"  />
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/mt-coherence-cluster/introduction.html" />
+    
+    <file-entry name="$DOMAIN_DIRECTORY$/config/jms/MedRec-jms.xml"  />
+    
+    <file-entry name="$WL_HOME$/samples/server/medrec/docs/mt/multi-tenancy-overview.html" />
+	
+    <change-pair-ref name="APPLICATIONS_DIRECTORY"/>
+    <change-pair-ref name="BEAHOME"/>
+    <change-pair-ref name="MW_HOME"/>
+    <change-pair-ref name="WL_HOME"/>
+    <change-pair-ref name="JAVA_HOME"/>
+    <change-pair-ref name="DOMAIN_NAME"/>
+    <change-pair-ref name="SERVER_NAME"/>
+    <change-pair-ref name="SAMPLES_HOME"/>
+    <change-pair-ref name="MEDREC_HOME"/>
+    <change-pair-ref name="USERDOMAIN_HOME"/>
+    <change-pair-ref name="STARTMODE"/>
+    <change-pair-ref name="ADMIN_SERVER_URL"/>
+    <change-pair-ref name="JAVA_VM"/>
+    <change-pair-ref name="JAVA_VENDOR"/>
+    <change-pair-ref name="SERVER_HOST"/>
+    <change-pair-ref name="SERVER_PORT"/>
+    <change-pair-ref name="DOCSWEBROOT"/>
+    <change-pair-ref name="SSL_PORT"/>
+    <change-pair-ref name="DOMAIN_USERNAME"/>
+    <change-pair-ref name="DOMAIN_USER_PASSWORD"/>
+  </group>
+
+  <change-pair id="APPLICATIONS_DIRECTORY" before="@APPLICATIONS_DIRECTORY" after="$WL_HOME$/samples/server/medrec"/>
+  <change-pair id="BEAHOME" before="@BEA_HOME" after="$BEAHOME$"/>
+  <change-pair id="MW_HOME" before="@MW_HOME" after="$MW_HOME$"/>
+  <change-pair id="WL_HOME" before="@WL_HOME" after="$WLS_INSTALL_DIR$"/>
+  <change-pair id="JAVA_HOME" before="@JAVA_HOME" after="$JAVA_HOME$"/>
+  <change-pair id="DOMAIN_NAME" before="@DOMAIN_NAME" after="MedRecServer"/>
+  <change-pair id="SERVER_NAME" before="@SERVER_NAME" after="$SERVER_NAME$"/>
+  <change-pair id="SAMPLES_HOME" before="@SAMPLES_HOME" after="$WL_HOME$/samples/server"/>
+  <change-pair id="MEDREC_HOME" before="@MEDREC_HOME" after="$WL_HOME$/samples/server/medrec"/>
+  <change-pair id="USERDOMAIN_HOME" before="@USERDOMAIN_HOME" after="$DOMAIN_DIRECTORY$"/>
+  <change-pair id="STARTMODE" before="@PRODUCTION_MODE" after="$STARTMODE$"/>
+  <change-pair id="ADMIN_SERVER_URL" before="@ADMIN_SERVER_URL" after="$ADMIN_SERVER_URL$"/>
+  <change-pair id="JAVA_VM" before="@JAVA_VM" after="$JAVA_VM$"/>
+  <change-pair id="JAVA_VENDOR" before="@JAVA_VENDOR" after="$JAVA_VENDOR$"/>
+  <change-pair id="SERVER_HOST" before="@SERVER_HOST" after="$SERVER_HOST$"/>
+  <change-pair id="SERVER_PORT" before="@SERVER_PORT" after="$SERVER_PORT$"/>
+  <change-pair id="DOCSWEBROOT" before="@DOCSWEBROOT" after="$DOCSWEBROOT$"/>
+  <change-pair id="SSL_PORT" before="@SSL_PORT" after="$SSL_PORT$"/>
+  <change-pair id="DOMAIN_USERNAME" before="@DOMAIN_USERNAME" after="$USERNAME$"/>
+  <change-pair id="DOMAIN_USER_PASSWORD" before="@DOMAIN_USER_PASSWORD" after="$PASSWORD$"/>
+</stringsubs-definition>

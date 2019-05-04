@@ -9,8 +9,6 @@ build:
     - script:
         name: Build docker image
         code: |
-              ls -la
-              pwd
               docker login $REGION.ocir.io -u $TENANCY/$OCI_REGISTRY_USERNAME -p $OCI_REGISTRY_PASSWORD
               if docker pull $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:latest; then
                 docker build --file docker/Dockerfile.update \
@@ -20,7 +18,6 @@ build:
                     -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:latest .
               else
                 docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-                cd template/medrec/ && zip -r medrec.jar . && cd ..
                 docker build --file docker/Dockerfile.create \
                     --force-rm=true \
                     -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_COMMIT \

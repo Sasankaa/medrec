@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogic-jms xmlns="http://xmlns.oracle.com/weblogic/weblogic-jms">
+	<uniform-distributed-queue name="PatientNotificationQueue">
+		<sub-deployment-name>MedRecJMSServer</sub-deployment-name>
+		<jndi-name>com.oracle.medrec.jms.PatientNotificationQueue</jndi-name>
+	</uniform-distributed-queue>
+
+	<connection-factory name="MedRecConnectionFactory">
+		<!--default-targeting-enabled>true</default-targeting-enabled-->
+		<sub-deployment-name>MedRecJMSServer</sub-deployment-name>
+		<jndi-name>com.oracle.medrec.jms.connectionFactory</jndi-name>
+		<client-params>
+			<client-id-policy>Restricted</client-id-policy>
+			<subscription-sharing-policy>Exclusive</subscription-sharing-policy>
+			<messages-maximum>10</messages-maximum>
+		</client-params>
+		<transaction-params>
+			<xa-connection-factory-enabled>true</xa-connection-factory-enabled>
+		</transaction-params>
+		<security-params>
+			<attach-jmsx-user-id>false</attach-jmsx-user-id>
+		</security-params>
+	</connection-factory>
+</weblogic-jms>
