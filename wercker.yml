@@ -10,13 +10,13 @@ build:
         name: Build docker image
         code: |
               docker login $REGION.ocir.io -u $TENANCY/$OCI_REGISTRY_USERNAME -p $OCI_REGISTRY_PASSWORD
-              if docker pull $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:latest; then
-                docker build --file docker/Dockerfile.update \
-                    --build-arg SOURCEIMAGE=$REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:latest \
-                    --force-rm=true \
-                    -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_COMMIT \
-                    -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:latest .
-              else
+              #if docker pull $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:latest; then
+              #  docker build --file docker/Dockerfile.update \
+              #      --build-arg SOURCEIMAGE=$REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:latest \
+              #      --force-rm=true \
+              #      -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_COMMIT \
+              #      -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:latest .
+              #else
                 docker build --file docker/Dockerfile.create \
                     --force-rm=true \
                     -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_COMMIT \

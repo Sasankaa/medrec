@@ -30,7 +30,8 @@ RUN cd ${ORACLE_HOME}/oracle_common/plugins/maven/com/oracle/maven/oracle-maven-
 
 COPY modules ${TEMP_DIR}/modules
 
-RUN cd ${TEMP_DIR}/modules/gar && \
+RUN cp ${TEMP_DIR}/modules/microservices.properties ${DOMAIN_HOME} && \
+    cd ${TEMP_DIR}/modules/gar && \
     mvn clean install && \
     cd ${TEMP_DIR}/modules && \
     mvn clean install
