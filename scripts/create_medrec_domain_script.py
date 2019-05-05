@@ -104,7 +104,7 @@ addTemplate(wlhome + '/common/templates/wls/medrec.jar')
 #cd('../../../../../..')
 #dsXAParams = create('dataSourceParams', 'JDBCDataSourceParams')
 #cd('JDBCDataSourceParams/NO_NAME_0')
-#set('JNDIName', ['jndi/MedRecGlobalDataSourceXA'])
+#set('JNDIName', [dsjndiname])
 
 
 print 'Create Oracle Transactional Data Source'
@@ -189,7 +189,7 @@ cmo.setValue('false')
 cd('../../../../../..')
 dsXAParams = create('dataSourceParams', 'JDBCDataSourceParams')
 cd('JDBCDataSourceParams/NO_NAME_0')
-set('JNDIName', ['jndi/MedRecGlobalDataSourceXA'])
+set('JNDIName', [dsjndiname])
 
 # Assign datasource to target
 # ======
