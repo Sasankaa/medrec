@@ -69,38 +69,123 @@ addTemplate(wlhome + '/common/templates/wls/medrec.jar')
 
 # Creating a Transactional Data Source
 # ==================
-print 'Create Derby Transactional Data Source'
+#print 'Create Derby Transactional Data Source'
+#dsname = 'MedRecGlobalDataSourceXA'
+#dsjndiname = 'jdbc/MedRecGlobalDataSourceXA'
+#dsdriver = 'org.apache.derby.jdbc.ClientXADataSource'
+#dsurl = 'jdbc:derby://localhost:1527/medrec'
+#dspassword = 'medrec'
+#dsusername = 'medrec'
+#dsinitialcapacity = 2
+#cd('/')
+#jdbcXASR = create("MedRecGlobalDataSourceXA","JDBCSystemResource")
+#cd('JDBCSystemResource/MedRecGlobalDataSourceXA/JdbcResource/MedRecGlobalDataSourceXA')
+#connectionPoolParams = create('connectionPoolParams', 'JDBCConnectionPoolParams')
+#connectionPoolParams.setInitialCapacity(2)
+#connectionPoolParams.setMaxCapacity(10)
+#connectionPoolParams.setCapacityIncrement(1)
+#connectionPoolParams.setShrinkFrequencySeconds(900)
+#connectionPoolParams.setTestConnectionsOnReserve(1)
+#connectionPoolParams.setTestTableName("SYSTABLES")
+#driverParams = create('driverParams', 'JDBCDriverParams')
+#driverParams.setDriverName("org.apache.derby.jdbc.ClientXADataSource")
+#driverParams.setUrl("jdbc:derby://localhost:1527/demo")
+#driverParams.setPasswordEncrypted("medrec")
+#cd('JDBCDriverParams/NO_NAME_0')
+#create('medrec','Properties')
+#cd('Properties/NO_NAME_0')
+#create('user', 'Property')
+#cd('Property/user')
+#cmo.setValue('medrec')
+#cd('../..')
+#create('DatabaseName', 'Property')
+#cd('Property/DatabaseName')
+#cmo.setValue('demo')
+#cd('../../../../../..')
+#dsXAParams = create('dataSourceParams', 'JDBCDataSourceParams')
+#cd('JDBCDataSourceParams/NO_NAME_0')
+#set('JNDIName', ['jndi/MedRecGlobalDataSourceXA'])
+
+
+print 'Create Oracle Transactional Data Source'
 dsname = 'MedRecGlobalDataSourceXA'
 dsjndiname = 'jdbc/MedRecGlobalDataSourceXA'
-dsdriver = 'org.apache.derby.jdbc.ClientXADataSource'
-dsurl = 'jdbc:derby://localhost:1527/medrec'
-dspassword = 'medrec'
+dsdriver = 'oracle.jdbc.OracleDriver'
+dsurl = 'jdbc:oracle:thin:@db1pnagy_high'
+dspassword = 'tactful@10Cr'
 dsusername = 'medrec'
-dsinitialcapacity = 2
 cd('/')
-jdbcXASR = create("MedRecGlobalDataSourceXA","JDBCSystemResource")
-cd('JDBCSystemResource/MedRecGlobalDataSourceXA/JdbcResource/MedRecGlobalDataSourceXA')
+jdbcXASR = create(dsname,"JDBCSystemResource")
+cd('JDBCSystemResource/' + dsname + '/JdbcResource/' + dsname + '')
 connectionPoolParams = create('connectionPoolParams', 'JDBCConnectionPoolParams')
 connectionPoolParams.setInitialCapacity(2)
 connectionPoolParams.setMaxCapacity(10)
 connectionPoolParams.setCapacityIncrement(1)
 connectionPoolParams.setShrinkFrequencySeconds(900)
 connectionPoolParams.setTestConnectionsOnReserve(1)
-connectionPoolParams.setTestTableName("SYSTABLES")
+connectionPoolParams.setTestTableName("SQL ISVALID")
 driverParams = create('driverParams', 'JDBCDriverParams')
-driverParams.setDriverName("org.apache.derby.jdbc.ClientXADataSource")
-driverParams.setUrl("jdbc:derby://localhost:1527/demo")
-driverParams.setPasswordEncrypted("medrec")
+driverParams.setDriverName(dsdriver)
+driverParams.setUrl(dsurl)
+driverParams.setPasswordEncrypted(dspassword)
 cd('JDBCDriverParams/NO_NAME_0')
 create('medrec','Properties')
 cd('Properties/NO_NAME_0')
+
+create('oracle.net.tns_admin', 'Property')
+cd('Property/oracle.net.tns_admin')
+cmo.setValue('/u01/oracle/wallet')
+
+cd('../..')
+create('oracle.net.ssl_version', 'Property')
+cd('Property/oracle.net.ssl_version')
+cmo.setValue('1.2')
+
+cd('../..')
+create('javax.net.ssl.trustStore', 'Property')
+cd('Property/javax.net.ssl.trustStore')
+cmo.setValue('/u01/oracle/wallet/truststore.jks')
+
+cd('../..')
+create('oracle.net.ssl_server_dn_match', 'Property')
+cd('Property/oracle.net.ssl_server_dn_match')
+cmo.setValue('true')
+
+cd('../..')
 create('user', 'Property')
 cd('Property/user')
-cmo.setValue('medrec')
+cmo.setValue(dsusername)
+
 cd('../..')
-create('DatabaseName', 'Property')
-cd('Property/DatabaseName')
-cmo.setValue('demo')
+create('javax.net.ssl.keyStoreType', 'Property')
+cd('Property/javax.net.ssl.keyStoreType')
+cmo.setValue('JKS')
+
+cd('../..')
+create('javax.net.ssl.trustStoreType', 'Property')
+cd('Property/javax.net.ssl.trustStoreType')
+cmo.setValue('JKS')
+
+cd('../..')
+create('javax.net.ssl.keyStore', 'Property')
+cd('Property/javax.net.ssl.keyStore')
+cmo.setValue('/u01/oracle/wallet/keystore.jks')
+
+#cd('../..')
+#create('javax.net.ssl.keyStorePassword', 'Property')
+#cd('Property/javax.net.ssl.keyStorePassword')
+#cmo.setValue('Ud08bEsNiX92D5I')
+
+#cd('../..')
+#create('javax.net.ssl.trustStorePassword', 'Property')
+#cd('Property/javax.net.ssl.trustStorePassword')
+#cmo.setValue('Ud08bEsNiX92D5I')
+
+cd('../..')
+create('oracle.jdbc.fanEnabled', 'Property')
+cd('Property/oracle.jdbc.fanEnabled')
+cmo.setValue('false')
+
 cd('../../../../../..')
 dsXAParams = create('dataSourceParams', 'JDBCDataSourceParams')
 cd('JDBCDataSourceParams/NO_NAME_0')
