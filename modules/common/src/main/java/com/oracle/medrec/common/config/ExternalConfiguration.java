@@ -16,8 +16,8 @@ public class ExternalConfiguration {
 
 	public static final String EXTERNAL_CONFIG_KEY = "configFile";
 	
-	public static final String PHYSICIAN_SERVICE_URL = "physician.url";
-	public static final String PATIENT_SERVICE_URL = "patient.url";
+	public static final String PHYSICIAN_SERVICE_URL = "PHYSICIAN_SERVICE";
+	public static final String PATIENT_SERVICE_URL = "PATIENT_SERVICE";
 
 	/**
 	 * Singleton

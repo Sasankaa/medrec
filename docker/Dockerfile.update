@@ -7,7 +7,8 @@ RUN rm -rf ${TEMP_DIR} && mkdir -p ${TEMP_DIR}
 
 COPY modules ${TEMP_DIR}/modules
 
-RUN cd ${TEMP_DIR}/modules/gar && \
+RUN cp ${TEMP_DIR}/modules/microservices.properties ${DOMAIN_HOME} && \
+    cd ${TEMP_DIR}/modules/gar && \
     mvn clean install && \
     cd ${TEMP_DIR}/modules && \
     mvn clean install
@@ -16,3 +17,10 @@ RUN chown -R oracle:oracle ${TEMP_DIR}/ && \
     chmod -R a+xwr ${TEMP_DIR}/
 
 WORKDIR ${DOMAIN_HOME}
+
+# TODO cleanup
+
+#USER oracle
+WORKDIR ${DOMAIN_HOME}
+
+CMD ["/u01/oracle/user_projects/domains/medrec/startWebLogic.sh"]

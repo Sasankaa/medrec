@@ -67,9 +67,11 @@ spec:
     # an (optional) list of environment variable to be set on the servers
     env:
     - name: JAVA_OPTIONS
-      value: "-Dweblogic.StdoutDebugEnabled=false -DconfigFile=/u01/oracle/user_projects/domains/medrec/microservices.properties"
+      value: "-Dweblogic.StdoutDebugEnabled=false "
     - name: USER_MEM_ARGS
       value: "-Xms64m -Xmx256m "
+    - name: PHYSICIAN_SERVICE
+      value: "http://physicianservice.medrec-domain-ns.svc.cluster.local:9001/physician"
 #    nodeSelector:
 #      licensed-for-weblogic: true
 
