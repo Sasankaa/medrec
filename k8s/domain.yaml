@@ -67,7 +67,7 @@ spec:
     # an (optional) list of environment variable to be set on the servers
     env:
     - name: JAVA_OPTIONS
-      value: "-Dweblogic.StdoutDebugEnabled=false"
+      value: "-Dweblogic.StdoutDebugEnabled=false -DconfigFile=/u01/oracle/user_projects/domains/medrec/microservices.properties"
     - name: USER_MEM_ARGS
       value: "-Xms64m -Xmx256m "
 #    nodeSelector:
