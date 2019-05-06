@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: physicianservice
+  labels:
+    app: physician
+spec:
+  ports:
+  - port: 9001
+    name: http
+  selector:
+    app: physician
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: physician
+spec:
+  selector:
+    matchLabels:
+      app: physician
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: physician
+    spec:
+      containers:
+      - name: physician
+        image: iad.ocir.io/weblogick8s/helidon-medrec-physician:1.0
+        ports:
+        - containerPort: 9001
