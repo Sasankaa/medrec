@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>TOC and Content Frames</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  </head>
+
+  <frameset cols="300,*" frameborder=yes framespacing=1 border=1>
+<!-- Changed JW 10/4/03: Originally, the TOC frame pointed to toc.html (now toc-frame.html).
+The only purpose of toc.html was to call top.displayTOC(). This added
+complexity because I had to prevent toc.html from being added to the browser
+history list when top.displayTOC() overwrote it.
+
+top.displayTOC() cannot be called from this page, because a <script> element
+isn't allowed after a <frameset> element, and if I put the <script> element
+in the <head> element, then displayTOC() doesn't know what the "myToc" frame
+is because that frame hasn't been declared yet.
+
+I solved this by calling top.displayTOC() in content.html.
+-->
+    <frame src="toc-frame.html?topicNumber=0&bookmarkMode=0&tocChange=3&changeContent=1&currentHistoryID=0"
+        name="myToc" title="Navigation" marginwidth=0 marginheight=0>
+    <frame src="content.html" name="myContent" title="Content">
+  </frameset>
+  <noframes>
+  </noframes>
+
+</html>

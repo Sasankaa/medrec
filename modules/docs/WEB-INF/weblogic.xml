@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<weblogic-web-app xmlns="http://xmlns.oracle.com/weblogic/weblogic-application">
+  <jsp-descriptor>
+    <page-check-seconds>1</page-check-seconds>
+    <verbose>true</verbose>
+  </jsp-descriptor>
+
+  <virtual-directory-mapping>
+    <local-path>../../</local-path>
+    <url-pattern>server/*</url-pattern>
+  </virtual-directory-mapping>
+  <virtual-directory-mapping>
+    <local-path>../</local-path>
+    <url-pattern>examples/*</url-pattern>
+  </virtual-directory-mapping>
+  <virtual-directory-mapping>
+    <local-path>../</local-path>
+    <url-pattern>docs/*</url-pattern>
+  </virtual-directory-mapping>
+  <virtual-directory-mapping>
+    <local-path>../</local-path>
+    <url-pattern>medrec/*</url-pattern>
+  </virtual-directory-mapping>
+  <virtual-directory-mapping>
+    <local-path>../</local-path>
+    <url-pattern>medrec-spring/*</url-pattern>
+  </virtual-directory-mapping>
+  <virtual-directory-mapping>
+    <local-path>../examples/build</local-path>
+    <url-pattern>images/*</url-pattern>
+  </virtual-directory-mapping>
+
+  <security-permission>
+    <security-permission-spec>
+      grant { permission java.security.AllPermission ; } ;
+    </security-permission-spec>
+  </security-permission>
+</weblogic-web-app>
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- DOMAIN TEMPLATE INFO -->
+
+<domain-template-info xmlns="http://xmlns.oracle.com/weblogic/domain-template"
+    version="12.2.1.3.0"
+    type="Extension Template"
+    name="Avitek Medical Records Sample Domain"
+    author="Oracle and/or its affiliates"
+    category="Oracle"
+    description="Create the Avitek Medical Records domain in a directory outside of the installed kit.  The Avitek Medical Records is a WebLogic Server sample application suite that concisely demonstrates all aspects of the Java EE platform."
+    iconName="medrec.gif">
+  
+</domain-template-info>

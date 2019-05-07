@@ -1,0 +1,59 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+<head>
+<!-- TemplateBeginEditable name="doctitle" -->
+<title>Topic Title</title>
+<!-- TemplateEndEditable --> 
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=Content-Type content="text/html; charset=$CHARSET;">
+<meta name=workshop content=WWKSHOP>
+
+<!-- TemplateBeginEditable name="metatags" -->
+<!-- In the component metatag, please indicate whether this topic is for Integration, Workshop, or Portal. -->
+<meta name="component" content="">
+<!-- In the description metatag, please provide a BRIEF description of the topic contents. -->
+<meta name="description" content="">
+<!-- In the component metatag, please list keywords that will help a user search for this topic. -->
+<meta name="keywords" content="">
+<!-- TemplateEndEditable -->
+
+<!--(Links)=========================================================-->
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
+<link href="../workshop.css" rel="stylesheet" type="text/css">
+<a href="../core/index.html" id="index"></a>
+<script language="JavaScript" src="../core/topicInfo.js"></script>
+<script language="JavaScript" src="../core/CookieClass.js"></script>
+<script language="JavaScript" src="../core/displayContent.js"></script>
+</head>
+
+<!--(Body)==========================================================-->
+<body>
+<script language="JavaScript">
+displayInFrames();
+</script>
+<!-- TemplateBeginEditable name="body" --> 
+<div id=topictitle> 
+  <H1 class=Title>Conceptual Title</h1>
+</div>
+<div id=topictext> 
+  <p>Introduce the topic and provide a brief overview of the topic's contents.</p>
+<h2>Heading 1</h2>
+  <p>A subset of ideas.</p>
+  <h3>Heading 2</h3>
+  <p>A second subset of ideas.</p>
+  <h3>Heading 2</h3>
+  <p>Another second subset of ideas.</p>
+  <h2>Heading 1</h2>
+  <p>A subset of ideas.</p>
+  <p class=relatedtopics>Related Topics</p>
+  <p>[tbd]</p>
+</div>
+<!-- TemplateEndEditable -->
+<script language="JavaScript">
+writeTopicInfo();
+</script>
+</body>
+</html>

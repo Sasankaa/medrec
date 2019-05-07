@@ -60,8 +60,8 @@ public class AuthenticationController extends BasePhysicianPageController {
 
 		LOGGER.info("Physician " + username + " is loging in.");
 
-		String physicianServiceUrl = ExternalConfiguration
-				.getExternalConfigValue(ExternalConfiguration.PHYSICIAN_SERVICE_URL);
+		String physicianServiceUrl = System.getenv(ExternalConfiguration.PHYSICIAN_SERVICE_URL);
+				//ExternalConfiguration.getExternalConfigValue(ExternalConfiguration.PHYSICIAN_SERVICE_URL);
 
 		String errorMessageKey = "message.invalidLogin";
 		String additionalMessage = "";

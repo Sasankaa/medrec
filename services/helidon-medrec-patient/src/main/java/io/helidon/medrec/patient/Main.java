@@ -48,7 +48,7 @@ public final class Main {
 
 		Server server = startServer();
 
-		System.out.println("http://localhost:" + server.port() + "/greet");
+		System.out.println("http://localhost:" + server.port() + "/patient");
 		
 		LOGGER.info("Import Patients into Patient service DB");
 		DataImporter.importData();

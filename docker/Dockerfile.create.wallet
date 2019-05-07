@@ -1,0 +1,16 @@
+# Pull base Oracle WebLogic image from Store
+# ---------------
+FROM store/oracle/weblogic:12.2.1.3
+
+ENV WALLET_DIR="/u01/oracle/wallet"
+
+USER root
+
+RUN mkdir -p ${WALLET_DIR}
+
+COPY wallet ${WALLET_DIR}
+
+RUN chown -R oracle:oracle ${WALLET_DIR} && \
+    ls -la ${WALLET_DIR}
+
+USER oracle

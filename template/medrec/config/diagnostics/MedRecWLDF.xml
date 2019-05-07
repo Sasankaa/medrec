@@ -1,0 +1,23 @@
+<wldf-resource xmlns="http://xmlns.oracle.com/weblogic/weblogic-diagnostics">
+  <name>MedRecWLDF</name>
+  <instrumentation>
+    <enabled>true</enabled>
+    <wldf-instrumentation-monitor>
+      <name>DyeInjection</name>
+      <description>Dye Injection monitor</description>
+      <dye-mask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"></dye-mask>
+      <properties>
+          ADDR1=127.0.0.1
+          USER1=volley@ball.com
+        </properties>
+    </wldf-instrumentation-monitor>
+  </instrumentation>
+  <harvester>
+    <name>MedRecWLDF</name>
+    <sample-period>6000</sample-period>
+    <harvested-type>
+      <name>com.oracle.medrec.admin.AdminReport</name>
+      <harvested-attribute>NewUserCount</harvested-attribute>
+    </harvested-type>
+  </harvester>
+</wldf-resource>

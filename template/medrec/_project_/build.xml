@@ -1,0 +1,52 @@
+<project name="setup" default="setup">
+
+    <property environment="env"/>
+
+    <property name="domain.console.ext" value="../console-ext"/>
+
+    <target name="setup">
+        <available file="../../../server/medrec/modules/medrec-data-import" type="dir" property="kit"/>
+        <available file="../../../modules/medrec-data-import" type="dir" property="standalone"/>
+        <antcall target="init.db"/>
+        <antcall target="deploy.diagnostics.console.ext"/>
+    </target>
+
+    <target name="deploy.diagnostics.console.ext">
+        <mkdir dir="${domain.console.ext}"/>
+        <copy file="${WL_HOME}/server/lib/console-ext/diagnostics-console-extension.jar"
+              todir="${domain.console.ext}" failonerror="false"/>
+        <!--<antcall target="deploy.diagnostics.console.ext.for.standalone"/>-->
+        <!--<antcall target="deploy.diagnostics.console.ext.for.kit"/>-->
+    </target>
+
+    <!--<target name="deploy.diagnostics.console.ext.for.standalone" if="standalone">-->
+        <!--<echo message="${env.WL_HOME}/server/lib/console-ext/diagnostics-console-extension.jar"/>-->
+        <!--<copy file="${env.WL_HOME}/server/lib/console-ext/diagnostics-console-extension.jar"-->
+              <!--todir="${domain.console.ext}" failonerror="false"/>-->
+    <!--</target>-->
+
+    <!--<target name="deploy.diagnostics.console.ext.for.kit" if="kit">-->
+        <!--<copy file="../../../../server/lib/console-ext/diagnostics-console-extension.jar"-->
+              <!--todir="${domain.console.ext}" failonerror="false"/>-->
+    <!--</target>-->
+
+    <target name="init.db">
+        <echo message="Initializing database..."/>
+        <antcall target="init.db.for.kit"/>
+        <antcall target="init.db.for.standalone"/>
+    </target>
+
+    <target name="init.db.for.standalone" if="standalone">
+        <ant dir="../../../modules/medrec-data-import" inheritAll="false" target="run">
+            <property name="notest" value="true"/>
+            <property name="nodep" value="true"/>
+        </ant>
+    </target>
+
+    <target name="init.db.for.kit" if="kit">
+        <!-- ant dir="../../../server/medrec/modules/medrec-data-import" inheritAll="false" target="run.for.installer" -->
+            <property name="notest" value="true"/>
+            <property name="nodep" value="true"/>
+        <!-- /ant -->
+    </target>
+</project>

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+<title>Search Input Pane</title>
+<link rel="StyleSheet" href="../css/wls.css" type="text/css">
+<script type="text/javascript">
+<!--
+function doQuery()
+{
+  var queryString = document.queryForm.elements.query.value;
+  //alert(" query is '" + queryString + "'");
+  var result = document.applets['search_applet'].queryToHtml(queryString,
+                                                             "../css/wls.css");
+  parent.frames['search_results'].document.open();
+  parent.frames['search_results'].document.write(result);
+  parent.frames['search_results'].document.close();
+}
+
+
+
+// -->
+</script>
+</head>
+<body leftmargin="5" rightmargin="5" marginwidth="5" marginheight="5" topmargin="8">
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<!-- Search My Google Search Appliance -->
+<form name="queryForm" action="/docs/SamplesSearchServlet" method="post" target="search_results">
+  <table>
+    <tr>
+      <td>
+        <input type="text" name="queryStringIn" size="25" maxlength="255" value="" class="formclass"/>        
+      </td>
+    </tr>
+	<tr>
+	  <td>
+	  	<input type="submit" value="{buttons.SEARCH}" name="btnG />
+	  </td>
+	</tr>
+	<tr>
+	  <td style="font-size:11px;color:000000;font-family: Tahoma;">
+		<a href="ovwSearchTipsRemote.html" target="myContent">Search Tips</a>.
+	  </td>
+	</tr>
+  </table>
+</form>
+</table>
+</body>
+</html>
+
+

@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+ <title>WebLogic Server Documentation</title>
+ <meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<script TYPE="text/javascript">
+// Begin Added JW 9/23/03: In case the user reaches this page via the back or forward
+// browser button or the history list, make sure the states of the mode select buttons
+// in the banner frame are synched.
+top.frames['banner'].setMode('search');
+// End Added JW 9/27/03
+
+document.write('<frameset rows="125,*">');
+document.write('<frame ');
+var strHref = window.location.href;
+//write out appropriate search form.
+if(strHref.indexOf("http://") > -1)
+	document.write('name="lucene_search_input" src="lucene_search_input.html"');
+else
+	document.write('name="local_search_input" src="local_search_input.html"');
+	document.write('style="frameborder:1; scrolling: auto; noresize: true;" noresize marginheight="0" marginwidth="0">');
+	document.write('<frame name="search_results" src="about:blank" target="content" style="frameborder:1;" noresize marginheight="0" marginwidth="0">');
+	document.write('</frameset><noframes></noframes>');
+</script>
+</html>

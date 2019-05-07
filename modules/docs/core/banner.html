@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Logo and Buttons for Administration Console Help</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<!-- Added JW: Included tocParas.js to have tocBehavior[] and
+tocLinks[] defined when calling the TOC's reDisplay() function.
+Previously, the banner frame wasn't calling reDisplay() to render
+the TOC, but it is now.
+-->
+<script type="text/javaScript" src="tocParas.js"></script>
+<script type="text/javascript" src="CookieClass.js"></script>
+<script type="text/javascript">
+var mode = 'toc';
+var buttonSelImages = new Array();
+var buttonUnselImages = new Array();
+var buttonHoverImages = new Array();
+var leftPanePage = new Array();
+
+
+// used by the WLS doc group to 
+// dynamically set the root of edocs
+var wlsURLRoot="";
+
+function init()
+{
+
+
+var destContent = new Cookie(document, "destContent");
+if (destContent.load())
+        {
+            query = destContent.query;
+            if (query=="local")
+            {
+	       wlsURLRoot="{CONSOLEHELP.URL.ROOT}";
+            }
+            else
+            {
+              wlsURLRoot="${DOCROOT}/";
+            }
+  
+          }
+destContent.remove();
+
+
+
+ // buttonSelImages['toc'] = "images/banner_toc_sel.gif";
+ // buttonUnselImages['toc'] = "images/banner_toc_unsel.gif";
+ // buttonHoverImages['toc'] = "images/banner_toc_hover.gif";
+
+ // buttonSelImages['viewBookmarks'] = "images/banner_view_bookmarks_sel.gif";
+ // buttonUnselImages['viewBookmarks'] = "images/banner_view_bookmarks_unsel.gif";
+ // buttonHoverImages['viewBookmarks'] = "images/banner_view_bookmarks_hover.gif";
+
+ // buttonSelImages['addBookmark'] = "images/banner_add_bookmark_sel.gif";
+ // buttonUnselImages['addBookmark'] = "images/banner_add_bookmark_unsel.gif";
+ // buttonHoverImages['addBookmark'] = "images/banner_add_bookmark_hover.gif";
+
+  leftPanePage['toc'] = "blank.html";
+
+ // document.images['toc'].src = "images/banner_toc_sel.gif";
+ // document.images['viewBookmarks'].src = "images/banner_view_bookmarks_unsel.gif";
+ // document.images['addBookmark'].src = "images/banner_add_bookmark_unsel.gif";
+
+  if( (cachedMode = getCookie('bannerMode')) == null )
+  {
+    mode = 'toc';
+    setCookie('bannerMode', mode);
+    cachedMode = mode;
+  }
+  debug("banner.init: cachedMode is " + cachedMode);
+  buttonSelect(cachedMode);
+}
+
+function buttonHover(button, event)
+{
+  if( mode != button )
+  {
+    switch ( event  )
+    {
+      case 'on':
+        document.images[button].src = buttonHoverImages[button];
+        break;
+      case 'off':
+        document.images[button].src = buttonUnselImages[button];
+        break;
+    }
+  }
+}
+
+// Begin Added JW: The user does not always start in the TOC to drive actions,
+// but ultimately other frames advise the TOC, and the TOC drives.
+// To ensure that the banner frame is in synch with the TOC, the TOC calls the
+// setMode function to update the states of the banner frame buttons.
+// The name setMode isn't perfect; this is more of an advise than a set.
+// The valid values for newMode are toc and viewBookmarks; addBookmark
+// is not a valid input.
+function setMode(newMode)
+{
+  if(mode != newMode)
+  {
+    //document.images[mode].src = buttonUnselImages[mode];
+    mode = newMode;
+    setCookie('bannerMode', mode);
+    //document.images[mode].src = buttonSelImages[mode];
+  }
+}
+// End Added JW
+
+function buttonSelect(button)
+{
+
+  // Begin Added JW: 
+  if(button == "addBookmark")
+  {
+    // addBookmark is a bit out of place here, as it's not a mode,
+    // just a function call. If the user is already in bookmark mode, clicking
+    // addBookmark will have no effect.
+    addBookmark();
+    
+    // The second parameter to reDisplay is called bookmarkMode [>>>and probably
+    // should use named constants, since Javascript has no enums]. 0= ToC mode, 1 = bookmarkMode.
+    // These are handled as two cases of rendering the ToC.
+    parent.reDisplay(top.g_currentTopicNumber, 0, tocBehavior[2], tocLinks[2]);
+
+    return;
+  }
+  // End Added JW
+
+  if( mode != button )
+  {
+    //document.images[mode].src = buttonUnselImages[mode];
+    mode = button;
+    setCookie('bannerMode', mode);
+    //document.images[mode].src = buttonSelImages[mode];
+    if(mode == "toc")
+    {
+      // Changed JW:
+      // 1. Changed first parameter from "0", which would open the TOC to the default
+      // topic, to "top.g_currentTopicNumber", a global which tracks the currently
+      // open topic across both the TOC and View Bookmarks modes.
+      // 2. The second parameter to reDisplay is called bookmarkMode; explained above.
+      // 3. Changed third parameter from "true" to tocBehavior[2]
+      // 4. Added fourth parameter, set to tocLinks[2]
+      parent.reDisplay(top.g_currentTopicNumber, 0, tocBehavior[2], tocLinks[2]);
+    }
+    else if(mode == "viewBookmarks")
+    {
+      // Begin Added JW: Bookmark mode is a special case of the TOC.
+      // The second parameter to reDisplay is called bookmarkMode; explained above.
+      parent.reDisplay(top.g_currentTopicNumber, 1, tocBehavior[2], tocLinks[2]);
+    }
+    else
+    {
+      // This is the search >>> might be better practice to code for this explicitly
+      //	rather than just making it the default.
+      parent.frames['tocAndContent'].frames['myToc'].document.location = leftPanePage[mode];
+    }
+  }
+}
+
+// Begin Added JW
+function addBookmark()
+{
+    var strCurrentToCTopic = null;
+    var strBookmarksCookieValue = null;
+    var arrstrBookmarkTopicNumbers = null;
+
+    // When the user selects a page from search results, top.g_currentTopicNumber
+    // isn't updated because I don't control the search results output.
+    // This shouldn't be a problem unless the user wants to bookmark the page, in
+    // which case I simply get the page's URL and look up its topic number.
+    if(mode != "search")
+    {
+        strCurrentToCTopic = top.g_currentTopicNumber;
+    }
+    else
+    {
+        var strContentURL = parent.frames['tocAndContent'].frames['myContent'].document.location.href;
+        strContentURL = strContentURL.substring(0, strContentURL.indexOf("?skipReload=true"));
+        strCurrentToCTopic = top.findTopicNumber(strContentURL);
+        top.g_currentTopicNumber = strCurrentToCTopic;
+    }
+
+    // When the BEA Help System is started, g_currentTopicNumber defaults to "0",
+    // so no topic is highlighted. However, if the user clicks the "Add Bookmark"
+    // button in this state, we want to add topic "1".
+    if(strCurrentToCTopic == "0")
+    {
+        strCurrentToCTopic = "1";
+    }
+
+    // Get topic URL from tocTab
+    var strCurrentToCTopicURL = top.tocTab[1][2];
+    for(var i = 0; i < top.tocTab.length; i++)
+    {
+        if(top.tocTab[i][0] == strCurrentToCTopic)
+        {
+            strCurrentToCTopicURL = top.tocTab[i][2];
+            break;
+        }
+    }
+
+    strBookmarksCookieValue = getCookie("bookmarks");
+
+    if(strBookmarksCookieValue == null || strBookmarksCookieValue == "")
+    {
+    	// No cookie yet (or empty cookie). Start one.
+        strBookmarksCookieValue = strCurrentToCTopicURL;
+    }
+    else
+    {
+        // Make sure this topic isn't already bookmarked.
+        // Linear search should be plenty fast unless someone has a LOT of bookmarks, but
+        // if this is seen as a performance issue, a hashing strategy could be adopted.
+        var arrstrBookmarkTopicURLs = strBookmarksCookieValue.split(";");
+
+        for(var i = 0; i < arrstrBookmarkTopicURLs.length; i++)
+        {
+            if(arrstrBookmarkTopicURLs[i] == strCurrentToCTopicURL)
+            {
+                return;
+            }
+        }
+
+        strBookmarksCookieValue = strBookmarksCookieValue + ";" + strCurrentToCTopicURL;
+    }
+    // Set the cookie for roughly ten years: we don't want bookmarks to go away on their own.
+    setCookie("bookmarks", strBookmarksCookieValue, 87600);
+
+    // If we're already in bookmark mode, refresh the bookmark list.
+    if(mode == "viewBookmarks")
+    {
+        parent.frames['tocAndContent'].frames['myToc'].document.location.replace("bookmark.html");
+    }
+}
+// End Added JW
+</script>
+
+<link href="../css/wls.css" rel="stylesheet" type="text/css">
+
+</head>
+<body onLoad="init()" leftMargin=0 topMargin=0 marginwidth="0" marginheight="0">
+<table width=100% cellpadding=0 cellspacing=0 border=0 class="banner">
+<tr>
+<!-- Changed JW -->
+<!-- Widened TD from 22% to accommodate new images. -->
+   <td align=left height="42"><img src="images/help_banner_logo.gif"></td>
+   <td align=left style="width=50%;vertical-align=middle;" nowrap>
+	<input type="submit" value="Contents" onclick="buttonSelect('toc')" class="button">
+	<input type="submit" value="View Bookmarks" onclick="buttonSelect('viewBookmarks')" class="button">
+	<input type="submit" value="Bookmark Current Topic" onclick="buttonSelect('addBookmark')" class="button">
+    </td>
+   <td width=100% align=right><img src="images/clear.gif" width=5 height=45 border=0></td>
+</tr></table>
+</body>
+</html>
