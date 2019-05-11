@@ -115,7 +115,34 @@
                 value="${empty prescription.instructions ? bundle['message.noInstructions'] : prescription.instructions}"/>
           </h:column>
         </h:dataTable>
-      </h:panelGrid>
+        <h:outputText value="${bundle['label.xrays']}"
+                      styleClass="label label-info"/>
+				<h:dataTable
+					value="${viewingRecordDetailController.recordDetail.xrays}"
+					var="xray" class="table span8" headerClass="tableHeader">
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="${bundle['label.date']}" />
+						</f:facet>
+						<h:outputText value="${xray.dateCreated}">
+							<f:convertDateTime type="date" dateStyle="medium" />
+						</h:outputText>
+					</h:column>
+					<h:column>
+					<f:facet name="header">
+						<h:outputText value="${bundle['label.xrayArea']}" />
+					</f:facet>
+		        <h:form id="downloadxray">
+		          <h:commandButton id="action"
+		                           class="btn btn-primary btn-info pull-right"
+		                           action="#{viewingRecordDetailController.getXray}"
+		                           value="Download">
+								<f:param name="xrayId" value="#{xray.id}" />
+							</h:commandButton>	                           
+		        </h:form>					
+					</h:column>
+				</h:dataTable>
+			</h:panelGrid>
     </div>
   </ui:define>
 </ui:composition>
