@@ -59,7 +59,7 @@ public class JaxWsPatientFacadeBroker implements JaxWsPatientFacade {
 				//ExternalConfiguration.getExternalConfigValue(ExternalConfiguration.PATIENT_SERVICE_URL);
 
 		if (patientServiceUrl != null) {
-			LOGGER.info("Patient service URL found in external configuration.");
+			LOGGER.info("Patient service URL found in external configuration: " + patientServiceUrl);
 
 			try {
 				Client client = ClientBuilder.newClient();

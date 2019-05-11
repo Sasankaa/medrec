@@ -1,10 +1,13 @@
 package com.oracle.physician.web;
 
+import com.oracle.medrec.common.config.ExternalConfiguration;
 import com.oracle.medrec.common.util.ServerPropertiesUtils;
+import com.oracle.physician.web.controller.AuthenticationController;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * This Filter hereby is just for demo itself. Filter catches host, port, context path.
@@ -15,6 +18,8 @@ import java.io.IOException;
  */
 @WebFilter(urlPatterns = {"/*"})
 public class GettingHostFilter implements Filter {
+	
+	private static final Logger LOGGER = Logger.getLogger(AuthenticationController.class.getName());
 
   private String partition;
 
@@ -41,6 +46,7 @@ public class GettingHostFilter implements Filter {
       builder.append(String.valueOf(request.getServerPort()));
       builder.append(partition);
       ServerPropertiesUtils.setRegion(builder.toString());
+      LOGGER.info("REGION: " + builder.toString());
     }
     chain.doFilter(request, response);
   }

@@ -19,6 +19,8 @@ public class ExternalConfiguration {
 	public static final String PHYSICIAN_SERVICE_URL = "PHYSICIAN_SERVICE";
 	public static final String PATIENT_SERVICE_URL = "PATIENT_SERVICE";
 
+	public static final String MEDREC_URL = "MEDREC_URL";
+
 	/**
 	 * Singleton
 	 */
