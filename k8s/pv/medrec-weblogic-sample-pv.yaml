@@ -19,4 +19,4 @@ spec:
   hostPath:
   # nfs:
     # server: %SAMPLE_STORAGE_NFS_SERVER%
-    path: "/scratch/pv001"
+    path: "/scratch/pv003"

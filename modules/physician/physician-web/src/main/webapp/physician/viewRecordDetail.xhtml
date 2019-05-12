@@ -133,12 +133,11 @@
 						<h:outputText value="${bundle['label.xrayArea']}" />
 					</f:facet>
 		        <h:form id="downloadxray">
-		          <h:commandButton id="action"
-		                           class="btn btn-primary btn-info pull-right"
-		                           action="#{viewingRecordDetailController.getXray}"
-		                           value="Download">
-								<f:param name="xrayId" value="#{xray.id}" />
-							</h:commandButton>	                           
+              <h:commandLink id="xrayaction"
+                      action="#{viewingRecordDetailController.getXray}">
+                 <h:outputText value="${xray.xrayArea}"/>
+                 <f:param name="xrayId" value="#{xray.id}" />
+              </h:commandLink>             
 		        </h:form>					
 					</h:column>
 				</h:dataTable>

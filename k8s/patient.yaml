@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: patientservice
+  labels:
+    app: patient
+spec:
+  ports:
+  - port: 9005
+    name: http
+  selector:
+    app: patient
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: patient
+spec:
+  selector:
+    matchLabels:
+      app: patient
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: patient
+    spec:
+      containers:
+      - name: patient
+        image: iad.ocir.io/weblogick8s/helidon-medrec-patient:1.0
+        ports:
+        - containerPort: 9005
