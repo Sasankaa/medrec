@@ -4,6 +4,7 @@ import com.oracle.medrec.common.util.DateAdapter;
 import com.oracle.medrec.model.Prescription;
 import com.oracle.medrec.model.Record;
 import com.oracle.medrec.model.VitalSigns;
+import com.oracle.medrec.model.Xray;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,6 +36,8 @@ public class RecordDetail extends TransferObject {
   private VitalSigns vitalSigns;
 
   private List<Prescription> prescriptions;
+  
+  private List<Xray> xrays;
 
   public RecordDetail() {
     prescriptions = new LinkedList<Prescription>();
@@ -110,7 +113,15 @@ public class RecordDetail extends TransferObject {
     this.id = id;
   }
 
-  @Override
+  public List<Xray> getXrays() {
+		return xrays;
+	}
+
+	public void setXrays(List<Xray> xrays) {
+		this.xrays = xrays;
+	}
+
+	@Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;

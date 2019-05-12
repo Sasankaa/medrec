@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
+# Copyright (c) 2018, 2019 Oracle and/or its affiliates. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,9 +14,13 @@
 # limitations under the License.
 #
 
-# Application properties. This is the default greeting
-app.greeting=Hello
+FROM openjdk:8-jre-slim
 
-# Microprofile server properties
-server.port=9005
-server.host=0.0.0.0
+
+COPY target/helidon-medrec-patient.jar ./
+
+COPY target/libs ./libs
+
+CMD ["java", "-jar", "helidon-medrec-patient.jar"]
+
+EXPOSE 9005

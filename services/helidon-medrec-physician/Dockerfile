@@ -15,31 +15,37 @@
 #
 
 # 1st stage, build the app
-FROM maven:3.5.4-jdk-9 as build
+# FROM maven:3.6.1-jdk-8 as build
 
-WORKDIR /helidon
+# WORKDIR /helidon
 
 # Create a first layer to cache the "Maven World" in the local repository.
 # Incremental docker builds will always resume after that, unless you update
 # the pom
-ADD pom.xml .
-RUN mvn package -DskipTests
+# ADD pom.xml .
+# RUN mvn package -DskipTests
 
 # Do the Maven build!
 # Incremental docker builds will resume here when you change sources
-ADD src src
-RUN mvn package -DskipTests
+# ADD src src
+# RUN mvn package -DskipTests
 
-RUN echo "done!"
+# RUN echo "done!"
 
 # 2nd stage, build the runtime image
 FROM openjdk:8-jre-slim
-WORKDIR /helidon
+# WORKDIR /helidon
+
+RUN echo "Start!"
 
 # Copy the binary built in the 1st stage
-COPY --from=build /helidon/target/helidon-medrec-physician.jar ./
-COPY --from=build /helidon/target/libs ./libs
+# COPY --from=build /helidon/target/helidon-medrec-physician.jar ./
+# COPY --from=build /helidon/target/libs ./libs
+
+COPY target/helidon-medrec-physician.jar ./
+
+COPY target/libs ./libs
 
 CMD ["java", "-jar", "helidon-medrec-physician.jar"]
 
-EXPOSE 8080
+EXPOSE 9001

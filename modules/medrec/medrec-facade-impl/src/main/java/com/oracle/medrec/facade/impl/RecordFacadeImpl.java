@@ -7,13 +7,18 @@ import com.oracle.medrec.facade.model.RecordDetail;
 import com.oracle.medrec.facade.model.RecordSummary;
 import com.oracle.medrec.facade.model.RecordToCreate;
 import com.oracle.medrec.model.Record;
+import com.oracle.medrec.model.Xray;
 import com.oracle.medrec.service.RecordService;
 
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.inject.Inject;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author Copyright (c) 2007, 2017, Oracle and/or its
@@ -24,6 +29,8 @@ import java.util.List;
 @MethodParameterValidated
 @ThrowableLogged
 public class RecordFacadeImpl implements RecordFacade {
+	
+	private static final Logger LOGGER = Logger.getLogger(RecordFacadeImpl.class.getName());
 
   @Inject
   private RecordService recordService;
@@ -47,6 +54,21 @@ public class RecordFacadeImpl implements RecordFacade {
     if (record == null) {
       throw new AssertionError("Invalid record id: " + id);
     }
-    return new RecordDetail(record);
+    RecordDetail recordDetail = new RecordDetail(record);
+  	LOGGER.info("Get xrays for record id:" + id);	    
+    recordDetail.setXrays(getXrays(id));
+    return recordDetail;
+  }
+  
+  private List<Xray> getXrays (Long recordId) {
+		List<Xray> xrays = new ArrayList<Xray>();
+		Xray xray = new Xray();
+		xray.setId(new Long(1));
+		xray.setPatientId(new Long(2));
+		xray.setDateCreated(new Date());
+		xray.setXrayArea("chest");
+		xrays.add(xray);
+		xrays.add(xray);
+  	return xrays;
   }
 }

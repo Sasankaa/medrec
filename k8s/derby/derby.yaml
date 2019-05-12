@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: derbydb
+  labels:
+    appdb: derbydb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      appdb: derbydb
+  template:
+    metadata:
+      labels:
+        appdb: derbydb
+    spec:
+      containers:
+      - name: derbydb
+        image: az82/docker-derby:v1.4
+        ports:
+        - containerPort: 1527

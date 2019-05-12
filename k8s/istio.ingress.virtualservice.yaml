@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: default-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - default-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /console
+    route:
+    - destination:
+        host: medrec-admin-server-external.pv-medrec-domain-ns.svc.cluster.local
+        port:
+          number: 7001
+  - route:
+    - destination:
+        host: medrec-cluster-medrec-cluster.pv-medrec-domain-ns.svc.cluster.local
+        port:
+          number: 31111
