@@ -24,9 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Base64;
-import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,8 +38,6 @@ import io.helidon.webserver.Routing;
 import io.helidon.webserver.ServerRequest;
 import io.helidon.webserver.ServerResponse;
 import io.helidon.webserver.Service;
-
-import static io.helidon.config.ConfigMappers.toPath;
 
 /**
  * A simple service to greet you. Examples:
@@ -64,8 +60,6 @@ public class FilesService implements Service {
     private static final Long DEFAULT_MAX_LENGTH = 100L * 1024 * 1024;
     private static final String DEFAULT_STORAGE_PATH = "./storage";
     public static final String DEFAULT_MEDIA_TYPE = "application/octet-stream";
-
-    private final Map<String, FileMetadata> metadataCache = new ConcurrentHashMap<>();
 
     /**
      * Configurable root of the storage.
@@ -205,7 +199,7 @@ public class FilesService implements Service {
     private void updateFile(ServerRequest request, ServerResponse response) {
         String fileName = request.path().param("file_name");
         String encodedFileName = encode(fileName);
-        Path filePath = toPath(fileName);
+        Path filePath = storageRoot.resolve(encodedFileName);
         String mediaType = request.headers().contentType().map(MediaType::toString).orElse(DEFAULT_MEDIA_TYPE);
 
         if (Files.exists(filePath) && !Files.isDirectory(filePath)) {
