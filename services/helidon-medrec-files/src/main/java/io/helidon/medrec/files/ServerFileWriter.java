@@ -8,6 +8,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
@@ -132,7 +133,7 @@ public class ServerFileWriter implements Flow.Subscriber<DataChunk> {
                 // write metadata
                 metadata.write(metadata.metadataPath());
                 // move the file to its final position
-                Files.move(tmpPath, metadata.filePath());
+                Files.move(tmpPath, metadata.filePath(), StandardCopyOption.REPLACE_EXISTING);
                 response.send();
             } catch (IOException e) {
                 sendError("Failed to move files to final location");

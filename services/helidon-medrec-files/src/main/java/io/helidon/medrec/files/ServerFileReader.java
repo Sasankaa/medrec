@@ -66,7 +66,7 @@ public class ServerFileReader implements Flow.Publisher<DataChunk> {
 
             // block a thread until fully written or cancelled
             executorService.submit(() -> {
-                ByteBuffer buffer = ByteBuffer.allocate(BUFFER_SIZE);
+                ByteBuffer buffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
                 try (FileChannel channel = theChannel) {
                     while (!cancelled.get()) {
                         Long nextElement;
@@ -82,20 +82,34 @@ public class ServerFileReader implements Flow.Publisher<DataChunk> {
                             subscriber.onError(new TimeoutException("No data requested in 10 minutes"));
                             break;
                         }
+
                         for (long i = 0; i < nextElement; i++) {
                             int bytes = channel.read(buffer);
                             if (bytes < 0) {
                                 subscriber.onComplete();
                                 return;
                             }
+
                             if (bytes > 0) {
-                                buffer.rewind();
-                                subscriber.onNext(DataChunk.create(buffer));
+                                // copying the bytes, as the DataChunk may be
+                                // cached before being written over the wire
+                                // simple implementation - we should also cache the
+                                // buffers here
+                                byte[] theBytes = new byte[bytes];
+                                buffer.flip();
+                                buffer.get(theBytes, 0, bytes);
+                                subscriber.onNext(DataChunk.create(theBytes));
+                                buffer.clear();
+                            }
+
+                            if (cancelled.get()) {
+                                break;
                             }
                         }
                     }
                 } catch (Exception e) {
                     LOGGER.severe("Exception while reading a file: " + filePath);
+                    subscriber.onError(e);
                 }
             });
         }).exceptionally(throwable -> {
