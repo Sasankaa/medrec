@@ -168,6 +168,8 @@ public class FilesService implements Service {
                     Path metaPath = FileMetadata.load(filePath).metadataPath();
                     Files.delete(metaPath);
                     Files.delete(filePath);
+                    response.status(Http.Status.ACCEPTED_202);
+                    response.send();
                 } catch (Exception e) {
                     response.status(Http.Status.INTERNAL_SERVER_ERROR_500);
                     response.send("Server failed to process the request");
