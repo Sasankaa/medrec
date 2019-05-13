@@ -88,6 +88,8 @@ public class FilesService implements Service {
 
         this.maxSizeBytes = config.get("max-size-mb")
                 .asLong()
+                // megabytes
+                .map(size -> size * 1024 * 1024)
                 .orElse(DEFAULT_MAX_LENGTH);
     }
 
