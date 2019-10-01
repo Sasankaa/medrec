@@ -17,6 +17,7 @@ build:
                     -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_COMMIT \
                     -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:latest .
               else
+                docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
                 docker build --file docker/Dockerfile.create \
                     --force-rm=true \
                     -t $REGION.ocir.io/$TENANCY/$WERCKER_APPLICATION_NAME:$WERCKER_GIT_COMMIT \
