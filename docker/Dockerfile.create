@@ -1,7 +1,7 @@
 # Pull base image
 # ---------------
-# FROM store/oracle/weblogic:12.2.1.3
-FROM iad.ocir.io/ide06y8kp7tn/weblogic:12.2.1.3-wallet
+ FROM store/oracle/weblogic:12.2.1.3
+#FROM iad.ocir.io/ide06y8kp7tn/weblogic:12.2.1.3-wallet
 
 ENV DOMAIN_NAME="medrec"
 ENV DOMAIN_HOME="/u01/oracle/user_projects/domains/${DOMAIN_NAME}"
